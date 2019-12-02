@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>2ad6cd89-c6a0-4076-95e7-1df9bf6c0960</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>EldredBrown.ProFootball.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Calculator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EnumsAndStructs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ITeamSeason.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)App_Data\AddSeason.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\CreateDatabase.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\FootballDataModel.edmx.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Functions\fn_GetTeamSeasonGames.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Functions\fn_GetTeamSeasonScheduleData.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Functions\fn_GetTeamSeasonScheduleProfile.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Functions\fn_GetTeamSeasonScheduleTotals.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\ProFootballDB.mdf" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\ProFootballDB_log.ldf" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Stored Procedures\GetLeagueSeasonTotals.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Stored Procedures\GetRankingsDefensive.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Stored Procedures\GetRankingsOffensive.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Stored Procedures\GetRankingsTotal.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Stored Procedures\GetSeasonStandings.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Stored Procedures\GetSeasonStandingsForConference.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Stored Procedures\GetSeasonStandingsForDivision.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Stored Procedures\GetSeasonStandingsForLeague.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Stored Procedures\GetTeamSeasonScheduleAverages.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Stored Procedures\GetTeamSeasonScheduleProfile.sql" />
+    <None Include="$(MSBuildThisFileDirectory)App_Data\Stored Procedures\GetTeamSeasonScheduleTotals.sql" />
+  </ItemGroup>
+</Project>

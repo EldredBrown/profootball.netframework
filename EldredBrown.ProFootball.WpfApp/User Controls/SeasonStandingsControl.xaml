@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="EldredBrown.ProFootball.WpfApp.UserControls.SeasonStandingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ViewModels="clr-namespace:EldredBrown.ProFootball.WpfApp.ViewModels"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             mc:Ignorable="d">
+	<UserControl.Resources>
+		<CollectionViewSource x:Key="StandingsViewSource" Source="{Binding Standings}" />
+	</UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ViewStandingsCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid x:Name="StandingsGrid" Style="{StaticResource GridBackgroundStyle}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="0.4*" />
+			<ColumnDefinition Width="0.6*" />
+		</Grid.ColumnDefinitions>
+		<TreeView x:Name="LeaguesTreeView" ItemsSource="{Binding LeagueNodes}" Grid.Column="0">
+            <TreeView.ItemContainerStyle>
+                <!--This Style binds a TreeViewItem to a TreeViewItemViewModel.-->
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeView.Resources>
+				<HierarchicalDataTemplate DataType="{x:Type ViewModels:LeagueNodeViewModel}"
+                                          ItemsSource="{Binding Children}">
+					<TextBlock Text="{Binding AssociationName}" />
+				</HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type ViewModels:ConferenceNodeViewModel}"
+                                          ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding AssociationName}" />
+                </HierarchicalDataTemplate>
+                <DataTemplate DataType="{x:Type ViewModels:DivisionNodeViewModel}">
+                    <TextBlock Text="{Binding AssociationName}" />
+				</DataTemplate>
+			</TreeView.Resources>
+		</TreeView>
+		<DataGrid x:Name="StandingsDataGrid"
+                  ItemsSource="{Binding Source={StaticResource StandingsViewSource}}"
+                  AutoGenerateColumns="False"
+                  CellStyle="{StaticResource RightAlignCellStyle}"
+                  ColumnWidth="Auto"
+                  MinColumnWidth="0"
+                  HorizontalGridLinesBrush="LightGray"
+                  VerticalGridLinesBrush="LightGray"
+                  ColumnHeaderStyle="{StaticResource ColumnHeaderStyle}"
+                  HeadersVisibility="Column"
+                  CanUserResizeRows="False"
+                  RowDetailsVisibilityMode="VisibleWhenSelected"
+                  Grid.Column="1"
+                  EnableRowVirtualization="True"
+                  IsReadOnly="True">
+			<DataGrid.Columns>
+				<DataGridTextColumn x:Name="StandingsTeamColumn"
+                                    Binding="{Binding Team}"
+                                    Header="Team"
+                                    Width="150"
+                                    CellStyle="{StaticResource LeftAlignCellStyle}" />
+				<DataGridTextColumn x:Name="StandingsSpacerColumn01"
+                                    HeaderStyle="{StaticResource HeaderStyle}"
+                                    Width="1" />
+                <DataGridTextColumn x:Name="StandingsSpacerColumn02"
+                                    HeaderStyle="{StaticResource HeaderStyle}"
+                                    Width="1" />
+                <DataGridTextColumn x:Name="StandingsSpacerColumn03"
+                                    HeaderStyle="{StaticResource HeaderStyle}"
+                                    Width="1" />
+                <DataGridTextColumn x:Name="StandingsWinsColumn"
+                                    Binding="{Binding Wins}"
+                                    Header="W" />
+				<DataGridTextColumn x:Name="StandingsLossesColumn"
+                                    Binding="{Binding Losses}"
+                                    Header="L" />
+                <DataGridTextColumn x:Name="StandingsTiesColumn"
+                                    Binding="{Binding Ties}"
+                                    Header="T" />
+                <DataGridTextColumn x:Name="StandingsWinningPercentageColumn"
+                                    Binding="{Binding WinningPercentage, StringFormat=.000}"
+                                    Header="Pct" />
+                <DataGridTextColumn x:Name="StandingsSpacerColumn08"
+                                    HeaderStyle="{StaticResource HeaderStyle}"
+                                    Width="1" />
+                <DataGridTextColumn x:Name="StandingsPointsForColumn"
+                                    Binding="{Binding PointsFor}"
+                                    Header="PF" />
+				<DataGridTextColumn x:Name="StandingsPointsAgainstColumn"
+                                    Binding="{Binding PointsAgainst}"
+                                    Header="PA" />
+                <DataGridTextColumn x:Name="StandingsAveragePointsForColumn"
+                                    Binding="{Binding AvgPointsFor, StringFormat=N1}"
+                                    Header="AvgPF" />
+                <DataGridTextColumn x:Name="StandingsAveragePointsAgainstColumn"
+                                    Binding="{Binding AvgPointsAgainst, StringFormat=N1}"
+                                    Header="AvgPA" />
+            </DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+</UserControl>

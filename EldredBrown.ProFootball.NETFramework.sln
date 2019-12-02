@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EldredBrown.ProFootball.AspNet.MvcWebApp", "EldredBrown.ProFootball.AspNet.MvcWebApp\EldredBrown.ProFootball.AspNet.MvcWebApp.csproj", "{37346ABC-79EC-435D-88EE-4735B976AC4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EldredBrown.ProFootball.AspNet.MvcWebApp.Tests", "EldredBrown.ProFootball.AspNet.MvcWebApp.Tests\EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.csproj", "{AF0D60BF-F499-4075-8270-64C8ECFDA114}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "EldredBrown.ProFootball.Shared", "EldredBrown.ProFootball.Shared\EldredBrown.ProFootball.Shared.shproj", "{2AD6CD89-C6A0-4076-95E7-1DF9BF6C0960}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EldredBrown.ProFootball.Shared.Tests", "EldredBrown.ProFootball.Shared.Tests\EldredBrown.ProFootball.Shared.Tests.csproj", "{E8DD7FEA-FFAB-4F8A-97BE-66D7552508AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EldredBrown.ProFootball.WpfApp", "EldredBrown.ProFootball.WpfApp\EldredBrown.ProFootball.WpfApp.csproj", "{B9EC30A4-3DE3-4887-8E42-9CEF125DE664}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EldredBrown.ProFootball.WpfApp.Tests", "EldredBrown.ProFootball.WpfApp.Tests\EldredBrown.ProFootball.WpfApp.Tests.csproj", "{8E3FB96D-FC9A-479B-B184-FCD9F16FD18B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37346ABC-79EC-435D-88EE-4735B976AC4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37346ABC-79EC-435D-88EE-4735B976AC4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37346ABC-79EC-435D-88EE-4735B976AC4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37346ABC-79EC-435D-88EE-4735B976AC4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF0D60BF-F499-4075-8270-64C8ECFDA114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF0D60BF-F499-4075-8270-64C8ECFDA114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF0D60BF-F499-4075-8270-64C8ECFDA114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF0D60BF-F499-4075-8270-64C8ECFDA114}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8DD7FEA-FFAB-4F8A-97BE-66D7552508AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8DD7FEA-FFAB-4F8A-97BE-66D7552508AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8DD7FEA-FFAB-4F8A-97BE-66D7552508AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8DD7FEA-FFAB-4F8A-97BE-66D7552508AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9EC30A4-3DE3-4887-8E42-9CEF125DE664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9EC30A4-3DE3-4887-8E42-9CEF125DE664}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9EC30A4-3DE3-4887-8E42-9CEF125DE664}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9EC30A4-3DE3-4887-8E42-9CEF125DE664}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E3FB96D-FC9A-479B-B184-FCD9F16FD18B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E3FB96D-FC9A-479B-B184-FCD9F16FD18B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E3FB96D-FC9A-479B-B184-FCD9F16FD18B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E3FB96D-FC9A-479B-B184-FCD9F16FD18B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A2552CB-8D8D-49F7-9858-0C874CE46D42}
+	EndGlobalSection
+EndGlobal

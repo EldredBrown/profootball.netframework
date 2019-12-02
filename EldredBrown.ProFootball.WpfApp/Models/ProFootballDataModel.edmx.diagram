@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="39976c77d8754635ba1a78e6b729dccc" Name="Diagram1" ShowGrid="false">
+        <EntityTypeShape EntityType="ProFootballModel.Conference" Width="1.5" PointX="5.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProFootballModel.Division" Width="1.5" PointX="7.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProFootballModel.Game" Width="1.5" PointX="13.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProFootballModel.LeagueSeason" Width="1.5" PointX="3.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProFootballModel.Season" Width="2" PointX="0.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProFootballModel.Team" Width="1.625" PointX="10.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProFootballModel.TeamSeason" Width="2.625" PointX="10" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProFootballModel.WeekCount" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="ProFootballModel.FK_Conference_Division" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Conference_TeamSeason" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Season_ConferenceFirstOf" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Season_ConferenceLastOf" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Division_TeamSeason" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Season_DivisionFirstOf" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Season_DivisionLastOf" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Season_Game" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Team_GameGuestOf" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Team_GameHostOf" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Team_GameLost" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Team_GameWon" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Season_LeagueSeason" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Season_TeamSeason" ManuallyRouted="false" />
+        <AssociationConnector Association="ProFootballModel.FK_Team_TeamSeason" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ProFootballModel.League" Width="1.5" PointX="3.25" PointY="0.5" />
+        <AssociationConnector Association="ProFootballModel.FK_League_Conference" />
+        <AssociationConnector Association="ProFootballModel.FK_League_Division" />
+        <AssociationConnector Association="ProFootballModel.FK_League_LeagueSeason" />
+        <AssociationConnector Association="ProFootballModel.FK_League_TeamSeason" />
+        <AssociationConnector Association="ProFootballModel.FK_Season_LeagueFirstOf" />
+        <AssociationConnector Association="ProFootballModel.FK_Season_LeagueLastOf" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,1405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProFootballModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Conferences">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="LongName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="FirstSeasonID" Type="int" Nullable="false" />
+          <Property Name="LastSeasonID" Type="int" />
+        </EntityType>
+        <EntityType Name="Divisions">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="ConferenceName" Type="char" MaxLength="3" />
+          <Property Name="FirstSeasonID" Type="int" Nullable="false" />
+          <Property Name="LastSeasonID" Type="int" />
+        </EntityType>
+        <EntityType Name="Games">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SeasonID" Type="int" Nullable="false" />
+          <Property Name="Week" Type="int" Nullable="false" />
+          <Property Name="GuestName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GuestScore" Type="float" Nullable="false" />
+          <Property Name="HostName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HostScore" Type="float" Nullable="false" />
+          <Property Name="WinnerName" Type="varchar" MaxLength="50" />
+          <Property Name="WinnerScore" Type="float" />
+          <Property Name="LoserName" Type="varchar" MaxLength="50" />
+          <Property Name="LoserScore" Type="float" />
+          <Property Name="IsPlayoffGame" Type="bit" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Leagues">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="LongName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstSeasonID" Type="int" Nullable="false" />
+          <Property Name="LastSeasonID" Type="int" />
+        </EntityType>
+        <EntityType Name="LeagueSeasons">
+          <Key>
+            <PropertyRef Name="LeagueName" />
+            <PropertyRef Name="SeasonID" />
+          </Key>
+          <Property Name="LeagueName" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="SeasonID" Type="int" Nullable="false" />
+          <Property Name="TotalGames" Type="float" Nullable="false" />
+          <Property Name="TotalPoints" Type="float" Nullable="false" />
+          <Property Name="AveragePoints" Type="float" />
+        </EntityType>
+        <EntityType Name="Seasons">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamSeasons">
+          <Key>
+            <PropertyRef Name="TeamName" />
+            <PropertyRef Name="SeasonID" />
+          </Key>
+          <Property Name="TeamName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SeasonID" Type="int" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="ConferenceName" Type="char" MaxLength="3" />
+          <Property Name="DivisionName" Type="varchar" MaxLength="25" />
+          <Property Name="Games" Type="float" Nullable="false" />
+          <Property Name="Wins" Type="float" Nullable="false" />
+          <Property Name="Losses" Type="float" Nullable="false" />
+          <Property Name="Ties" Type="float" Nullable="false" />
+          <Property Name="WinningPercentage" Type="float" />
+          <Property Name="PointsFor" Type="float" Nullable="false" />
+          <Property Name="PointsAgainst" Type="float" Nullable="false" />
+          <Property Name="PythagoreanWins" Type="float" Nullable="false" />
+          <Property Name="PythagoreanLosses" Type="float" Nullable="false" />
+          <Property Name="OffensiveAverage" Type="float" />
+          <Property Name="OffensiveFactor" Type="float" />
+          <Property Name="OffensiveIndex" Type="float" />
+          <Property Name="DefensiveAverage" Type="float" />
+          <Property Name="DefensiveFactor" Type="float" />
+          <Property Name="DefensiveIndex" Type="float" />
+          <Property Name="FinalPythagoreanWinningPercentage" Type="float" />
+        </EntityType>
+        <EntityType Name="WeekCounts">
+          <Key>
+            <PropertyRef Name="SeasonID" />
+          </Key>
+          <Property Name="SeasonID" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Conference_Division">
+          <End Role="Conferences" Type="Self.Conferences" Multiplicity="0..1" />
+          <End Role="Divisions" Type="Self.Divisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conferences">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Divisions">
+              <PropertyRef Name="ConferenceName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conference_TeamSeason">
+          <End Role="Conferences" Type="Self.Conferences" Multiplicity="0..1" />
+          <End Role="TeamSeasons" Type="Self.TeamSeasons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conferences">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="TeamSeasons">
+              <PropertyRef Name="ConferenceName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Division_TeamSeason">
+          <End Role="Divisions" Type="Self.Divisions" Multiplicity="0..1" />
+          <End Role="TeamSeasons" Type="Self.TeamSeasons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Divisions">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="TeamSeasons">
+              <PropertyRef Name="DivisionName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_League_Conference">
+          <End Role="Leagues" Type="Self.Leagues" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Conferences" Type="Self.Conferences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Leagues">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Conferences">
+              <PropertyRef Name="LeagueName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_League_Division">
+          <End Role="Leagues" Type="Self.Leagues" Multiplicity="1" />
+          <End Role="Divisions" Type="Self.Divisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Leagues">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Divisions">
+              <PropertyRef Name="LeagueName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_League_LeagueSeason">
+          <End Role="Leagues" Type="Self.Leagues" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LeagueSeasons" Type="Self.LeagueSeasons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Leagues">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="LeagueSeasons">
+              <PropertyRef Name="LeagueName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_League_TeamSeason">
+          <End Role="Leagues" Type="Self.Leagues" Multiplicity="1" />
+          <End Role="TeamSeasons" Type="Self.TeamSeasons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Leagues">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="TeamSeasons">
+              <PropertyRef Name="LeagueName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_ConferenceFirstOf">
+          <End Role="Seasons" Type="Self.Seasons" Multiplicity="1" />
+          <End Role="Conferences" Type="Self.Conferences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Conferences">
+              <PropertyRef Name="FirstSeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_ConferenceLastOf">
+          <End Role="Seasons" Type="Self.Seasons" Multiplicity="0..1" />
+          <End Role="Conferences" Type="Self.Conferences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Conferences">
+              <PropertyRef Name="LastSeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_DivisionFirstOf">
+          <End Role="Seasons" Type="Self.Seasons" Multiplicity="1" />
+          <End Role="Divisions" Type="Self.Divisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Divisions">
+              <PropertyRef Name="FirstSeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_DivisionLastOf">
+          <End Role="Seasons" Type="Self.Seasons" Multiplicity="0..1" />
+          <End Role="Divisions" Type="Self.Divisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Divisions">
+              <PropertyRef Name="LastSeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_Game">
+          <End Role="Seasons" Type="Self.Seasons" Multiplicity="1" />
+          <End Role="Games" Type="Self.Games" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="SeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_LeagueFirstOf">
+          <End Role="Seasons" Type="Self.Seasons" Multiplicity="1" />
+          <End Role="Leagues" Type="Self.Leagues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Leagues">
+              <PropertyRef Name="FirstSeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_LeagueLastOf">
+          <End Role="Seasons" Type="Self.Seasons" Multiplicity="0..1" />
+          <End Role="Leagues" Type="Self.Leagues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Leagues">
+              <PropertyRef Name="LastSeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_LeagueSeason">
+          <End Role="Seasons" Type="Self.Seasons" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LeagueSeasons" Type="Self.LeagueSeasons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LeagueSeasons">
+              <PropertyRef Name="SeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_TeamSeason">
+          <End Role="Seasons" Type="Self.Seasons" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamSeasons" Type="Self.TeamSeasons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TeamSeasons">
+              <PropertyRef Name="SeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_TeamSeason">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamSeasons" Type="Self.TeamSeasons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="TeamSeasons">
+              <PropertyRef Name="TeamName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetLeagueSeasonTotals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="leagueName" Type="varchar" Mode="In" />
+          <Parameter Name="seasonID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetRankingsDefensive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seasonID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetRankingsOffensive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seasonID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetRankingsTotal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seasonID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetSeasonStandings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seasonID" Type="int" Mode="In" />
+          <Parameter Name="groupByDivision" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="GetSeasonStandingsForConference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seasonID" Type="int" Mode="In" />
+          <Parameter Name="conferenceName" Type="char" Mode="In" />
+        </Function>
+        <Function Name="GetSeasonStandingsForDivision" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seasonID" Type="int" Mode="In" />
+          <Parameter Name="divisionName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetSeasonStandingsForLeague" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seasonID" Type="int" Mode="In" />
+          <Parameter Name="leagueName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetTeamSeasonScheduleAverages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="teamName" Type="varchar" Mode="In" />
+          <Parameter Name="seasonID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetTeamSeasonScheduleProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="teamName" Type="varchar" Mode="In" />
+          <Parameter Name="seasonID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetTeamSeasonScheduleTotals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="teamName" Type="varchar" Mode="In" />
+          <Parameter Name="seasonID" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="ProFootballModelStoreContainer">
+          <EntitySet Name="Conferences" EntityType="Self.Conferences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Divisions" EntityType="Self.Divisions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Games" EntityType="Self.Games" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leagues" EntityType="Self.Leagues" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LeagueSeasons" EntityType="Self.LeagueSeasons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seasons" EntityType="Self.Seasons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamSeasons" EntityType="Self.TeamSeasons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WeekCounts" EntityType="Self.WeekCounts" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Conference_Division" Association="Self.FK_Conference_Division">
+            <End Role="Conferences" EntitySet="Conferences" />
+            <End Role="Divisions" EntitySet="Divisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conference_TeamSeason" Association="Self.FK_Conference_TeamSeason">
+            <End Role="Conferences" EntitySet="Conferences" />
+            <End Role="TeamSeasons" EntitySet="TeamSeasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Division_TeamSeason" Association="Self.FK_Division_TeamSeason">
+            <End Role="Divisions" EntitySet="Divisions" />
+            <End Role="TeamSeasons" EntitySet="TeamSeasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_League_Conference" Association="Self.FK_League_Conference">
+            <End Role="Leagues" EntitySet="Leagues" />
+            <End Role="Conferences" EntitySet="Conferences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_League_Division" Association="Self.FK_League_Division">
+            <End Role="Leagues" EntitySet="Leagues" />
+            <End Role="Divisions" EntitySet="Divisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_League_LeagueSeason" Association="Self.FK_League_LeagueSeason">
+            <End Role="Leagues" EntitySet="Leagues" />
+            <End Role="LeagueSeasons" EntitySet="LeagueSeasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_League_TeamSeason" Association="Self.FK_League_TeamSeason">
+            <End Role="Leagues" EntitySet="Leagues" />
+            <End Role="TeamSeasons" EntitySet="TeamSeasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_ConferenceFirstOf" Association="Self.FK_Season_ConferenceFirstOf">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Conferences" EntitySet="Conferences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_ConferenceLastOf" Association="Self.FK_Season_ConferenceLastOf">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Conferences" EntitySet="Conferences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_DivisionFirstOf" Association="Self.FK_Season_DivisionFirstOf">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Divisions" EntitySet="Divisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_DivisionLastOf" Association="Self.FK_Season_DivisionLastOf">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Divisions" EntitySet="Divisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_Game" Association="Self.FK_Season_Game">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_LeagueFirstOf" Association="Self.FK_Season_LeagueFirstOf">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Leagues" EntitySet="Leagues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_LeagueLastOf" Association="Self.FK_Season_LeagueLastOf">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Leagues" EntitySet="Leagues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_LeagueSeason" Association="Self.FK_Season_LeagueSeason">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="LeagueSeasons" EntitySet="LeagueSeasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_TeamSeason" Association="Self.FK_Season_TeamSeason">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="TeamSeasons" EntitySet="TeamSeasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_TeamSeason" Association="Self.FK_Team_TeamSeason">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="TeamSeasons" EntitySet="TeamSeasons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProFootballModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Conference">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="LongName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LeagueName" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstSeasonID" Type="Int32" Nullable="false" />
+          <Property Name="LastSeasonID" Type="Int32" />
+          <NavigationProperty Name="League" Relationship="Self.FK_League_Conference" FromRole="Conferences" ToRole="Leagues" />
+          <NavigationProperty Name="Divisions" Relationship="Self.FK_Conference_Division" FromRole="Conferences" ToRole="Divisions" />
+          <NavigationProperty Name="FirstSeason" Relationship="Self.FK_Season_ConferenceFirstOf" FromRole="Conferences" ToRole="Seasons" />
+          <NavigationProperty Name="LastSeason" Relationship="Self.FK_Season_ConferenceLastOf" FromRole="Conferences" ToRole="Seasons" />
+          <NavigationProperty Name="TeamSeasons" Relationship="Self.FK_Conference_TeamSeason" FromRole="Conferences" ToRole="TeamSeasons" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LeagueName" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ConferenceName" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="FirstSeasonID" Type="Int32" Nullable="false" />
+          <Property Name="LastSeasonID" Type="Int32" />
+          <NavigationProperty Name="League" Relationship="Self.FK_League_Division" FromRole="Divisions" ToRole="Leagues" />
+          <NavigationProperty Name="Conference" Relationship="Self.FK_Conference_Division" FromRole="Divisions" ToRole="Conferences" />
+          <NavigationProperty Name="FirstSeason" Relationship="Self.FK_Season_DivisionFirstOf" FromRole="Divisions" ToRole="Seasons" />
+          <NavigationProperty Name="LastSeason" Relationship="Self.FK_Season_DivisionLastOf" FromRole="Divisions" ToRole="Seasons" />
+          <NavigationProperty Name="TeamSeasons" Relationship="Self.FK_Division_TeamSeason" FromRole="Divisions" ToRole="TeamSeasons" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeasonID" Type="Int32" Nullable="false" />
+          <Property Name="Week" Type="Int32" Nullable="false" />
+          <Property Name="GuestName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GuestScore" Type="Double" Nullable="false" />
+          <Property Name="HostName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HostScore" Type="Double" Nullable="false" />
+          <Property Name="WinnerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WinnerScore" Type="Double" />
+          <Property Name="LoserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LoserScore" Type="Double" />
+          <Property Name="IsPlayoffGame" Type="Boolean" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Season" Relationship="Self.FK_Season_Game" FromRole="Games" ToRole="Seasons" />
+          <NavigationProperty Name="Guest" Relationship="ProFootballModel.FK_Team_GameGuestOf" FromRole="Games" ToRole="Teams" />
+          <NavigationProperty Name="Host" Relationship="ProFootballModel.FK_Team_GameHostOf" FromRole="Games" ToRole="Teams" />
+          <NavigationProperty Name="Winner" Relationship="ProFootballModel.FK_Team_GameWon" FromRole="Games" ToRole="Teams" />
+          <NavigationProperty Name="Loser" Relationship="ProFootballModel.FK_Team_GameLost" FromRole="Games" ToRole="Teams" />
+        </EntityType>
+        <EntityType Name="League">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LongName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstSeasonID" Type="Int32" Nullable="false" />
+          <Property Name="LastSeasonID" Type="Int32" />
+          <NavigationProperty Name="Conferences" Relationship="Self.FK_League_Conference" FromRole="Leagues" ToRole="Conferences" />
+          <NavigationProperty Name="Divisions" Relationship="Self.FK_League_Division" FromRole="Leagues" ToRole="Divisions" />
+          <NavigationProperty Name="FirstSeason" Relationship="Self.FK_Season_LeagueFirstOf" FromRole="Leagues" ToRole="Seasons" />
+          <NavigationProperty Name="LastSeason" Relationship="Self.FK_Season_LeagueLastOf" FromRole="Leagues" ToRole="Seasons" />
+          <NavigationProperty Name="LeagueSeasons" Relationship="Self.FK_League_LeagueSeason" FromRole="Leagues" ToRole="LeagueSeasons" />
+          <NavigationProperty Name="TeamSeasons" Relationship="Self.FK_League_TeamSeason" FromRole="Leagues" ToRole="TeamSeasons" />
+        </EntityType>
+        <EntityType Name="LeagueSeason">
+          <Key>
+            <PropertyRef Name="LeagueName" />
+            <PropertyRef Name="SeasonID" />
+          </Key>
+          <Property Name="LeagueName" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SeasonID" Type="Int32" Nullable="false" />
+          <Property Name="TotalGames" Type="Double" Nullable="false" />
+          <Property Name="TotalPoints" Type="Double" Nullable="false" />
+          <Property Name="AveragePoints" Type="Double" />
+          <NavigationProperty Name="League" Relationship="Self.FK_League_LeagueSeason" FromRole="LeagueSeasons" ToRole="Leagues" />
+          <NavigationProperty Name="Season" Relationship="Self.FK_Season_LeagueSeason" FromRole="LeagueSeasons" ToRole="Seasons" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LeaguesFirstSeasonOf" Relationship="Self.FK_Season_LeagueFirstOf" FromRole="Seasons" ToRole="Leagues" />
+          <NavigationProperty Name="LeaguesLastSeasonOf" Relationship="Self.FK_Season_LeagueLastOf" FromRole="Seasons" ToRole="Leagues" />
+          <NavigationProperty Name="ConferencesFirstSeasonOf" Relationship="Self.FK_Season_ConferenceFirstOf" FromRole="Seasons" ToRole="Conferences" />
+          <NavigationProperty Name="ConferencesLastSeasonOf" Relationship="Self.FK_Season_ConferenceLastOf" FromRole="Seasons" ToRole="Conferences" />
+          <NavigationProperty Name="DivisionsFirstSeasonOf" Relationship="Self.FK_Season_DivisionFirstOf" FromRole="Seasons" ToRole="Divisions" />
+          <NavigationProperty Name="DivisionsLastSeasonOf" Relationship="Self.FK_Season_DivisionLastOf" FromRole="Seasons" ToRole="Divisions" />
+          <NavigationProperty Name="Games" Relationship="Self.FK_Season_Game" FromRole="Seasons" ToRole="Games" />
+          <NavigationProperty Name="LeagueSeasons" Relationship="Self.FK_Season_LeagueSeason" FromRole="Seasons" ToRole="LeagueSeasons" />
+          <NavigationProperty Name="TeamSeasons" Relationship="Self.FK_Season_TeamSeason" FromRole="Seasons" ToRole="TeamSeasons" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="GamesGuestOf" Relationship="ProFootballModel.FK_Team_GameGuestOf" FromRole="Teams" ToRole="Games" />
+          <NavigationProperty Name="GamesHostOf" Relationship="ProFootballModel.FK_Team_GameHostOf" FromRole="Teams" ToRole="Games" />
+          <NavigationProperty Name="GamesWon" Relationship="ProFootballModel.FK_Team_GameWon" FromRole="Teams" ToRole="Games" />
+          <NavigationProperty Name="GamesLost" Relationship="ProFootballModel.FK_Team_GameLost" FromRole="Teams" ToRole="Games" />
+          <NavigationProperty Name="TeamSeasons" Relationship="Self.FK_Team_TeamSeason" FromRole="Teams" ToRole="TeamSeasons" />
+        </EntityType>
+        <EntityType Name="TeamSeason">
+          <Key>
+            <PropertyRef Name="TeamName" />
+            <PropertyRef Name="SeasonID" />
+          </Key>
+          <Property Name="TeamName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SeasonID" Type="Int32" Nullable="false" />
+          <Property Name="LeagueName" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ConferenceName" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="DivisionName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Games" Type="Double" Nullable="false" />
+          <Property Name="Wins" Type="Double" Nullable="false" />
+          <Property Name="Losses" Type="Double" Nullable="false" />
+          <Property Name="Ties" Type="Double" Nullable="false" />
+          <Property Name="WinningPercentage" Type="Double" />
+          <Property Name="PointsFor" Type="Double" Nullable="false" />
+          <Property Name="PointsAgainst" Type="Double" Nullable="false" />
+          <Property Name="PythagoreanWins" Type="Double" Nullable="false" />
+          <Property Name="PythagoreanLosses" Type="Double" Nullable="false" />
+          <Property Name="OffensiveAverage" Type="Double" />
+          <Property Name="OffensiveFactor" Type="Double" />
+          <Property Name="OffensiveIndex" Type="Double" />
+          <Property Name="DefensiveAverage" Type="Double" />
+          <Property Name="DefensiveFactor" Type="Double" />
+          <Property Name="DefensiveIndex" Type="Double" />
+          <Property Name="FinalPythagoreanWinningPercentage" Type="Double" />
+          <NavigationProperty Name="Conference" Relationship="Self.FK_Conference_TeamSeason" FromRole="TeamSeasons" ToRole="Conferences" />
+          <NavigationProperty Name="Division" Relationship="Self.FK_Division_TeamSeason" FromRole="TeamSeasons" ToRole="Divisions" />
+          <NavigationProperty Name="League" Relationship="Self.FK_League_TeamSeason" FromRole="TeamSeasons" ToRole="Leagues" />
+          <NavigationProperty Name="Season" Relationship="Self.FK_Season_TeamSeason" FromRole="TeamSeasons" ToRole="Seasons" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_Team_TeamSeason" FromRole="TeamSeasons" ToRole="Teams" />
+        </EntityType>
+        <EntityType Name="WeekCount">
+          <Key>
+            <PropertyRef Name="SeasonID" />
+          </Key>
+          <Property Name="SeasonID" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Conference_Division">
+          <End Role="Conferences" Type="Self.Conference" Multiplicity="0..1" />
+          <End Role="Divisions" Type="Self.Division" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conferences">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Divisions">
+              <PropertyRef Name="ConferenceName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conference_TeamSeason">
+          <End Role="Conferences" Type="Self.Conference" Multiplicity="0..1" />
+          <End Role="TeamSeasons" Type="Self.TeamSeason" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conferences">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="TeamSeasons">
+              <PropertyRef Name="ConferenceName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_League_Conference">
+          <End Role="Leagues" Type="Self.League" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Conferences" Type="Self.Conference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Leagues">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Conferences">
+              <PropertyRef Name="LeagueName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_ConferenceFirstOf">
+          <End Role="Seasons" Type="Self.Season" Multiplicity="1" />
+          <End Role="Conferences" Type="Self.Conference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Conferences">
+              <PropertyRef Name="FirstSeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_ConferenceLastOf">
+          <End Role="Seasons" Type="Self.Season" Multiplicity="0..1" />
+          <End Role="Conferences" Type="Self.Conference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Conferences">
+              <PropertyRef Name="LastSeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Division_TeamSeason">
+          <End Role="Divisions" Type="Self.Division" Multiplicity="0..1" />
+          <End Role="TeamSeasons" Type="Self.TeamSeason" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Divisions">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="TeamSeasons">
+              <PropertyRef Name="DivisionName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_League_Division">
+          <End Role="Leagues" Type="Self.League" Multiplicity="1" />
+          <End Role="Divisions" Type="Self.Division" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Leagues">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Divisions">
+              <PropertyRef Name="LeagueName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_DivisionFirstOf">
+          <End Role="Seasons" Type="Self.Season" Multiplicity="1" />
+          <End Role="Divisions" Type="Self.Division" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Divisions">
+              <PropertyRef Name="FirstSeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_DivisionLastOf">
+          <End Role="Seasons" Type="Self.Season" Multiplicity="0..1" />
+          <End Role="Divisions" Type="Self.Division" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Divisions">
+              <PropertyRef Name="LastSeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_Game">
+          <End Role="Seasons" Type="Self.Season" Multiplicity="1" />
+          <End Role="Games" Type="Self.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="SeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_League_LeagueSeason">
+          <End Role="Leagues" Type="Self.League" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LeagueSeasons" Type="Self.LeagueSeason" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Leagues">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="LeagueSeasons">
+              <PropertyRef Name="LeagueName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_League_TeamSeason">
+          <End Role="Leagues" Type="Self.League" Multiplicity="1" />
+          <End Role="TeamSeasons" Type="Self.TeamSeason" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Leagues">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="TeamSeasons">
+              <PropertyRef Name="LeagueName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_LeagueFirstOf">
+          <End Role="Seasons" Type="Self.Season" Multiplicity="1" />
+          <End Role="Leagues" Type="Self.League" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Leagues">
+              <PropertyRef Name="FirstSeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_LeagueLastOf">
+          <End Role="Seasons" Type="Self.Season" Multiplicity="0..1" />
+          <End Role="Leagues" Type="Self.League" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Leagues">
+              <PropertyRef Name="LastSeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_LeagueSeason">
+          <End Role="Seasons" Type="Self.Season" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LeagueSeasons" Type="Self.LeagueSeason" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LeagueSeasons">
+              <PropertyRef Name="SeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Season_TeamSeason">
+          <End Role="Seasons" Type="Self.Season" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamSeasons" Type="Self.TeamSeason" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TeamSeasons">
+              <PropertyRef Name="SeasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_TeamSeason">
+          <End Role="Teams" Type="Self.Team" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeamSeasons" Type="Self.TeamSeason" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="TeamSeasons">
+              <PropertyRef Name="TeamName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProFootballEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Conferences" EntityType="Self.Conference" />
+          <EntitySet Name="Divisions" EntityType="Self.Division" />
+          <EntitySet Name="Games" EntityType="Self.Game" />
+          <EntitySet Name="Leagues" EntityType="Self.League" />
+          <EntitySet Name="LeagueSeasons" EntityType="Self.LeagueSeason" />
+          <EntitySet Name="Seasons" EntityType="Self.Season" />
+          <EntitySet Name="Teams" EntityType="Self.Team" />
+          <EntitySet Name="TeamSeasons" EntityType="Self.TeamSeason" />
+          <EntitySet Name="WeekCounts" EntityType="Self.WeekCount" />
+          <AssociationSet Name="FK_Conference_Division" Association="Self.FK_Conference_Division">
+            <End Role="Conferences" EntitySet="Conferences" />
+            <End Role="Divisions" EntitySet="Divisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conference_TeamSeason" Association="Self.FK_Conference_TeamSeason">
+            <End Role="Conferences" EntitySet="Conferences" />
+            <End Role="TeamSeasons" EntitySet="TeamSeasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_League_Conference" Association="Self.FK_League_Conference">
+            <End Role="Leagues" EntitySet="Leagues" />
+            <End Role="Conferences" EntitySet="Conferences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_ConferenceFirstOf" Association="Self.FK_Season_ConferenceFirstOf">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Conferences" EntitySet="Conferences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_ConferenceLastOf" Association="Self.FK_Season_ConferenceLastOf">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Conferences" EntitySet="Conferences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Division_TeamSeason" Association="Self.FK_Division_TeamSeason">
+            <End Role="Divisions" EntitySet="Divisions" />
+            <End Role="TeamSeasons" EntitySet="TeamSeasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_League_Division" Association="Self.FK_League_Division">
+            <End Role="Leagues" EntitySet="Leagues" />
+            <End Role="Divisions" EntitySet="Divisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_DivisionFirstOf" Association="Self.FK_Season_DivisionFirstOf">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Divisions" EntitySet="Divisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_DivisionLastOf" Association="Self.FK_Season_DivisionLastOf">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Divisions" EntitySet="Divisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_Game" Association="Self.FK_Season_Game">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_League_LeagueSeason" Association="Self.FK_League_LeagueSeason">
+            <End Role="Leagues" EntitySet="Leagues" />
+            <End Role="LeagueSeasons" EntitySet="LeagueSeasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_League_TeamSeason" Association="Self.FK_League_TeamSeason">
+            <End Role="Leagues" EntitySet="Leagues" />
+            <End Role="TeamSeasons" EntitySet="TeamSeasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_LeagueFirstOf" Association="Self.FK_Season_LeagueFirstOf">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Leagues" EntitySet="Leagues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_LeagueLastOf" Association="Self.FK_Season_LeagueLastOf">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="Leagues" EntitySet="Leagues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_LeagueSeason" Association="Self.FK_Season_LeagueSeason">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="LeagueSeasons" EntitySet="LeagueSeasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Season_TeamSeason" Association="Self.FK_Season_TeamSeason">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="TeamSeasons" EntitySet="TeamSeasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_TeamSeason" Association="Self.FK_Team_TeamSeason">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="TeamSeasons" EntitySet="TeamSeasons" />
+          </AssociationSet>
+          <FunctionImport Name="GetLeagueSeasonTotals" ReturnType="Collection(ProFootballModel.GetLeagueSeasonTotals_Result)">
+            <Parameter Name="leagueName" Mode="In" Type="String" />
+            <Parameter Name="seasonID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetRankingsDefensive" ReturnType="Collection(ProFootballModel.GetRankingsDefensive_Result)">
+            <Parameter Name="seasonID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetRankingsOffensive" ReturnType="Collection(ProFootballModel.GetRankingsOffensive_Result)">
+            <Parameter Name="seasonID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetRankingsTotal" ReturnType="Collection(ProFootballModel.GetRankingsTotal_Result)">
+            <Parameter Name="seasonID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetSeasonStandings" ReturnType="Collection(ProFootballModel.GetSeasonStandings_Result)">
+            <Parameter Name="seasonID" Mode="In" Type="Int32" />
+            <Parameter Name="groupByDivision" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="GetSeasonStandingsForConference" ReturnType="Collection(ProFootballModel.GetSeasonStandingsForConference_Result)">
+            <Parameter Name="seasonID" Mode="In" Type="Int32" />
+            <Parameter Name="conferenceName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetSeasonStandingsForDivision" ReturnType="Collection(ProFootballModel.GetSeasonStandingsForDivision_Result)">
+            <Parameter Name="seasonID" Mode="In" Type="Int32" />
+            <Parameter Name="divisionName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetSeasonStandingsForLeague" ReturnType="Collection(ProFootballModel.GetSeasonStandingsForLeague_Result)">
+            <Parameter Name="seasonID" Mode="In" Type="Int32" />
+            <Parameter Name="leagueName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTeamSeasonScheduleAverages" ReturnType="Collection(ProFootballModel.GetTeamSeasonScheduleAverages_Result)">
+            <Parameter Name="teamName" Mode="In" Type="String" />
+            <Parameter Name="seasonID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetTeamSeasonScheduleProfile" ReturnType="Collection(ProFootballModel.GetTeamSeasonScheduleProfile_Result)">
+            <Parameter Name="teamName" Mode="In" Type="String" />
+            <Parameter Name="seasonID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetTeamSeasonScheduleTotals" ReturnType="Collection(ProFootballModel.GetTeamSeasonScheduleTotals_Result)">
+            <Parameter Name="teamName" Mode="In" Type="String" />
+            <Parameter Name="seasonID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <AssociationSet Name="FK_Team_GameGuestOf" Association="ProFootballModel.FK_Team_GameGuestOf">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_GameHostOf" Association="ProFootballModel.FK_Team_GameHostOf">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_GameWon" Association="ProFootballModel.FK_Team_GameWon">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_GameLost" Association="ProFootballModel.FK_Team_GameLost">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="GetLeagueSeasonTotals_Result">
+          <Property Type="Double" Name="TotalGames" Nullable="true" />
+          <Property Type="Double" Name="TotalPoints" Nullable="true" />
+          <Property Type="Double" Name="AveragePoints" Nullable="true" />
+          <Property Type="Double" Name="WeekCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetRankingsDefensive_Result">
+          <Property Type="String" Name="Team" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Wins" Nullable="false" />
+          <Property Type="Double" Name="Losses" Nullable="false" />
+          <Property Type="Double" Name="Ties" Nullable="false" />
+          <Property Type="Double" Name="DefensiveAverage" Nullable="true" />
+          <Property Type="Double" Name="DefensiveFactor" Nullable="true" />
+          <Property Type="Double" Name="DefensiveIndex" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetRankingsOffensive_Result">
+          <Property Type="String" Name="Team" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Wins" Nullable="false" />
+          <Property Type="Double" Name="Losses" Nullable="false" />
+          <Property Type="Double" Name="Ties" Nullable="false" />
+          <Property Type="Double" Name="OffensiveAverage" Nullable="true" />
+          <Property Type="Double" Name="OffensiveFactor" Nullable="true" />
+          <Property Type="Double" Name="OffensiveIndex" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetRankingsTotal_Result">
+          <Property Type="String" Name="Team" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Wins" Nullable="false" />
+          <Property Type="Double" Name="Losses" Nullable="false" />
+          <Property Type="Double" Name="Ties" Nullable="false" />
+          <Property Type="Double" Name="OffensiveAverage" Nullable="true" />
+          <Property Type="Double" Name="OffensiveFactor" Nullable="true" />
+          <Property Type="Double" Name="OffensiveIndex" Nullable="true" />
+          <Property Type="Double" Name="DefensiveAverage" Nullable="true" />
+          <Property Type="Double" Name="DefensiveFactor" Nullable="true" />
+          <Property Type="Double" Name="DefensiveIndex" Nullable="true" />
+          <Property Type="Double" Name="FinalPythagoreanWinningPercentage" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetSeasonStandings_Result">
+          <Property Type="String" Name="Team" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Conference" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="25" />
+          <Property Type="Double" Name="Wins" Nullable="false" />
+          <Property Type="Double" Name="Losses" Nullable="false" />
+          <Property Type="Double" Name="Ties" Nullable="false" />
+          <Property Type="Double" Name="WinningPercentage" Nullable="true" />
+          <Property Type="Double" Name="PointsFor" Nullable="false" />
+          <Property Type="Double" Name="PointsAgainst" Nullable="false" />
+          <Property Type="Double" Name="AvgPointsFor" Nullable="true" />
+          <Property Type="Double" Name="AvgPointsAgainst" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetSeasonStandingsForConference_Result">
+          <Property Type="String" Name="Team" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Wins" Nullable="false" />
+          <Property Type="Double" Name="Losses" Nullable="false" />
+          <Property Type="Double" Name="Ties" Nullable="false" />
+          <Property Type="Double" Name="WinningPercentage" Nullable="true" />
+          <Property Type="Double" Name="PointsFor" Nullable="false" />
+          <Property Type="Double" Name="PointsAgainst" Nullable="false" />
+          <Property Type="Double" Name="AvgPointsFor" Nullable="true" />
+          <Property Type="Double" Name="AvgPointsAgainst" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetSeasonStandingsForDivision_Result">
+          <Property Type="String" Name="Team" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Wins" Nullable="false" />
+          <Property Type="Double" Name="Losses" Nullable="false" />
+          <Property Type="Double" Name="Ties" Nullable="false" />
+          <Property Type="Double" Name="WinningPercentage" Nullable="true" />
+          <Property Type="Double" Name="PointsFor" Nullable="false" />
+          <Property Type="Double" Name="PointsAgainst" Nullable="false" />
+          <Property Type="Double" Name="AvgPointsFor" Nullable="true" />
+          <Property Type="Double" Name="AvgPointsAgainst" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetSeasonStandingsForLeague_Result">
+          <Property Type="String" Name="Team" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Wins" Nullable="false" />
+          <Property Type="Double" Name="Losses" Nullable="false" />
+          <Property Type="Double" Name="Ties" Nullable="false" />
+          <Property Type="Double" Name="WinningPercentage" Nullable="true" />
+          <Property Type="Double" Name="PointsFor" Nullable="false" />
+          <Property Type="Double" Name="PointsAgainst" Nullable="false" />
+          <Property Type="Double" Name="AvgPointsFor" Nullable="true" />
+          <Property Type="Double" Name="AvgPointsAgainst" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetTeamSeasonScheduleAverages_Result">
+          <Property Type="Double" Name="PointsFor" Nullable="true" />
+          <Property Type="Double" Name="PointsAgainst" Nullable="true" />
+          <Property Type="Double" Name="SchedulePointsFor" Nullable="true" />
+          <Property Type="Double" Name="SchedulePointsAgainst" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetTeamSeasonScheduleProfile_Result">
+          <Property Type="String" Name="Opponent" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="GamePointsFor" Nullable="true" />
+          <Property Type="Double" Name="GamePointsAgainst" Nullable="true" />
+          <Property Type="Double" Name="OpponentWins" Nullable="true" />
+          <Property Type="Double" Name="OpponentLosses" Nullable="true" />
+          <Property Type="Double" Name="OpponentTies" Nullable="true" />
+          <Property Type="Double" Name="OpponentWinningPercentage" Nullable="true" />
+          <Property Type="Double" Name="OpponentWeightedGames" Nullable="true" />
+          <Property Type="Double" Name="OpponentWeightedPointsFor" Nullable="true" />
+          <Property Type="Double" Name="OpponentWeightedPointsAgainst" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetTeamSeasonScheduleTotals_Result">
+          <Property Type="Double" Name="Games" Nullable="true" />
+          <Property Type="Double" Name="PointsFor" Nullable="true" />
+          <Property Type="Double" Name="PointsAgainst" Nullable="true" />
+          <Property Type="Double" Name="ScheduleWins" Nullable="true" />
+          <Property Type="Double" Name="ScheduleLosses" Nullable="true" />
+          <Property Type="Double" Name="ScheduleTies" Nullable="true" />
+          <Property Type="Double" Name="ScheduleWinningPercentage" Nullable="true" />
+          <Property Type="Double" Name="ScheduleGames" Nullable="true" />
+          <Property Type="Double" Name="SchedulePointsFor" Nullable="true" />
+          <Property Type="Double" Name="SchedulePointsAgainst" Nullable="true" />
+        </ComplexType>
+        <Association Name="FK_Team_GameGuestOf">
+          <End Type="ProFootballModel.Team" Role="Teams" Multiplicity="1" />
+          <End Type="ProFootballModel.Game" Role="Games" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="GuestName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_GameHostOf">
+          <End Type="ProFootballModel.Team" Role="Teams" Multiplicity="1" />
+          <End Type="ProFootballModel.Game" Role="Games" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="HostName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_GameWon">
+          <End Type="ProFootballModel.Team" Role="Teams" Multiplicity="0..1" />
+          <End Type="ProFootballModel.Game" Role="Games" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="WinnerName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_GameLost">
+          <End Type="ProFootballModel.Team" Role="Teams" Multiplicity="0..1" />
+          <End Type="ProFootballModel.Game" Role="Games" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="LoserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProFootballModelStoreContainer" CdmEntityContainer="ProFootballEntities">
+          <EntitySetMapping Name="Conferences">
+            <EntityTypeMapping TypeName="ProFootballModel.Conference">
+              <MappingFragment StoreEntitySet="Conferences">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LongName" ColumnName="LongName" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="FirstSeasonID" ColumnName="FirstSeasonID" />
+                <ScalarProperty Name="LastSeasonID" ColumnName="LastSeasonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Divisions">
+            <EntityTypeMapping TypeName="ProFootballModel.Division">
+              <MappingFragment StoreEntitySet="Divisions">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="ConferenceName" ColumnName="ConferenceName" />
+                <ScalarProperty Name="FirstSeasonID" ColumnName="FirstSeasonID" />
+                <ScalarProperty Name="LastSeasonID" ColumnName="LastSeasonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Games">
+            <EntityTypeMapping TypeName="ProFootballModel.Game">
+              <MappingFragment StoreEntitySet="Games">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SeasonID" ColumnName="SeasonID" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="GuestName" ColumnName="GuestName" />
+                <ScalarProperty Name="GuestScore" ColumnName="GuestScore" />
+                <ScalarProperty Name="HostName" ColumnName="HostName" />
+                <ScalarProperty Name="HostScore" ColumnName="HostScore" />
+                <ScalarProperty Name="WinnerName" ColumnName="WinnerName" />
+                <ScalarProperty Name="WinnerScore" ColumnName="WinnerScore" />
+                <ScalarProperty Name="LoserName" ColumnName="LoserName" />
+                <ScalarProperty Name="LoserScore" ColumnName="LoserScore" />
+                <ScalarProperty Name="IsPlayoffGame" ColumnName="IsPlayoffGame" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leagues">
+            <EntityTypeMapping TypeName="ProFootballModel.League">
+              <MappingFragment StoreEntitySet="Leagues">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LongName" ColumnName="LongName" />
+                <ScalarProperty Name="FirstSeasonID" ColumnName="FirstSeasonID" />
+                <ScalarProperty Name="LastSeasonID" ColumnName="LastSeasonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LeagueSeasons">
+            <EntityTypeMapping TypeName="ProFootballModel.LeagueSeason">
+              <MappingFragment StoreEntitySet="LeagueSeasons">
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="SeasonID" ColumnName="SeasonID" />
+                <ScalarProperty Name="TotalGames" ColumnName="TotalGames" />
+                <ScalarProperty Name="TotalPoints" ColumnName="TotalPoints" />
+                <ScalarProperty Name="AveragePoints" ColumnName="AveragePoints" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seasons">
+            <EntityTypeMapping TypeName="ProFootballModel.Season">
+              <MappingFragment StoreEntitySet="Seasons">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="ProFootballModel.Team">
+              <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamSeasons">
+            <EntityTypeMapping TypeName="ProFootballModel.TeamSeason">
+              <MappingFragment StoreEntitySet="TeamSeasons">
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="SeasonID" ColumnName="SeasonID" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="ConferenceName" ColumnName="ConferenceName" />
+                <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
+                <ScalarProperty Name="Games" ColumnName="Games" />
+                <ScalarProperty Name="Wins" ColumnName="Wins" />
+                <ScalarProperty Name="Losses" ColumnName="Losses" />
+                <ScalarProperty Name="Ties" ColumnName="Ties" />
+                <ScalarProperty Name="WinningPercentage" ColumnName="WinningPercentage" />
+                <ScalarProperty Name="PointsFor" ColumnName="PointsFor" />
+                <ScalarProperty Name="PointsAgainst" ColumnName="PointsAgainst" />
+                <ScalarProperty Name="PythagoreanWins" ColumnName="PythagoreanWins" />
+                <ScalarProperty Name="PythagoreanLosses" ColumnName="PythagoreanLosses" />
+                <ScalarProperty Name="OffensiveAverage" ColumnName="OffensiveAverage" />
+                <ScalarProperty Name="OffensiveFactor" ColumnName="OffensiveFactor" />
+                <ScalarProperty Name="OffensiveIndex" ColumnName="OffensiveIndex" />
+                <ScalarProperty Name="DefensiveAverage" ColumnName="DefensiveAverage" />
+                <ScalarProperty Name="DefensiveFactor" ColumnName="DefensiveFactor" />
+                <ScalarProperty Name="DefensiveIndex" ColumnName="DefensiveIndex" />
+                <ScalarProperty Name="FinalPythagoreanWinningPercentage" ColumnName="FinalPythagoreanWinningPercentage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeekCounts">
+            <EntityTypeMapping TypeName="ProFootballModel.WeekCount">
+              <MappingFragment StoreEntitySet="WeekCounts">
+                <ScalarProperty Name="SeasonID" ColumnName="SeasonID" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetLeagueSeasonTotals" FunctionName="ProFootballModel.Store.GetLeagueSeasonTotals">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProFootballModel.GetLeagueSeasonTotals_Result">
+                <ScalarProperty Name="TotalGames" ColumnName="TotalGames" />
+                <ScalarProperty Name="TotalPoints" ColumnName="TotalPoints" />
+                <ScalarProperty Name="AveragePoints" ColumnName="AveragePoints" />
+                <ScalarProperty Name="WeekCount" ColumnName="WeekCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetRankingsDefensive" FunctionName="ProFootballModel.Store.GetRankingsDefensive">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProFootballModel.GetRankingsDefensive_Result">
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="Wins" ColumnName="Wins" />
+                <ScalarProperty Name="Losses" ColumnName="Losses" />
+                <ScalarProperty Name="Ties" ColumnName="Ties" />
+                <ScalarProperty Name="DefensiveAverage" ColumnName="DefensiveAverage" />
+                <ScalarProperty Name="DefensiveFactor" ColumnName="DefensiveFactor" />
+                <ScalarProperty Name="DefensiveIndex" ColumnName="DefensiveIndex" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetRankingsOffensive" FunctionName="ProFootballModel.Store.GetRankingsOffensive">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProFootballModel.GetRankingsOffensive_Result">
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="Wins" ColumnName="Wins" />
+                <ScalarProperty Name="Losses" ColumnName="Losses" />
+                <ScalarProperty Name="Ties" ColumnName="Ties" />
+                <ScalarProperty Name="OffensiveAverage" ColumnName="OffensiveAverage" />
+                <ScalarProperty Name="OffensiveFactor" ColumnName="OffensiveFactor" />
+                <ScalarProperty Name="OffensiveIndex" ColumnName="OffensiveIndex" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetRankingsTotal" FunctionName="ProFootballModel.Store.GetRankingsTotal">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProFootballModel.GetRankingsTotal_Result">
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="Wins" ColumnName="Wins" />
+                <ScalarProperty Name="Losses" ColumnName="Losses" />
+                <ScalarProperty Name="Ties" ColumnName="Ties" />
+                <ScalarProperty Name="OffensiveAverage" ColumnName="OffensiveAverage" />
+                <ScalarProperty Name="OffensiveFactor" ColumnName="OffensiveFactor" />
+                <ScalarProperty Name="OffensiveIndex" ColumnName="OffensiveIndex" />
+                <ScalarProperty Name="DefensiveAverage" ColumnName="DefensiveAverage" />
+                <ScalarProperty Name="DefensiveFactor" ColumnName="DefensiveFactor" />
+                <ScalarProperty Name="DefensiveIndex" ColumnName="DefensiveIndex" />
+                <ScalarProperty Name="FinalPythagoreanWinningPercentage" ColumnName="FinalPythagoreanWinningPercentage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSeasonStandings" FunctionName="ProFootballModel.Store.GetSeasonStandings">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProFootballModel.GetSeasonStandings_Result">
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="Conference" ColumnName="Conference" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Wins" ColumnName="Wins" />
+                <ScalarProperty Name="Losses" ColumnName="Losses" />
+                <ScalarProperty Name="Ties" ColumnName="Ties" />
+                <ScalarProperty Name="WinningPercentage" ColumnName="WinningPercentage" />
+                <ScalarProperty Name="PointsFor" ColumnName="PointsFor" />
+                <ScalarProperty Name="PointsAgainst" ColumnName="PointsAgainst" />
+                <ScalarProperty Name="AvgPointsFor" ColumnName="AvgPointsFor" />
+                <ScalarProperty Name="AvgPointsAgainst" ColumnName="AvgPointsAgainst" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSeasonStandingsForConference" FunctionName="ProFootballModel.Store.GetSeasonStandingsForConference">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProFootballModel.GetSeasonStandingsForConference_Result">
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="Wins" ColumnName="Wins" />
+                <ScalarProperty Name="Losses" ColumnName="Losses" />
+                <ScalarProperty Name="Ties" ColumnName="Ties" />
+                <ScalarProperty Name="WinningPercentage" ColumnName="WinningPercentage" />
+                <ScalarProperty Name="PointsFor" ColumnName="PointsFor" />
+                <ScalarProperty Name="PointsAgainst" ColumnName="PointsAgainst" />
+                <ScalarProperty Name="AvgPointsFor" ColumnName="AvgPointsFor" />
+                <ScalarProperty Name="AvgPointsAgainst" ColumnName="AvgPointsAgainst" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSeasonStandingsForDivision" FunctionName="ProFootballModel.Store.GetSeasonStandingsForDivision">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProFootballModel.GetSeasonStandingsForDivision_Result">
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="Wins" ColumnName="Wins" />
+                <ScalarProperty Name="Losses" ColumnName="Losses" />
+                <ScalarProperty Name="Ties" ColumnName="Ties" />
+                <ScalarProperty Name="WinningPercentage" ColumnName="WinningPercentage" />
+                <ScalarProperty Name="PointsFor" ColumnName="PointsFor" />
+                <ScalarProperty Name="PointsAgainst" ColumnName="PointsAgainst" />
+                <ScalarProperty Name="AvgPointsFor" ColumnName="AvgPointsFor" />
+                <ScalarProperty Name="AvgPointsAgainst" ColumnName="AvgPointsAgainst" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSeasonStandingsForLeague" FunctionName="ProFootballModel.Store.GetSeasonStandingsForLeague">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProFootballModel.GetSeasonStandingsForLeague_Result">
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="Wins" ColumnName="Wins" />
+                <ScalarProperty Name="Losses" ColumnName="Losses" />
+                <ScalarProperty Name="Ties" ColumnName="Ties" />
+                <ScalarProperty Name="WinningPercentage" ColumnName="WinningPercentage" />
+                <ScalarProperty Name="PointsFor" ColumnName="PointsFor" />
+                <ScalarProperty Name="PointsAgainst" ColumnName="PointsAgainst" />
+                <ScalarProperty Name="AvgPointsFor" ColumnName="AvgPointsFor" />
+                <ScalarProperty Name="AvgPointsAgainst" ColumnName="AvgPointsAgainst" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTeamSeasonScheduleAverages" FunctionName="ProFootballModel.Store.GetTeamSeasonScheduleAverages">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProFootballModel.GetTeamSeasonScheduleAverages_Result">
+                <ScalarProperty Name="PointsFor" ColumnName="PointsFor" />
+                <ScalarProperty Name="PointsAgainst" ColumnName="PointsAgainst" />
+                <ScalarProperty Name="SchedulePointsFor" ColumnName="SchedulePointsFor" />
+                <ScalarProperty Name="SchedulePointsAgainst" ColumnName="SchedulePointsAgainst" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTeamSeasonScheduleProfile" FunctionName="ProFootballModel.Store.GetTeamSeasonScheduleProfile">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProFootballModel.GetTeamSeasonScheduleProfile_Result">
+                <ScalarProperty Name="Opponent" ColumnName="Opponent" />
+                <ScalarProperty Name="GamePointsFor" ColumnName="GamePointsFor" />
+                <ScalarProperty Name="GamePointsAgainst" ColumnName="GamePointsAgainst" />
+                <ScalarProperty Name="OpponentWins" ColumnName="OpponentWins" />
+                <ScalarProperty Name="OpponentLosses" ColumnName="OpponentLosses" />
+                <ScalarProperty Name="OpponentTies" ColumnName="OpponentTies" />
+                <ScalarProperty Name="OpponentWinningPercentage" ColumnName="OpponentWinningPercentage" />
+                <ScalarProperty Name="OpponentWeightedGames" ColumnName="OpponentWeightedGames" />
+                <ScalarProperty Name="OpponentWeightedPointsFor" ColumnName="OpponentWeightedPointsFor" />
+                <ScalarProperty Name="OpponentWeightedPointsAgainst" ColumnName="OpponentWeightedPointsAgainst" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTeamSeasonScheduleTotals" FunctionName="ProFootballModel.Store.GetTeamSeasonScheduleTotals">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProFootballModel.GetTeamSeasonScheduleTotals_Result">
+                <ScalarProperty Name="Games" ColumnName="Games" />
+                <ScalarProperty Name="PointsFor" ColumnName="PointsFor" />
+                <ScalarProperty Name="PointsAgainst" ColumnName="PointsAgainst" />
+                <ScalarProperty Name="ScheduleWins" ColumnName="ScheduleWins" />
+                <ScalarProperty Name="ScheduleLosses" ColumnName="ScheduleLosses" />
+                <ScalarProperty Name="ScheduleTies" ColumnName="ScheduleTies" />
+                <ScalarProperty Name="ScheduleWinningPercentage" ColumnName="ScheduleWinningPercentage" />
+                <ScalarProperty Name="ScheduleGames" ColumnName="ScheduleGames" />
+                <ScalarProperty Name="SchedulePointsFor" ColumnName="SchedulePointsFor" />
+                <ScalarProperty Name="SchedulePointsAgainst" ColumnName="SchedulePointsAgainst" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

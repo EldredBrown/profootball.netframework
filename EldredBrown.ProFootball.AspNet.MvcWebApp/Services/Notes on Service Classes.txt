@@ -1,0 +1,3 @@
+﻿DbContext objects are not thread safe and need to be instantiated at the top of the service layer inside each service method implementation.
+I'm using the Explicit DbContext method to pass the DbContext down the stack as an explicit argument to each called repository method.
+This isn't the best approach, but it is well regarded for its simplicity and ease of recognition.

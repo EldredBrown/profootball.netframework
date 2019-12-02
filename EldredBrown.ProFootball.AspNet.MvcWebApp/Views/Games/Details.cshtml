@@ -1,0 +1,82 @@
+﻿@model EldredBrown.ProFootball.AspNet.MvcWebApp.Models.View.GameViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Game</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Season
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeasonID)
+        </dd>
+
+        <dt>
+            Week
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Week)
+        </dd>
+
+        <dt>
+            Guest
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GuestName)
+        </dd>
+
+        <dt>
+            Guest Score
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GuestScore)
+        </dd>
+
+        <dt>
+            Host
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HostName)
+        </dd>
+
+        <dt>
+            Host Score
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HostScore)
+        </dd>
+
+        <dt>
+            Playoff Game?
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPlayoffGame)
+        </dd>
+
+        <dt>
+            Notes
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary btn-sm" }) |
+    @Html.ActionLink("Back to List", "Index", new { seasonID = Model.SeasonID }, new { @class = "btn btn-primary btn-sm" })
+</p>

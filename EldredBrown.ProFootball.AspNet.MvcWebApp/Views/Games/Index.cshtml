@@ -1,0 +1,87 @@
+﻿@model IEnumerable<EldredBrown.ProFootball.AspNet.MvcWebApp.Models.View.GameViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Games</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Season: @Html.DropDownList("SeasonID", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Filter" class="btn btn-primary btn-sm" />
+    </p>
+    <p>
+        Week: @Html.DropDownList("Week", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Filter" class="btn btn-primary btn-sm" />
+    </p>
+    <p>
+        @Html.ActionLink("Create New", "Create", new { seasonID = ViewBag.SeasonID }, new { @class = "btn btn-primary btn-lg" })
+    </p>
+}
+
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <th style="text-align: right">
+            Season
+        </th>
+        <th style="text-align: right">
+            Week
+        </th>
+        <th>
+            Guest
+        </th>
+        <th style="text-align: right">
+            Guest Score
+        </th>
+        <th>
+            Host
+        </th>
+        <th style="text-align: right">
+            Host Score
+        </th>
+        <th>
+            Playoff Game?
+        </th>
+        <th>
+            Notes
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.SeasonID)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.Week)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GuestName)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.GuestScore)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HostName)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.HostScore)
+            </td>
+            <td style="text-align: center">
+                @Html.DisplayFor(modelItem => item.IsPlayoffGame)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary btn-sm" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary btn-sm" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-primary btn-sm" })
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.FootballDbEntities">
+    <Position X="17.25" Y="24.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>QAAACEIBBAAEAAAAAQAAQggAEBAAAAACQAAQAAFQAAA=</HashCode>
+      <FileName>Models\FootballDataModel.Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.usp_GetConferenceSeasonStandings_Result" Collapsed="true">
+    <Position X="12.25" Y="17" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>QAAEAAgAAAAgAAAAAAAAAAAIAAAAAAAgEAAAwAAAAAA=</HashCode>
+      <FileName>Models\usp_GetConferenceSeasonStandings_Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.usp_GetDivisionSeasonStandings_Result" Collapsed="true">
+    <Position X="16" Y="17" Width="3" />
+    <TypeIdentifier>
+      <HashCode>QAAEAAgAAAAgAAAAAAAAAAAIAAAAAAAgEAAAwAAAAAA=</HashCode>
+      <FileName>Models\usp_GetDivisionSeasonStandings_Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.usp_GetSeasonAssociationStandings_Result" Collapsed="true">
+    <Position X="14.25" Y="18" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\usp_GetAssociationSeasonStandings_Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.ConferenceViewModel">
+    <Position X="14.5" Y="13.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAgEAEAAAEAAAAAAAAABAAAAAAAAAAABAA=</HashCode>
+      <FileName>ViewModels\ConferenceViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.DivisionViewModel">
+    <Position X="17" Y="13.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAEAEAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>ViewModels\DivisionViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.GameFinderWindowViewModel">
+    <Position X="25.5" Y="5.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAABgAAQAAAAAACgAAAAQAAAAAAAABAAIAAAAAA=</HashCode>
+      <FileName>ViewModels\GameFinderWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.GamePredictorWindowViewModel">
+    <Position X="28.25" Y="5.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>gIIIACABAABQAAIAASAAIAAAAgEAAAAgAHAkJAAABAE=</HashCode>
+      <FileName>ViewModels\GamePredictorWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.GamesWindowViewModel">
+    <Position X="22.75" Y="5.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>4AI5AgkBIAAQAAYFQAQUEAAEAA5ABAIgCHAoIIACiAA=</HashCode>
+      <FileName>ViewModels\GamesWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.LeaguesTreeViewViewModel">
+    <Position X="14.75" Y="9.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAECAAAAEAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\LeaguesTreeViewViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.LeagueViewModel">
+    <Position X="12.5" Y="13.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAEAAAAAEAAABAAAAAAAABAABAA=</HashCode>
+      <FileName>ViewModels\LeagueViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.MainWindowViewModel">
+    <Position X="5.75" Y="5.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAYAAAAAAEAIECAAIAAAAAGAAAAAAAApBAAAAAA=</HashCode>
+      <FileName>ViewModels\MainWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.RankingsControlViewModel">
+    <Position X="19.75" Y="5.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAACAAAAAAJAAAAAAABIAAAASQAAA=</HashCode>
+      <FileName>ViewModels\RankingsControlViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.StandingsControlViewModel">
+    <Position X="14.75" Y="5.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAgAAAAAECAAAAAAAAAAAIQAAECAAAAAA=</HashCode>
+      <FileName>ViewModels\StandingsControlViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.TreeViewItemViewModel" Collapsed="true">
+    <Position X="14.75" Y="12.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAgAAAAEAEAAAEUQAEAAAAABAIAAAAAAACABAA=</HashCode>
+      <FileName>ViewModels\TreeViewItemViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.ViewModelBase" Collapsed="true">
+    <Position X="18.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAACAEAAAAAAAAAAIAAAAAEAgAAAECAAAAAAAAABAAA=</HashCode>
+      <FileName>ViewModels\ViewModelBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.App" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABgAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.MainWindow" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAACAAAAAAgAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Helpers.MainWindowHelper" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="3" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAACAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Helpers\MainWindowHelper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.Helpers.MainWindowViewModelHelper" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="10.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAgAABAAAAAAAIAAAACAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>ViewModels\Helpers\MainWindowViewModelHelper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.UserControls.TeamsControl" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="0.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserControls\TeamsControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.TeamsControlViewModel">
+    <Position X="8.75" Y="5.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>EAAECABgAAAAACQAAAACAACAAEAAAAACQAAAIQAAQAA=</HashCode>
+      <FileName>ViewModels\TeamsControlViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.UserControls.StandingsControl" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserControls\StandingsControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.UserControls.RankingsControl" BaseTypeListCollapsed="true">
+    <Position X="19.75" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserControls\RankingsControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Windows.GamesWindow" BaseTypeListCollapsed="true">
+    <Position X="22.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Windows\GamesWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.Helpers.GamesWindowViewModelHelper" BaseTypeListCollapsed="true">
+    <Position X="22.75" Y="17.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAABAAIEBAAAAEAIIAAAQAAEACAQAAAAAIAFAgE=</HashCode>
+      <FileName>ViewModels\Helpers\GamesWindowViewModelHelper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Windows.GameFinderWindow" BaseTypeListCollapsed="true">
+    <Position X="25.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAEAAAAAAAIAAAAAAAABAAA=</HashCode>
+      <FileName>Windows\GameFinderWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Windows.GamePredictorWindow" BaseTypeListCollapsed="true">
+    <Position X="28.25" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Windows\GamePredictorWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.Helpers.GamePredictorWindowViewModelHelper" BaseTypeListCollapsed="true">
+    <Position X="28.25" Y="12.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Helpers\GamePredictorWindowViewModelHelper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Calculator" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="3.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAARAAAAAAAAADAAAAAQAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Calculator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Globals" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="2.75" />
+    <NestedTypes>
+      <Struct Name="EldredBrown.FootballApplicationWPF.Globals.Constants" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Globals.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Globals.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.WeekCount">
+    <Position X="10.5" Y="29.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\WeekCount.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.usp_GetLeagueSeasonTotals_Result">
+    <Position X="12.25" Y="36" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIACAAAAAAAAAAAAAAAAAAgAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\usp_GetLeagueSeasonTotals_Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.League" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="29.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AEAAAEABBAEAgAAAAAAAAAQAABBAIAAAAAAAAAAACAA=</HashCode>
+      <FileName>Models\League.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.usp_GetOffensiveRankings_Result">
+    <Position X="19.75" Y="9.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAACAAQAAAAAAAACAAgEAAAQAAAAAA=</HashCode>
+      <FileName>Models\usp_GetOffensiveRankings_Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.usp_GetDefensiveRankings_Result">
+    <Position X="19.75" Y="11.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACgAAAAAAAAAAAAAAQAAAAgECAAQAAAAAA=</HashCode>
+      <FileName>Models\usp_GetDefensiveRankings_Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.usp_GetTotalRankings_Result">
+    <Position X="19.75" Y="14.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACgAAAACAAQAAAAAAQACAAkECAAQAAAAAA=</HashCode>
+      <FileName>Models\usp_GetTotalRankings_Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.Conference" BaseTypeListCollapsed="true">
+    <Position X="15.25" Y="29.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAABAEAgAAAAACAAAQAABBAIAAAAACAAAAACAA=</HashCode>
+      <FileName>Models\Conference.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.Division" BaseTypeListCollapsed="true">
+    <Position X="17" Y="29.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAABAACgAAAAACAAAQAAABAIAAAAACACAAACAA=</HashCode>
+      <FileName>Models\Division.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.Team">
+    <Position X="19" Y="29.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAABAAQAgAAAAAAAAQAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Team.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.Season">
+    <Position X="22.5" Y="29.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAABBAAAgAAQCAAAAAAgIgAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Season.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.LeagueSeason">
+    <Position X="12.25" Y="33.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIACAQAIAAAAAACAAAAAAAgAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Models\LeagueSeason.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.TeamSeason">
+    <Position X="19" Y="32.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>QAAEAAgAAQCqAABACACQAAABABQgCAAkECCASAAABAA=</HashCode>
+      <FileName>Models\TeamSeason.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.Game" BaseTypeListCollapsed="true">
+    <Position X="24.75" Y="29.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>gAEgIAAAARAIgAAAAQCAAAIAAAAACAAAAGBAIIABAAg=</HashCode>
+      <FileName>Models\CustomGame.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.DataAccess">
+    <Position X="18.25" Y="22.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataAccess\DataAccess.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="DbContext" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.DelegateCommand" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEACAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\DelegateCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.ViewModels.FocusVMLib.MoveFocusEventArgs">
+    <Position X="2.25" Y="10.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>ViewModels\FocusVMLib\IFocusMover.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.DataValidationException">
+    <Position X="2.25" Y="6.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataValidationException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.usp_GetTeamSeasonScheduleProfile_Result">
+    <Position X="8.75" Y="10.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>ABAAgAAAAAAAAAAIgIBAAAAACAAAAAAQAAAQAAAAAAQ=</HashCode>
+      <FileName>Models\usp_GetTeamSeasonScheduleProfile_Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.usp_GetTeamSeasonScheduleTotals_Result">
+    <Position X="8.75" Y="13.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>QAAEAAgAAAAAAAAAAAAAAAAAQIABAAABAAAACAABAAA=</HashCode>
+      <FileName>Models\usp_GetTeamSeasonScheduleTotals_Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EldredBrown.FootballApplicationWPF.Models.usp_GetTeamSeasonScheduleAverages_Result">
+    <Position X="8.75" Y="16.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>QAAEAAAAAAAAAAAAAAAAAAAAQAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Models\usp_GetTeamSeasonScheduleAverages_Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="EldredBrown.FootballApplicationWPF.Matchup" Collapsed="true">
+    <Position X="28.25" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>EnumsAndStructs.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="EldredBrown.FootballApplicationWPF.Direction" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>EnumsAndStructs.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EldredBrown.FootballApplicationWPF.WinnerOrLoser" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EnumsAndStructs.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Microsoft.Shell.WM" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>08ECgSVMcgBGiiAABCICSCDuaoqAAL1BEIwRAGUSB8w=</HashCode>
+      <FileName>SingleInstance.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="EldredBrown.FootballApplicationWPF.Operation" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAQAAAA=</HashCode>
+      <FileName>Calculator.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

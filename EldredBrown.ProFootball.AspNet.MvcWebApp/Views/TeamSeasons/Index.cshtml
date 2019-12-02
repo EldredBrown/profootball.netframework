@@ -1,0 +1,186 @@
+﻿@model IEnumerable<EldredBrown.ProFootball.AspNet.MvcWebApp.Models.View.TeamSeasonViewModel>
+
+@{
+    ViewBag.Title = "Teams";
+}
+
+<h2>Teams</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Season: @Html.DropDownList("SeasonID")
+        <input type="submit" value="Filter" class="btn btn-primary btn-sm" />
+    </p> 
+    <p>
+        <input id="weeklyUpdate" type="button" value="Weekly Update" class="btn btn-primary btn-lg" />
+    </p> 
+}
+
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.ActionLink("Team", "Index", new { sortOrder = ViewBag.TeamSortParm })
+        </th>
+        <th>
+            Season
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("W", "Index", new { sortOrder = ViewBag.WinsSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("L", "Index", new { sortOrder = ViewBag.LossesSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("T", "Index", new { sortOrder = ViewBag.TiesSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("Pct.", "Index", new { sortOrder = ViewBag.WinningPercentageSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("PF", "Index", new { sortOrder = ViewBag.PointsForSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("PA", "Index", new { sortOrder = ViewBag.PointsAgainstSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("PythW", "Index", new { sortOrder = ViewBag.PythagoreanWinsSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("PythL", "Index", new { sortOrder = ViewBag.PythagoreanLossesSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("OffAvg", "Index", new { sortOrder = ViewBag.OffensiveAverageSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("OffFactor", "Index", new { sortOrder = ViewBag.OffensiveFactorSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("OffIndex", "Index", new { sortOrder = ViewBag.OffensiveIndexSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("DefAvg", "Index", new { sortOrder = ViewBag.DefensiveAverageSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("DefFactor", "Index", new { sortOrder = ViewBag.DefensiveFactorSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("DefIndex", "Index", new { sortOrder = ViewBag.DefensiveIndexSortParm })
+        </th>
+        <th style="text-align: right">
+            @Html.ActionLink("FinPythPct", "Index", new { sortOrder = ViewBag.FinalPythagoreanWinningPercentageSortParm })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TeamName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SeasonID)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.Wins)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.Losses)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.Ties)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.WinningPercentage)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.PointsFor)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.PointsAgainst)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.PythagoreanWins)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.PythagoreanLosses)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.OffensiveAverage)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.OffensiveFactor)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.OffensiveIndex)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.DefensiveAverage)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.DefensiveFactor)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.DefensiveIndex)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(modelItem => item.FinalPythagoreanWinningPercentage)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { teamName = item.TeamName, seasonID = item.SeasonID }, new { @class = "btn btn-primary btn-sm" })
+            </td>
+        </tr>
+    }
+</table>
+
+<div id="modal-confirm-update" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title">Confirm Update</h4>
+            </div>
+            <div class="modal-body">
+                <h4 id="modal-msg" class="modal-title">This operation may make the UI unresponsive for a minute or two. Are you sure you want to continue?</h4>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-btn-yes" type="button" class="btn btn-default">Yes</button>
+                <button id="modal-btn-no" type="button" class="btn btn-primary">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            initializeModal();
+        });
+
+        function initializeModal() {
+
+            var confirmUpdate = function (callback) {
+                $("#weeklyUpdate").on("click", function () {
+                    $("#modal-confirm-update").modal('show');
+                });
+
+                $("#modal-btn-yes").on("click", function () {
+                    callback();
+                    $("#modal-confirm-update").modal('hide');
+                });
+
+                $("#modal-btn-no").on("click", function () {
+                    $("#modal-confirm-update").modal('hide');
+                });
+            };
+
+            confirmUpdate(function() {
+                var url = '@Url.Action("UpdateRankings", "TeamSeasons")';
+                console.log(url);
+                window.location.href = url;
+            });
+        }
+    </script>
+}

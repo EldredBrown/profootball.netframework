@@ -1,0 +1,369 @@
+﻿@model EldredBrown.ProFootball.AspNet.MvcWebApp.Models.View.TeamSeasonDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Team</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Team Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.TeamName)
+        </dd>
+
+        <dt>
+            Season
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.SeasonID)
+        </dd>
+
+        <dt>
+            League
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.LeagueName)
+        </dd>
+
+        <dt>
+            Conference
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.ConferenceName)
+        </dd>
+
+        <dt>
+            Division
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.DivisionName)
+        </dd>
+
+        <dt>
+            Games
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.Games)
+        </dd>
+
+        <dt>
+            Wins
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.Wins)
+        </dd>
+
+        <dt>
+            Losses
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.Losses)
+        </dd>
+
+        <dt>
+            Ties
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.Ties)
+        </dd>
+
+        <dt>
+            Winning Percentage
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.WinningPercentage)
+        </dd>
+
+        <dt>
+            Points Scored
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.PointsFor)
+        </dd>
+
+        <dt>
+            Points Allowed
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.PointsAgainst)
+        </dd>
+
+        <dt>
+            Pythagorean Wins
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.PythagoreanWins)
+        </dd>
+
+        <dt>
+            Pythagorean Losses
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.PythagoreanLosses)
+        </dd>
+
+        <dt>
+            Offensive Average
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.OffensiveAverage)
+        </dd>
+
+        <dt>
+            Offensive Factor
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.OffensiveFactor)
+        </dd>
+
+        <dt>
+            Offensive Index
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.OffensiveIndex)
+        </dd>
+
+        <dt>
+            Defensive Average
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.DefensiveAverage)
+        </dd>
+
+        <dt>
+            Defensive Factor
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.DefensiveFactor)
+        </dd>
+
+        <dt>
+            Defensive Index
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.DefensiveIndex)
+        </dd>
+
+        <dt>
+            Final Pyth Win Pct.
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamSeason.FinalPythagoreanWinningPercentage)
+        </dd>
+    </dl>
+</div>
+
+@if (Model.TeamSeasonScheduleProfile != null)
+{
+    <h3>Team Schedule Profile</h3>
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th>
+                Opponent
+            </th>
+            <th style="text-align: right">
+                GPF
+            </th>
+            <th style="text-align: right">
+                GPA
+            </th>
+            <th style="text-align: right">
+                OW
+            </th>
+            <th style="text-align: right">
+                OL
+            </th>
+            <th style="text-align: right">
+                OT
+            </th>
+            <th style="text-align: right">
+                OWPct
+            </th>
+            <th style="text-align: right">
+                OWG
+            </th>
+            <th style="text-align: right">
+                OWPF
+            </th>
+            <th style="text-align: right">
+                OWPA
+            </th>
+        </tr>
+
+        @foreach (var item in Model.TeamSeasonScheduleProfile)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Opponent)
+                </td>
+                <td style="text-align: right">
+                    @Html.DisplayFor(modelItem => item.GamePointsFor)
+                </td>
+                <td style="text-align: right">
+                    @Html.DisplayFor(modelItem => item.GamePointsAgainst)
+                </td>
+                <td style="text-align: right">
+                    @Html.DisplayFor(modelItem => item.OpponentWins)
+                </td>
+                <td style="text-align: right">
+                    @Html.DisplayFor(modelItem => item.OpponentLosses)
+                </td>
+                <td style="text-align: right">
+                    @Html.DisplayFor(modelItem => item.OpponentTies)
+                </td>
+                <td style="text-align: right">
+                    @Html.DisplayFor(modelItem => item.OpponentWinningPercentage)
+                </td>
+                <td style="text-align: right">
+                    @Html.DisplayFor(modelItem => item.OpponentWeightedGames)
+                </td>
+                <td style="text-align: right">
+                    @Html.DisplayFor(modelItem => item.OpponentWeightedPointsFor)
+                </td>
+                <td style="text-align: right">
+                    @Html.DisplayFor(modelItem => item.OpponentWeightedPointsAgainst)
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+@if (Model.TeamSeasonScheduleTotals != null)
+{
+    <h3>Team Schedule Totals</h3>
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th style="text-align: right">
+                G
+            </th>
+            <th style="text-align: right">
+                PF
+            </th>
+            <th style="text-align: right">
+                PA
+            </th>
+            <th style="text-align: right">
+                SW
+            </th>
+            <th style="text-align: right">
+                SL
+            </th>
+            <th style="text-align: right">
+                ST
+            </th>
+            <th style="text-align: right">
+                SWPct
+            </th>
+            <th style="text-align: right">
+                SG
+            </th>
+            <th style="text-align: right">
+                SPF
+            </th>
+            <th style="text-align: right">
+                SPA
+            </th>
+        </tr>
+
+        <tr>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleTotals.Games)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleTotals.PointsFor)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleTotals.PointsAgainst)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleTotals.ScheduleWins)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleTotals.ScheduleLosses)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleTotals.ScheduleTies)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleTotals.ScheduleWinningPercentage)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleTotals.ScheduleGames)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleTotals.SchedulePointsFor)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleTotals.SchedulePointsAgainst)
+            </td>
+        </tr>
+    </table>
+}
+
+@if (Model.TeamSeasonScheduleAverages != null)
+{
+    <h3>Team Schedule Averages</h3>
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <th style="text-align: right">
+                PF
+            </th>
+            <th style="text-align: right">
+                PA
+            </th>
+            <th style="text-align: right">
+                SPF
+            </th>
+            <th style="text-align: right">
+                SPA
+            </th>
+        </tr>
+
+        <tr>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleAverages.PointsFor)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleAverages.PointsAgainst)
+            </td>
+            <td style="text-align: right;">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleAverages.SchedulePointsFor)
+            </td>
+            <td style="text-align: right">
+                @Html.DisplayFor(model => model.TeamSeasonScheduleAverages.SchedulePointsAgainst)
+            </td>
+        </tr>
+    </table>
+}
+
+<p>
+    @Html.ActionLink("Back to List", "Index", new { seasonID = Model.TeamSeason.SeasonID }, new { @class = "btn btn-primary btn-sm" })
+</p>

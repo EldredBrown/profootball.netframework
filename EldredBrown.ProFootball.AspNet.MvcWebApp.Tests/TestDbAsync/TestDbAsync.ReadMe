@@ -1,0 +1,3 @@
+﻿All classes and code in this TestDbAsync folder was copied from "Entity Framework Testing with a Mocking Framework (EF6 onwards)" from the MSDN web site (https://msdn.microsoft.com/en-us/library/dn314429%28v=vs.113%29.aspx).
+
+I saw the link to the MSDN site here in this blog post: http://benhall.io/using-fakeiteasy-with-entity-framework-6/
