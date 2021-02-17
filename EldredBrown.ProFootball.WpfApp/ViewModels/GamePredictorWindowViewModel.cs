@@ -26,13 +26,7 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
 
     public class GamePredictorWindowViewModel : ViewModelBase, IFocusMover, IGamePredictorWindowViewModel
     {
-        #region Member Fields
-
         private readonly IGamePredictorWindowService _windowService;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the GamePredictorWindowViewModel class
@@ -44,10 +38,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
         {
             _windowService = windowService;
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets this window's guest value.
@@ -219,10 +209,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
         }
 
-        #endregion Properties
-
-        #region Commands
-
         /// <summary>
         /// Loads the DataModel's Seasons table.
         /// </summary>
@@ -295,10 +281,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
         }
 
-        #endregion Commands
-
-        #region Methods
-
         /// <summary>
         /// Validates the data entered via the context window
         /// </summary>
@@ -308,13 +290,13 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             var guestSeason = _sharedService.FindTeamSeason(GuestName, GuestSelectedSeason);
             var hostSeason = _sharedService.FindTeamSeason(HostName, HostSelectedSeason);
 
-            if (String.IsNullOrWhiteSpace(GuestName))
+            if (string.IsNullOrWhiteSpace(GuestName))
             {
                 // GuestName not in database (name probably misspelled)
                 MoveFocusTo("GuestName");
                 throw new DataValidationException(WpfGlobals.Constants.BothTeamsNeededErrorMessage);
             }
-            else if (String.IsNullOrWhiteSpace(HostName))
+            else if (string.IsNullOrWhiteSpace(HostName))
             {
                 // GuestName not in database (name probably misspelled)
                 MoveFocusTo("HostName");
@@ -336,8 +318,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             return new Matchup(guestSeason, hostSeason);
         }
 
-        #region Helpers
-
         /// <summary>
         /// Moves the focus to the specified property
         /// </summary>
@@ -346,9 +326,5 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
         {
             OnMoveFocus(focusedProperty);
         }
-
-        #endregion Helpers
-
-        #endregion Methods
     }
 }

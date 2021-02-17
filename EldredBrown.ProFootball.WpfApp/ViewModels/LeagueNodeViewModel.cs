@@ -13,15 +13,9 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
     /// </summary>
     public class LeagueNodeViewModel : TreeViewItemViewModel
     {
-        #region Member Fields
-
         private readonly ILeaguesTreeViewViewModel _parentControl;
         private readonly League _league;
         private readonly IRepository<Conference> _conferenceRepository;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the LeagueNodeViewModel class.
@@ -43,10 +37,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
 
             _conferenceRepository = conferenceRepository;
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets the name of the League instance wrapped inside this ViewModel.
@@ -127,10 +117,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
         }
 
-        #endregion Properties
-
-        #region Methods
-
         /// <summary>
         /// Loads this object's children into the TreeView.
         /// </summary>
@@ -194,7 +180,5 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
                 _sharedService.ShowExceptionMessage(ex.InnerException);
             }
         }
-
-        #endregion Methods
     }
 }

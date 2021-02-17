@@ -9,7 +9,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Models.View
         {
             if (week == null)
             {
-                this.ID = String.Empty;
+                this.ID = string.Empty;
             }
             else
             {

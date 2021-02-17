@@ -12,16 +12,10 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
     /// </summary>
     public class DivisionRepository : IRepository<Division>
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ProFootballEntities _dbContext;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the DivisionRepository class
@@ -40,10 +34,6 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             _dbContext.Dispose();
         }
 
-        #endregion Constructors & Finalizers
-
-        #region IRepository<Division> Implementation
-
         /// <summary>
         /// Adds a Division entity to the data store
         /// </summary>
@@ -53,13 +43,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Adding Division entity to data store");
+                _log.Info("Adding Division entity to data store");
 
                 return _dbContext.Divisions.Add(division);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -74,13 +64,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Adding Division entities to data store");
+                _log.Info("Adding Division entities to data store");
 
                 return _dbContext.Divisions.AddRange(divisions);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -94,13 +84,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Creating Division entity");
+                _log.Info("Creating Division entity");
 
                 return _dbContext.Divisions.Create();
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -114,13 +104,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Updating Division entity in data store");
+                _log.Info("Updating Division entity in data store");
 
                 _dbContext.SetModified(division);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -156,24 +146,24 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
                 {
                     var errMsg = $"Division entity not found in data store\nName: {name}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info($"Division entity found in data store\nName: {name}");
+                _log.Info($"Division entity found in data store\nName: {name}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"Division entity not found in data store\nName: {name}";
 
-                Log.Error($"{errMsg}\n{ex.Message}");
+                _log.Error($"{errMsg}\n{ex.Message}");
 
                 throw new ObjectNotFoundException(errMsg);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -189,13 +179,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Getting Division entities from data store");
+                _log.Info("Getting Division entities from data store");
 
                 return _dbContext.Divisions;
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -210,13 +200,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Removing Division entity from data store");
+                _log.Info("Removing Division entity from data store");
 
                 return _dbContext.Divisions.Remove(division);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -231,18 +221,16 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Removing Division entities from data store");
+                _log.Info("Removing Division entities from data store");
 
                 return _dbContext.Divisions.RemoveRange(divisions);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
         }
-
-        #endregion IRepository<Division> Implementation
     }
 }

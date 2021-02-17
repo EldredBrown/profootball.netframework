@@ -31,16 +31,10 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
     /// </summary>
     public class StoredProcedureRepository : IStoredProcedureRepository
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ProFootballEntities _dbContext;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the StoredProcedureRepository class
@@ -50,10 +44,6 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             _dbContext = dbContext;
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Methods
 
         /// <summary>
         /// Gets totals for a league's season
@@ -69,19 +59,19 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             }
             catch (ArgumentException ex)
             {
-                Log.Error($"Argument exception in StoredProcedureRepository.GetLeagueSeasonTotals: {ex.Message}");
+                _log.Error($"Argument exception in StoredProcedureRepository.GetLeagueSeasonTotals: {ex.Message}");
 
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                Log.Error($"Invalid operation in StoredProcedureRepository.GetLeagueSeasonTotals: {ex.Message}");
+                _log.Error($"Invalid operation in StoredProcedureRepository.GetLeagueSeasonTotals: {ex.Message}");
 
                 throw;
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -100,7 +90,7 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -119,7 +109,7 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -138,7 +128,7 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -159,7 +149,7 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -180,7 +170,7 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -201,7 +191,7 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -222,20 +212,20 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             }
             catch (ArgumentException ex)
             {
-                Log.Error(
+                _log.Error(
                     $"Argument exception in StoredProcedureRepository.GetTeamSeasonScheduleProfile: {ex.Message}");
 
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                Log.Error($"Invalid operation in StoredProcedureRepository.GetTeamSeasonScheduleProfile: {ex.Message}");
+                _log.Error($"Invalid operation in StoredProcedureRepository.GetTeamSeasonScheduleProfile: {ex.Message}");
 
                 throw;
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -256,19 +246,19 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             }
             catch (ArgumentException ex)
             {
-                Log.Error($"Argument exception in StoredProcedureRepository.GetTeamSeasonScheduleTotals: {ex.Message}");
+                _log.Error($"Argument exception in StoredProcedureRepository.GetTeamSeasonScheduleTotals: {ex.Message}");
 
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                Log.Error($"Invalid operation in StoredProcedureRepository.GetTeamSeasonScheduleTotals: {ex.Message}");
+                _log.Error($"Invalid operation in StoredProcedureRepository.GetTeamSeasonScheduleTotals: {ex.Message}");
 
                 throw;
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -289,26 +279,24 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             }
             catch (ArgumentException ex)
             {
-                Log.Error(
+                _log.Error(
                     $"Argument exception in StoredProcedureRepository.GetTeamSeasonScheduleAverages: {ex.Message}");
 
                 throw;
             }
             catch (InvalidOperationException ex)
             {
-                Log.Error(
+                _log.Error(
                     $"Invalid operation in StoredProcedureRepository.GetTeamSeasonScheduleAverages: {ex.Message}");
 
                 throw;
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
         }
-
-        #endregion Methods
     }
 }

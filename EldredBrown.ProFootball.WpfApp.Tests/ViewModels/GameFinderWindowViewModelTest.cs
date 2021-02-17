@@ -10,23 +10,13 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
     [TestFixture]
     public class GameFinderWindowViewModelTest
     {
-        #region Member Fields
-
         private ISharedService _sharedService;
-
-        #endregion Member Fields
-
-        #region Setup & Teardown
 
         [SetUp]
         public void SetUp()
         {
             _sharedService = A.Fake<ISharedService>();
         }
-
-        #endregion Setup & Teardown
-        
-        #region Test Cases
 
         [TestCase]
         public void ValidateDataEntry_GuestNameIsNull_ThrowsDataValidationException()
@@ -50,7 +40,7 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             // Arrange
             var viewModel = new GameFinderWindowViewModel(_sharedService)
             {
-                GuestName = String.Empty
+                GuestName = string.Empty
             };
 
             // Act
@@ -100,7 +90,7 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             var viewModel = new GameFinderWindowViewModel(_sharedService)
             {
                 GuestName = "Team",
-                HostName = String.Empty
+                HostName = string.Empty
             };
 
             // Act
@@ -175,7 +165,5 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

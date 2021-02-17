@@ -10,23 +10,13 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
     [TestFixture]
     public class SharedServiceTest
     {
-        #region Member Fields
-
         private IRepository<TeamSeason> _teamSeasonRepository;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
         {
             _teamSeasonRepository = A.Fake<IRepository<TeamSeason>>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public void FindEntity_HappyPath()
@@ -121,7 +111,5 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

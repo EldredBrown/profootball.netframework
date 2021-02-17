@@ -16,8 +16,6 @@ namespace EldredBrown.ProFootball.WpfApp.Windows
     /// </summary>
     public partial class GamesWindow : Window, IGamesWindow
     {
-        #region Constructors & Finalizers
-
         /// <summary>
         /// Initializes a new instance of the GamesWindow class
         /// </summary>
@@ -28,10 +26,6 @@ namespace EldredBrown.ProFootball.WpfApp.Windows
 		    DataContext = WpfGlobals.Container.Resolve<IGamesWindowViewModel>();
 		}
 
-        #endregion Constructors & Finalizers
-
-        #region Methods
-
         /// <summary>
         /// Opens a window and returns only when the newly opened window is closed
         /// </summary>
@@ -40,10 +34,6 @@ namespace EldredBrown.ProFootball.WpfApp.Windows
         {
             return base.ShowDialog();
         }
-
-        #endregion Methods
-
-        #region Event Handlers
 
         /// <summary>
         /// Handles the SelectionChanged event for the GamesDataGrid
@@ -58,7 +48,5 @@ namespace EldredBrown.ProFootball.WpfApp.Windows
                 (DataContext as GamesWindowViewModel).SelectedGame = null;
             }
         }
-
-        #endregion Event Handlers
     }
 }

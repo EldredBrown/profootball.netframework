@@ -27,7 +27,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.DAL
 
             if (throwTransientErrors && _counter < 4)
             {
-                log.Info(String.Format("Returning transient error for command: {0}", command.CommandText));
+                log.Info(string.Format("Returning transient error for command: {0}", command.CommandText));
                 _counter++;
                 interceptionContext.Exception = CreateDummySqlException();
             }

@@ -12,16 +12,10 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
     /// </summary>
     public class WeekCountRepository : IRepository<WeekCount>
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ProFootballEntities _dbContext;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the WeekCountRepository class
@@ -40,10 +34,6 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             _dbContext.Dispose();
         }
 
-        #endregion Constructors & Finalizers
-
-        #region IRepository<WeekCount> Implementation
-
         /// <summary>
         /// Adds a WeekCount entity to the data store
         /// </summary>
@@ -53,13 +43,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Adding WeekCount entity to data store");
+                _log.Info("Adding WeekCount entity to data store");
 
                 return _dbContext.WeekCounts.Add(weekCount);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -74,13 +64,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Adding WeekCount entities to data store");
+                _log.Info("Adding WeekCount entities to data store");
 
                 return _dbContext.WeekCounts.AddRange(weekCounts);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -94,13 +84,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Creating WeekCount entity");
+                _log.Info("Creating WeekCount entity");
 
                 return _dbContext.WeekCounts.Create();
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -114,13 +104,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Updating WeekCount entity in data store");
+                _log.Info("Updating WeekCount entity in data store");
 
                 _dbContext.SetModified(weekCount);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -156,24 +146,24 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
                 {
                     var errMsg = $"WeekCount entity not found in data store\nSeasonID: {seasonID}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info($"WeekCount entity found in data store\nSeasonID: {seasonID}");
+                _log.Info($"WeekCount entity found in data store\nSeasonID: {seasonID}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"WeekCount entity not found in data store\nSeasonID: {seasonID}";
 
-                Log.Error($"{errMsg}\n{ex.Message}");
+                _log.Error($"{errMsg}\n{ex.Message}");
 
                 throw new ObjectNotFoundException(errMsg);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -189,13 +179,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Getting WeekCount entities from data store");
+                _log.Info("Getting WeekCount entities from data store");
 
                 return _dbContext.WeekCounts;
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -210,13 +200,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Removing WeekCount entity from data store");
+                _log.Info("Removing WeekCount entity from data store");
 
                 return _dbContext.WeekCounts.Remove(weekCount);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -231,18 +221,16 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Removing WeekCount entities from data store");
+                _log.Info("Removing WeekCount entities from data store");
 
                 return _dbContext.WeekCounts.RemoveRange(weekCounts);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
         }
-
-        #endregion IRepository<WeekCount> Implementation
     }
 }

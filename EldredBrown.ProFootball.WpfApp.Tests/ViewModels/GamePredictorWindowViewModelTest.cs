@@ -14,14 +14,8 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
     [TestFixture]
     public class GamePredictorWindowViewModelTest
     {
-        #region Member Fields
-
         private ISharedService _sharedService;
         private IGamePredictorWindowService _windowService;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -29,10 +23,6 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             _sharedService = A.Fake<ISharedService>();
             _windowService = A.Fake<IGamePredictorWindowService>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public void ViewSeasonsCommand_HappyPath()
@@ -226,7 +216,7 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             // Instantiate class under test.
             var viewModel = new GamePredictorWindowViewModel(_sharedService, _windowService)
             {
-                GuestName = String.Empty,
+                GuestName = string.Empty,
                 HostName = "Host"
             };
 
@@ -314,7 +304,7 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             var viewModel = new GamePredictorWindowViewModel(_sharedService, _windowService)
             {
                 GuestName = "Guest",
-                HostName = String.Empty
+                HostName = string.Empty
             };
 
             // Set up needed infrastructure of class under test.
@@ -468,7 +458,5 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

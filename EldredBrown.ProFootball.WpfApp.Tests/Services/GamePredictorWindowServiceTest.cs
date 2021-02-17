@@ -11,31 +11,19 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
     [TestFixture]
     public class GamePredictorWindowServiceTest
     {
-        #region Member Fields
-
         private IRepository<Season> _seasonRepository;
-        private IRepository<TeamSeason> _teamSeasonRepository;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
         {
             _seasonRepository = A.Fake<IRepository<Season>>();
-            _teamSeasonRepository = A.Fake<IRepository<TeamSeason>>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public void GetSeasonIDs_HappyPath()
         {
             // Arrange
-            var service = new GamePredictorWindowService(_seasonRepository, _teamSeasonRepository);
+            var service = new GamePredictorWindowService(_seasonRepository);
 
             // Set up needed infrastructure of class under test.
             var lastSeason = 2017;
@@ -70,7 +58,7 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
         public void GetSeasonIDs_ExceptionCaught_LogsAndRethrowsException()
         {
             // Arrange
-            var service = new GamePredictorWindowService(_seasonRepository, _teamSeasonRepository);
+            var service = new GamePredictorWindowService(_seasonRepository);
 
             A.CallTo(() => _seasonRepository.GetEntities()).Throws<Exception>();
 
@@ -98,7 +86,5 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

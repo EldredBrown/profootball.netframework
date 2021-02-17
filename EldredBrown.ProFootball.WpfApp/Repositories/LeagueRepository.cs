@@ -12,16 +12,10 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
     /// </summary>
     public class LeagueRepository : IRepository<League>
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ProFootballEntities _dbContext;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the LeagueRepository class
@@ -40,10 +34,6 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             _dbContext.Dispose();
         }
 
-        #endregion Constructors & Finalizers
-
-        #region IRepository<League> Implementation
-
         /// <summary>
         /// Adds a League entity to the data store
         /// </summary>
@@ -53,13 +43,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Adding League entity to data store");
+                _log.Info("Adding League entity to data store");
 
                 return _dbContext.Leagues.Add(league);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -74,13 +64,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Adding League entities to data store");
+                _log.Info("Adding League entities to data store");
 
                 return _dbContext.Leagues.AddRange(leagues);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -94,13 +84,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Creating League entity");
+                _log.Info("Creating League entity");
 
                 return _dbContext.Leagues.Create();
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -114,13 +104,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Updating League entity in data store");
+                _log.Info("Updating League entity in data store");
 
                 _dbContext.SetModified(league);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -156,24 +146,24 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
                 {
                     var errMsg = $"League entity not found in data store\nName: {name}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info($"League entity found in data store\nName: {name}");
+                _log.Info($"League entity found in data store\nName: {name}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"League entity not found in data store\nName: {name}";
 
-                Log.Error($"{errMsg}\n{ex.Message}");
+                _log.Error($"{errMsg}\n{ex.Message}");
 
                 throw new ObjectNotFoundException(errMsg);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -189,13 +179,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Getting League entities from data store");
+                _log.Info("Getting League entities from data store");
 
                 return _dbContext.Leagues;
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -210,13 +200,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Removing League entity from data store");
+                _log.Info("Removing League entity from data store");
 
                 return _dbContext.Leagues.Remove(league);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -231,18 +221,16 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Removing League entities from data store");
+                _log.Info("Removing League entities from data store");
 
                 return _dbContext.Leagues.RemoveRange(leagues);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
         }
-
-        #endregion IRepository<League> Implementation
     }
 }

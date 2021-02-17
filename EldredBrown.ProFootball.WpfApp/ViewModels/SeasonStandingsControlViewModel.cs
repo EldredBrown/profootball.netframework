@@ -19,16 +19,10 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
     /// </summary>
     public class SeasonStandingsControlViewModel : ViewModelBase, ISeasonStandingsControlViewModel
     {
-        #region Member Fields
-
         private readonly ISeasonStandingsControlService _controlService;
         private readonly IRepository<Conference> _conferenceRepository;
 
         private ILeaguesTreeViewViewModel _leaguesTreeViewViewModel;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the StandingsControlViewModel class
@@ -43,10 +37,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
 
             _leaguesTreeViewViewModel = null;
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets the leagues collection for the TreeView control contained inside this control.
@@ -88,10 +78,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
         }
 
-        #endregion Properties
-
-        #region Commands
-
         /// <summary>
         /// Loads the control.
         /// </summary>
@@ -124,7 +110,5 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
                 _sharedService.ShowExceptionMessage(ex);
             }
         }
-
-        #endregion Commands
     }
 }

@@ -13,10 +13,8 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
     /// </summary>
     public class LeagueRepository : IRepository<League>
     {
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        #region IRepository<League> Implementation
 
         /// <summary>
         /// Adds a League entity to ProFootballEntities
@@ -26,7 +24,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The League entity added to dbContext</returns>
         public League AddEntity(ProFootballEntities dbContext, League league)
         {
-            Log.Info("Adding League entity to data store");
+            _log.Info("Adding League entity to data store");
             return dbContext.Leagues.Add(league);
         }
 
@@ -38,7 +36,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The League entity collection added to dbContext</returns>
         public IEnumerable<League> AddEntities(ProFootballEntities dbContext, IEnumerable<League> leagues)
         {
-            Log.Info("Adding League entities to data store");
+            _log.Info("Adding League entities to data store");
             return dbContext.Leagues.AddRange(leagues);
         }
 
@@ -49,7 +47,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The new League entity instance</returns>
         public League CreateEntity(ProFootballEntities dbContext)
         {
-            Log.Info("Creating League entity");
+            _log.Info("Creating League entity");
             return dbContext.Leagues.Create();
         }
 
@@ -60,7 +58,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <param name="league">The League entity to modify</param>
         public void EditEntity(ProFootballEntities dbContext, League league)
         {
-            Log.Info("Updating League entity in data store");
+            _log.Info("Updating League entity in data store");
             dbContext.SetModified(league);
         }
 
@@ -84,18 +82,18 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
                 {
                     var errMsg = $"League entity not found in ProFootballEntities\nName: {name}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info($"League entity found in ProFootballEntities\nName: {name}");
+                _log.Info($"League entity found in ProFootballEntities\nName: {name}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"League entity not found in ProFootballEntities\nName: {name}\n";
 
-                Log.Error(errMsg + "\n" + ex.Message);
+                _log.Error(errMsg + "\n" + ex.Message);
 
                 throw new ObjectNotFoundException(errMsg);
             }
@@ -123,94 +121,24 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
                 {
                     var errMsg = $"League entity not found in ProFootballEntities\nName: {name}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info($"League entity found in ProFootballEntities\nName: {name}");
+                _log.Info($"League entity found in ProFootballEntities\nName: {name}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"League entity not found in ProFootballEntities\nName: {name}\n";
 
-                Log.Error(errMsg + "\n" + ex.Message);
+                _log.Error(errMsg + "\n" + ex.Message);
 
                 throw new ObjectNotFoundException(errMsg);
             }
 
             return retVal;
         }
-
-        /// <summary>
-        /// Gets an enumerable collection of League entities
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <returns>An enumerable collection of League objects</returns>
-        public IEnumerable<League> GetEntities(ProFootballEntities dbContext)
-        {
-            Log.Info("Getting League entities from data store");
-            return dbContext.Leagues;
-        }
-
-        /// <summary>
-        /// Gets an enumerable collection of League entities - asynchronous
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <returns>An enumerable collection of League objects</returns>
-        public async Task<IEnumerable<League>> GetEntitiesAsync(ProFootballEntities dbContext)
-        {
-            Log.Info("Getting League entities from data store");
-            return await dbContext.Leagues.ToListAsync();
-        }
-
-        /// <summary>
-        /// Loads a collection of League entities into memory
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        public void LoadEntities(ProFootballEntities dbContext)
-        {
-            Log.Info("Loading League entities into memory");
-            dbContext.Leagues.Load();
-        }
-
-        /// <summary>
-        /// Loads a collection of League entities into memory - asynchronous
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        public async Task LoadEntitiesAsync(ProFootballEntities dbContext)
-        {
-            Log.Info("Loading League entities into memory");
-            await dbContext.Leagues.LoadAsync();
-        }
-
-        /// <summary>
-        /// Removes a League entity from ProFootballEntities
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <param name="league">The League entity to delete</param>
-        /// <returns>The League entity deleted from dbContext</returns>
-        public League RemoveEntity(ProFootballEntities dbContext, League league)
-        {
-            Log.Info("Removing League entity from data store");
-            return dbContext.Leagues.Remove(league);
-        }
-
-        /// <summary>
-        /// Removes multiple League entities from ProFootballEntities
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <param name="leagues">The collection of League entities to remove</param>
-        /// <returns>The League entity collection removed from dbContext</returns>
-        public IEnumerable<League> RemoveEntities(ProFootballEntities dbContext, IEnumerable<League> leagues)
-        {
-            Log.Info("Removing League entities from data store");
-            return dbContext.Leagues.RemoveRange(leagues);
-        }
-
-        #endregion IRepository<League> Implementation
-
-        #region Helpers
 
         private void ValidateFindArgs(string methodName, params object[] args)
         {
@@ -226,6 +154,70 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
             }
         }
 
-        #endregion Helpers
+        /// <summary>
+        /// Gets an enumerable collection of League entities
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <returns>An enumerable collection of League objects</returns>
+        public IEnumerable<League> GetEntities(ProFootballEntities dbContext)
+        {
+            _log.Info("Getting League entities from data store");
+            return dbContext.Leagues;
+        }
+
+        /// <summary>
+        /// Gets an enumerable collection of League entities - asynchronous
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <returns>An enumerable collection of League objects</returns>
+        public async Task<IEnumerable<League>> GetEntitiesAsync(ProFootballEntities dbContext)
+        {
+            _log.Info("Getting League entities from data store");
+            return await dbContext.Leagues.ToListAsync();
+        }
+
+        /// <summary>
+        /// Loads a collection of League entities into memory
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        public void LoadEntities(ProFootballEntities dbContext)
+        {
+            _log.Info("Loading League entities into memory");
+            dbContext.Leagues.Load();
+        }
+
+        /// <summary>
+        /// Loads a collection of League entities into memory - asynchronous
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        public async Task LoadEntitiesAsync(ProFootballEntities dbContext)
+        {
+            _log.Info("Loading League entities into memory");
+            await dbContext.Leagues.LoadAsync();
+        }
+
+        /// <summary>
+        /// Removes a League entity from ProFootballEntities
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <param name="league">The League entity to delete</param>
+        /// <returns>The League entity deleted from dbContext</returns>
+        public League RemoveEntity(ProFootballEntities dbContext, League league)
+        {
+            _log.Info("Removing League entity from data store");
+            return dbContext.Leagues.Remove(league);
+        }
+
+        /// <summary>
+        /// Removes multiple League entities from ProFootballEntities
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <param name="leagues">The collection of League entities to remove</param>
+        /// <returns>The League entity collection removed from dbContext</returns>
+        public IEnumerable<League> RemoveEntities(ProFootballEntities dbContext, IEnumerable<League> leagues)
+        {
+            _log.Info("Removing League entities from data store");
+            return dbContext.Leagues.RemoveRange(leagues);
+        }
     }
 }

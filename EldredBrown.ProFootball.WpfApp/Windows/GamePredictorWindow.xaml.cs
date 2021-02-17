@@ -14,8 +14,6 @@ namespace EldredBrown.ProFootball.WpfApp.Windows
     /// </summary>
     public partial class GamePredictorWindow : Window, IGamePredictorWindow
     {
-        #region Constructors & Finalizers
-
         /// <summary>
         /// Initializes a new instance of the GamePredictorWindow class
         /// </summary>
@@ -25,7 +23,5 @@ namespace EldredBrown.ProFootball.WpfApp.Windows
 
             DataContext = WpfGlobals.Container.Resolve<IGamePredictorWindowViewModel>();
         }
-
-        #endregion Constructors & Finalizers
     }
 }

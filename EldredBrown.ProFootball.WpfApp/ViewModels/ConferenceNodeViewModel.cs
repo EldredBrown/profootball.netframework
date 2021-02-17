@@ -12,13 +12,7 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
     /// </summary>
     public class ConferenceNodeViewModel : TreeViewItemViewModel
 	{
-        #region Member Fields
-
         private readonly Conference _conference;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the Conference class.
@@ -35,10 +29,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             // Assign argument values to member fields.
             _conference = conference ?? throw new ArgumentNullException("conference");
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets the name of the Conference instance wrapped inside this ViewModel.
@@ -119,10 +109,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
         }
 
-        #endregion Properties
-
-        #region Methods
-
         /// <summary>
         /// Loads this object's children into the TreeView.
         /// </summary>
@@ -173,7 +159,5 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
                 _sharedService.ShowExceptionMessage(ex.InnerException);
             }
         }
-
-        #endregion Methods
     }
 }

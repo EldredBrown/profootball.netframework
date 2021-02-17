@@ -28,9 +28,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
     /// </summary>
     public class TeamSeasonsService : ITeamSeasonsService
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ISharedService _sharedService;
@@ -39,10 +37,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
         private readonly IStoredProcedureRepository _storedProcedureRepository;
         private readonly IRepository<TeamSeason> _teamSeasonRepository;
         private readonly ICalculator _calculator;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the TeamSeasonsService class
@@ -65,15 +59,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
             _calculator = calculator;
         }
 
-        #endregion Constructors & Finalizers
-
-        #region Properties
-
         public static int SelectedSeason;
-
-        #endregion Properties
-
-        #region Methods
 
         /// <summary>
         /// Gets an ordered list of TeamSeasonViewModel objects
@@ -201,7 +187,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
             }
             catch (ArgumentNullException ex)
             {
-                Log.Error($"ArgumentNullException in TeamSeasonsService.GetEntitiesOrderedAsync: {ex.Message}");
+                _log.Error($"ArgumentNullException in TeamSeasonsService.GetEntitiesOrderedAsync: {ex.Message}");
             }
 
             foreach (var teamSeason in teamSeasons)
@@ -232,6 +218,50 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
             };
         }
 
+        private IEnumerable<TeamSeasonScheduleProfileViewModel> GetTeamSeasonScheduleProfile(string teamName,
+            int? seasonID, ProFootballEntities dbContextInjected = null)
+        {
+            var teamSeasonScheduleProfileViewModels = new List<TeamSeasonScheduleProfileViewModel>();
+
+            IEnumerable<GetTeamSeasonScheduleProfile_Result> teamSeasonScheduleProfile;
+            using (var dbContext = dbContextInjected ?? new ProFootballEntities())
+            {
+                teamSeasonScheduleProfile = _storedProcedureRepository
+                    .GetTeamSeasonScheduleProfile(dbContext, teamName, seasonID).ToList();
+            }
+            foreach (var item in teamSeasonScheduleProfile)
+            {
+                var teamSeasonScheduleProfileViewModel = _dataMapper.MapToTeamSeasonScheduleProfileViewModel(item);
+                teamSeasonScheduleProfileViewModels.Add(teamSeasonScheduleProfileViewModel);
+            }
+
+            return teamSeasonScheduleProfileViewModels;
+        }
+
+        private TeamSeasonScheduleTotalsViewModel GetTeamSeasonScheduleTotals(string teamName, int? seasonID,
+            ProFootballEntities dbContextInjected = null)
+        {
+            GetTeamSeasonScheduleTotals_Result teamSeasonScheduleTotals;
+            using (var dbContext = dbContextInjected ?? new ProFootballEntities())
+            {
+                teamSeasonScheduleTotals = _storedProcedureRepository
+                    .GetTeamSeasonScheduleTotals(dbContext, teamName, seasonID).FirstOrDefault();
+            }
+            return _dataMapper.MapToTeamSeasonScheduleTotalsViewModel(teamSeasonScheduleTotals);
+        }
+
+        private TeamSeasonScheduleAveragesViewModel GetTeamSeasonScheduleAverages(string teamName, int? seasonID,
+            ProFootballEntities dbContextInjected = null)
+        {
+            GetTeamSeasonScheduleAverages_Result teamSeasonScheduleAverages;
+            using (var dbContext = dbContextInjected ?? new ProFootballEntities())
+            {
+                teamSeasonScheduleAverages = _storedProcedureRepository
+                    .GetTeamSeasonScheduleAverages(dbContext, teamName, seasonID).FirstOrDefault();
+            }
+            return _dataMapper.MapToTeamSeasonScheduleAveragesViewModel(teamSeasonScheduleAverages);
+        }
+
         /// <summary>
         /// Sets the selected season for this web app
         /// </summary>
@@ -242,7 +272,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
         {
             if (seasonID == null)
             {
-                if (String.IsNullOrEmpty(sortOrder))
+                if (string.IsNullOrEmpty(sortOrder))
                 {
                     if (WebGlobals.SelectedSeason == null)
                     {
@@ -288,7 +318,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("TeamSeasonsService.UpdateRankings could not save changes to database: " + ex.Message);
+                    _log.Error("TeamSeasonsService.UpdateRankings could not save changes to database: " + ex.Message);
                 }
 
                 IList<TeamSeason> teamSeasons;
@@ -301,7 +331,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 }
                 catch (ArgumentNullException ex)
                 {
-                    Log.Error($"ArgumentNullException in TeamSeasonsService.UpdateRankings: {ex.Message}");
+                    _log.Error($"ArgumentNullException in TeamSeasonsService.UpdateRankings: {ex.Message}");
 
                     MessageBox.Show(
                         "The UpdateRankings function was unable to update TeamSeasons. Please wait a few minutes and try again.",
@@ -321,7 +351,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                     }
                     catch (ArgumentNullException ex)
                     {
-                        Log.Error($"ArgumentNullException in TeamSeasonsService.UpdateRankings: {ex.Message}");
+                        _log.Error($"ArgumentNullException in TeamSeasonsService.UpdateRankings: {ex.Message}");
                         return;
                     }
                 }
@@ -332,84 +362,11 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 }
                 catch (Exception ex)
                 {
-                    Log.Error($"TeamSeasonsService.UpdateRankings could not save changes to database: {ex.Message}");
+                    _log.Error($"TeamSeasonsService.UpdateRankings could not save changes to database: {ex.Message}");
                 }
             }
         }
 
-        #region Helpers
-
-        /// <summary>
-        /// Gets a team's season schedule profile
-        /// </summary>
-        /// <param name="teamName">The name of the selected team</param>
-        /// <param name="seasonID">The ID of the selected season</param>
-        /// <param name="dbContextInjected">Injected DbContext object for unit testing</param>
-        /// <returns>An enumerable collection of the team's season schedule profile view models</returns>
-        private IEnumerable<TeamSeasonScheduleProfileViewModel> GetTeamSeasonScheduleProfile(string teamName,
-            int? seasonID, ProFootballEntities dbContextInjected = null)
-        {
-            var teamSeasonScheduleProfileViewModels = new List<TeamSeasonScheduleProfileViewModel>();
-
-            IEnumerable<GetTeamSeasonScheduleProfile_Result> teamSeasonScheduleProfile;
-            using (var dbContext = dbContextInjected ?? new ProFootballEntities())
-            {
-                teamSeasonScheduleProfile = _storedProcedureRepository
-                    .GetTeamSeasonScheduleProfile(dbContext, teamName, seasonID).ToList();
-            }
-            foreach (var item in teamSeasonScheduleProfile)
-            {
-                var teamSeasonScheduleProfileViewModel = _dataMapper.MapToTeamSeasonScheduleProfileViewModel(item);
-                teamSeasonScheduleProfileViewModels.Add(teamSeasonScheduleProfileViewModel);
-            }
-
-            return teamSeasonScheduleProfileViewModels;
-        }
-
-        /// <summary>
-        /// Gets a team's season schedule totals
-        /// </summary>
-        /// <param name="teamName">The name of the selected team</param>
-        /// <param name="seasonID">The ID of the selected season</param>
-        /// <param name="dbContextInjected">Injected DbContext object for unit testing</param>
-        /// <returns>A view model representing the team's season schedule totals</returns>
-        private TeamSeasonScheduleTotalsViewModel GetTeamSeasonScheduleTotals(string teamName, int? seasonID,
-            ProFootballEntities dbContextInjected = null)
-        {
-            GetTeamSeasonScheduleTotals_Result teamSeasonScheduleTotals;
-            using (var dbContext = dbContextInjected ?? new ProFootballEntities())
-            {
-                teamSeasonScheduleTotals = _storedProcedureRepository
-                    .GetTeamSeasonScheduleTotals(dbContext, teamName, seasonID).FirstOrDefault();
-            }
-            return _dataMapper.MapToTeamSeasonScheduleTotalsViewModel(teamSeasonScheduleTotals);
-        }
-
-        /// <summary>
-        /// Gets a team's season schedule averages
-        /// </summary>
-        /// <param name="teamName">The name of the selected team</param>
-        /// <param name="seasonID">The ID of the selected season</param>
-        /// <param name="dbContextInjected">Injected DbContext object for unit testing</param>
-        /// <returns>A view model representing the team's season schedule averages</returns>
-        private TeamSeasonScheduleAveragesViewModel GetTeamSeasonScheduleAverages(string teamName, int? seasonID,
-            ProFootballEntities dbContextInjected = null)
-        {
-            GetTeamSeasonScheduleAverages_Result teamSeasonScheduleAverages;
-            using (var dbContext = dbContextInjected ?? new ProFootballEntities())
-            {
-                teamSeasonScheduleAverages = _storedProcedureRepository
-                    .GetTeamSeasonScheduleAverages(dbContext, teamName, seasonID).FirstOrDefault();
-            }
-            return _dataMapper.MapToTeamSeasonScheduleAveragesViewModel(teamSeasonScheduleAverages);
-        }
-
-        /// <summary>
-        /// Updates the rankings for the specified team and the selected season
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <param name="teamSeason">The TeamSeason object for which team rankings will be updated</param>
-        /// <returns></returns>
         private async Task UpdateRankingsByTeamSeason(ProFootballEntities dbContext, TeamSeason teamSeason)
         {
             var teamSeasonScheduleTotals = _storedProcedureRepository
@@ -448,9 +405,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                     _calculator.CalculatePythagoreanWinningPercentage(teamSeason);
             }
         }
-
-        #endregion Helpers
-
-        #endregion Methods
     }
 }

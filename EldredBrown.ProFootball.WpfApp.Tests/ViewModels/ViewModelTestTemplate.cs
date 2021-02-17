@@ -5,12 +5,6 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
     [TestFixture]
     public class ViewModelTestTemplate
     {
-        #region Member Fields
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
-
         [SetUp]
         public void SetUp()
         {
@@ -22,10 +16,6 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
         {
 
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         //[TestCase]
         public void TestCase1()
@@ -43,7 +33,5 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

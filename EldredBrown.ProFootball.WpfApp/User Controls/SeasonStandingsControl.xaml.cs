@@ -14,8 +14,6 @@ namespace EldredBrown.ProFootball.WpfApp.UserControls
     /// </summary>
     public partial class SeasonStandingsControl : UserControl, ISeasonStandingsControl
     {
-        #region Constructors & Finalizers
-
         /// <summary>
         /// Initializes a new instance of the StandingsControl class
         /// </summary>
@@ -26,10 +24,6 @@ namespace EldredBrown.ProFootball.WpfApp.UserControls
             DataContext = WpfGlobals.Container.Resolve<ISeasonStandingsControlViewModel>();
         }
 
-        #endregion Constructors & Finalizers
-
-        #region Methods
-
         /// <summary>
         /// Refreshes the view of this StandingsControl object
         /// </summary>
@@ -37,7 +31,5 @@ namespace EldredBrown.ProFootball.WpfApp.UserControls
         {
             (DataContext as ISeasonStandingsControlViewModel).ViewStandingsCommand.Execute(null);
         }
-
-        #endregion Methods
     }
 }

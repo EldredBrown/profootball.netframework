@@ -14,15 +14,9 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
     [TestFixture]
     public class SeasonStandingsControlViewModelTest
     {
-        #region Member Fields
-
         private ISharedService _sharedService;
         private ISeasonStandingsControlService _controlService;
         private IRepository<Conference> _conferenceRepository;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -31,10 +25,6 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             _controlService = A.Fake<ISeasonStandingsControlService>();
             _conferenceRepository = A.Fake<IRepository<Conference>>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public void ViewStandingsCommand_HappyPath()
@@ -94,7 +84,5 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

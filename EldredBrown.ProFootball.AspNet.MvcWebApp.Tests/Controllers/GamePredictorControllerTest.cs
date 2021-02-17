@@ -13,14 +13,8 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Controllers
     [TestFixture]
     public class GamePredictorControllerTest
     {
-        #region Member Fields
-
         private IGamePredictorService _service;
         private ISharedService _sharedService;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -28,10 +22,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Controllers
             _service = A.Fake<IGamePredictorService>();
             _sharedService = A.Fake<ISharedService>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public async Task PredictGameGet_HappyPath()
@@ -281,7 +271,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Controllers
 
             // Assert
         }
-
-        #endregion Test Cases
     }
 }

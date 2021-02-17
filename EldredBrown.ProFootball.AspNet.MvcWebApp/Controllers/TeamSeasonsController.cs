@@ -12,7 +12,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
     /// </summary>
     public class TeamSeasonsController : Controller
     {
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ITeamSeasonsService _service;
@@ -78,7 +78,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in TeamSeasonsController.Index: " + ex.Message);
+                _log.Error("Exception in TeamSeasonsController.Index: " + ex.Message);
 
                 throw;
             }
@@ -89,7 +89,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
         {
             try
             {
-                if (String.IsNullOrEmpty(teamName) || seasonID == null)
+                if (string.IsNullOrEmpty(teamName) || seasonID == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
@@ -108,7 +108,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in TeamSeasonsController.Details: " + ex.Message);
+                _log.Error("Exception in TeamSeasonsController.Details: " + ex.Message);
                 throw;
             }
         }
@@ -129,7 +129,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in TeamSeasonsController.UpdateRankings: " + ex.Message);
+                _log.Error("Exception in TeamSeasonsController.UpdateRankings: " + ex.Message);
                 throw;
             }
         }

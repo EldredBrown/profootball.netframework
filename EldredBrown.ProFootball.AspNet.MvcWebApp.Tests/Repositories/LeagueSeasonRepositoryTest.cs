@@ -12,8 +12,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Repositories
     [TestFixture]
     public class LeagueSeasonRepositoryTest
     {
-        #region Test Cases
-
         [TestCase]
         public void AddLeagueSeason()
         {
@@ -332,7 +330,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Repositories
 
             // Assert
         }
-
-        #endregion Test Cases
     }
 }

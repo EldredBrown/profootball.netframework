@@ -36,9 +36,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
     /// </summary>
     public class GamesService : IGamesService
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ISharedService _sharedService;
@@ -47,10 +45,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
         private readonly IRepository<Team> _teamRepository;
         private readonly IRepository<TeamSeason> _teamSeasonRepository;
         private readonly ICalculator _calculator;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the GamesService class
@@ -73,16 +67,8 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
             _calculator = calculator;
         }
 
-        #endregion Constructors & Finalizers
-
-        #region Properties
-
         public static int SelectedSeason;
         public static WeekViewModel SelectedWeek;
-
-        #endregion Properties
-
-        #region Methods
 
         /// <summary>
         /// Adds a game to the underlying data store
@@ -99,7 +85,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
             {
                 _gameRepository.AddEntity(dbContext, newGame);
 
-                await AddEntityToTeams(dbContext, newGame);
+                await EditTeams(dbContext, newGame, Direction.Up);
 
                 try
                 {
@@ -107,82 +93,10 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("GamesService.AddEntity could not save changes to database: " + ex.Message);
+                    _log.Error("GamesService.AddEntity could not save changes to database: " + ex.Message);
                 }
             }
         }
-
-        ///// <summary>
-        ///// Applies the filter set in the GameFinderWindowViewModel
-        ///// </summary>
-        //public void ApplyFindEntityFilter()
-        //{
-        //    try
-        //    {
-        //        var dataContext = _context.GameFinder.DataContext as GameFinderWindowViewModel;
-        //        var guest = dataContext.GuestName;
-        //        var host = dataContext.HostName;
-        //        var games = (from game in _context.DbContextContext.Games
-        //                     where ((game.GuestName == guest) && (game.HostName == host) && (game.SeasonID == Globals.SelectedSeason))
-        //                     select game);
-
-        //        LoadEntities(games);
-
-        //        _context.IsFindEntityFilterApplied = true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // _globals.ShowExceptionMessage(ex);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Resets data in all data entry fields to their default values.
-        ///// </summary>
-        //public void ClearDataEntryControls()
-        //{
-        //    try
-        //    {
-        //        _context.GuestName = String.Empty;
-        //        _context.GuestScore = 0;
-        //        _context.HostName = String.Empty;
-        //        _context.HostScore = 0;
-        //        _context.IsPlayoffGame = false;
-        //        _context.Notes = String.Empty;
-
-        //        _context.AddEntityControlVisibility = Visibility.Visible;
-        //        _context.EditGameControlVisibility = Visibility.Hidden;
-        //        _context.RemoveEntityControlVisibility = Visibility.Hidden;
-
-        //        // Set focus to GuestName field.
-        //        _context.MoveFocusTo("GuestName");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // _globals.ShowExceptionMessage(ex);
-        //    }
-        //}
-
-        /////// <summary>
-        /////// Edits each seasonTeam's data (games, points for, points against) from playoff games.
-        /////// </summary>
-        /////// <param name = "winner"></param>
-        /////// <param name = "loser"></param>
-        /////// <param name = "operation"></param>
-        /////// <param name = "game"></param>
-        /////// <param name = "winnerScore"></param>
-        /////// <param name = "loserScore"></param>
-        ////public static void EditDataFromPlayoffGames(Team winner, Team loser, Operation operation, Game game)
-        ////{
-        ////	try
-        ////	{
-        ////		EditWinLossDataFromPlayoffGames(winner, loser, operation, game);
-        ////	}
-        ////	catch ( Exception ex )
-        ////	{
-        ////		// _globals.ShowExceptionMessage(ex);
-        ////	}
-        ////}
 
         /// <summary>
         /// Removes a game from the underlying data store
@@ -196,7 +110,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 var oldGame = await _gameRepository.FindEntityAsync(dbContext, id);
                 DecideWinnerAndLoser(oldGame);
 
-                await DeleteGameFromTeams(dbContext, oldGame);
+                await EditTeams(dbContext, oldGame, Direction.Down);
                 _gameRepository.RemoveEntity(dbContext, oldGame);
 
                 try
@@ -205,7 +119,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("GamesService.DeleteGame could not save changes to database: " + ex.Message);
+                    _log.Error("GamesService.DeleteGame could not save changes to database: " + ex.Message);
                 }
             }
         }
@@ -240,7 +154,8 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 var newGame = _dataMapper.MapToGame(newGameViewModel);
                 DecideWinnerAndLoser(newGame);
 
-                await EditGameInTeams(dbContext, oldGame, newGame);
+                await EditTeams(dbContext, oldGame, Direction.Down);
+                await EditTeams(dbContext, newGame, Direction.Up);
 
                 try
                 {
@@ -249,8 +164,129 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("GamesService.EditEntity could not save changes to database: " + ex.Message);
+                    _log.Error("GamesService.EditEntity could not save changes to database: " + ex.Message);
                 }
+            }
+        }
+
+        private void DecideWinnerAndLoser(Game game)
+        {
+            // Declare the winner to be the team that scored more points in the game.
+            if (game.GuestScore > game.HostScore)
+            {
+                game.WinnerName = game.GuestName;
+                game.WinnerScore = game.GuestScore;
+                game.LoserName = game.HostName;
+                game.LoserScore = game.HostScore;
+            }
+            else if (game.HostScore > game.GuestScore)
+            {
+                game.WinnerName = game.HostName;
+                game.WinnerScore = game.HostScore;
+                game.LoserName = game.GuestName;
+                game.LoserScore = game.GuestScore;
+            }
+            else
+            {
+                game.WinnerName = null;
+                game.LoserName = null;
+            }
+        }
+
+        private async Task EditTeams(ProFootballEntities dbContext, Game game, Direction direction)
+        {
+            Operation operation;
+
+            // Decide whether the teams need to be edited up or down.
+            // Up for new game, down then up for edited game, down for deleted game.
+            switch (direction)
+            {
+                case Direction.Up:
+                    operation = new Operation(_calculator.Add);
+                    break;
+
+                case Direction.Down:
+                    operation = new Operation(_calculator.Subtract);
+                    break;
+
+                default:
+                    throw new ArgumentException("direction");
+            }
+
+            try
+            {
+                await ProcessGame(dbContext, game, operation);
+            }
+            catch (ObjectNotFoundException ex)
+            {
+                _log.Error("ObjectNotFoundException in GamesService.EditTeams: " + ex.Message);
+                MessageBox.Show(ex.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async Task ProcessGame(ProFootballEntities dbContext, Game game, Operation operation)
+        {
+            await EditWinLossData(dbContext, game, operation);
+            await EditScoringData(dbContext, game, operation);
+        }
+
+        private async Task EditWinLossData(ProFootballEntities dbContext, Game game, Operation operation)
+        {
+            var seasonID = game.SeasonID;
+
+            var guestSeason = await _teamSeasonRepository.FindEntityAsync(dbContext, game.GuestName, seasonID);
+            guestSeason.Games = (int)operation(guestSeason.Games, 1);
+
+            var hostSeason = await _teamSeasonRepository.FindEntityAsync(dbContext, game.HostName, seasonID);
+            hostSeason.Games = (int)operation(hostSeason.Games, 1);
+
+            var winnerName = game.WinnerName;
+            var loserName = game.LoserName;
+            if (string.IsNullOrEmpty(winnerName) || string.IsNullOrEmpty(loserName))
+            {
+                guestSeason.Ties = (int)operation(guestSeason.Ties, 1);
+                hostSeason.Ties = (int)operation(hostSeason.Ties, 1);
+            }
+            else
+            {
+                var winnerSeason = await _teamSeasonRepository.FindEntityAsync(dbContext, winnerName, seasonID);
+                winnerSeason.Wins = (int)operation(winnerSeason.Wins, 1);
+
+                var loserSeason = await _teamSeasonRepository.FindEntityAsync(dbContext, loserName, seasonID);
+                loserSeason.Losses = (int)operation(loserSeason.Losses, 1);
+            }
+
+            guestSeason.WinningPercentage = _calculator.CalculateWinningPercentage(guestSeason);
+            hostSeason.WinningPercentage = _calculator.CalculateWinningPercentage(hostSeason);
+        }
+
+        private async Task EditScoringData(ProFootballEntities dbContext, Game game, Operation operation)
+        {
+            await EditScoringDataByTeamSeason(dbContext, game.GuestName, game.SeasonID, operation, game.GuestScore,
+                game.HostScore);
+
+            await EditScoringDataByTeamSeason(dbContext, game.HostName, game.SeasonID, operation, game.HostScore,
+                game.GuestScore);
+        }
+
+        private async Task EditScoringDataByTeamSeason(ProFootballEntities dbContext, string teamName, int seasonID,
+            Operation operation, double teamScore, double opponentScore)
+        {
+            var teamSeason = await _teamSeasonRepository.FindEntityAsync(dbContext, teamName, seasonID);
+
+            teamSeason.PointsFor = operation(teamSeason.PointsFor, teamScore);
+            teamSeason.PointsAgainst = operation(teamSeason.PointsAgainst, opponentScore);
+
+            var pythPct = _calculator.CalculatePythagoreanWinningPercentage(teamSeason);
+            if (pythPct == null)
+            {
+                teamSeason.PythagoreanWins = 0;
+                teamSeason.PythagoreanLosses = 0;
+            }
+            else
+            {
+                teamSeason.PythagoreanWins = _calculator.Multiply((double)pythPct, teamSeason.Games);
+                teamSeason.PythagoreanLosses = _calculator.Multiply((double)(1 - pythPct), teamSeason.Games);
             }
         }
 
@@ -291,22 +327,22 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 {
                     games = (await _gameRepository.GetEntitiesAsync(dbContext)).Where(g => g.SeasonID == seasonID);
 
-                    if (!String.IsNullOrEmpty(selectedWeek))
+                    if (!string.IsNullOrEmpty(selectedWeek))
                     {
                         games = games.Where(g => g.Week.ToString() == selectedWeek);
                     }
-                    if (!String.IsNullOrEmpty(guestSearchString))
+                    if (!string.IsNullOrEmpty(guestSearchString))
                     {
                         games = games.Where(g => g.GuestName.Contains(guestSearchString));
                     }
-                    if (!String.IsNullOrEmpty(hostSearchString))
+                    if (!string.IsNullOrEmpty(hostSearchString))
                     {
                         games = games.Where(g => g.HostName.Contains(hostSearchString));
                     }
                 }
                 catch (ArgumentNullException ex)
                 {
-                    Log.Error("ArgumentNullException in GamesService.GetEntitiesAsync: " + ex.Message);
+                    _log.Error("ArgumentNullException in GamesService.GetEntitiesAsync: " + ex.Message);
 
                     return null;
                 }
@@ -372,7 +408,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 }
                 catch (ArgumentNullException ex)
                 {
-                    Log.Error("ArgumentNullException in GamesService.GetEntitiesAsync: " + ex.Message);
+                    _log.Error("ArgumentNullException in GamesService.GetEntitiesAsync: " + ex.Message);
                     return null;
                 }
             }
@@ -384,57 +420,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
 
             return weekViewModels;
         }
-
-        ///// <summary>
-        ///// Edits each seasonTeam's data (games, points for, points against, adjusted points for, adjusted points against) from all games.
-        ///// </summary>
-        ///// <param name = "game"></param>
-        ///// <param name = "operation"></param>
-        ///// <summary>
-        ///// Loads _context GamesWindowViewModel object's Games collection.
-        ///// </summary>
-        ///// <param name = "games"></param>
-        //public void LoadEntities(IQueryable<Game> games)
-        //{
-        //    try
-        //    {
-        //        _context.Games = new ObservableCollection<Game>();
-        //        foreach (var game in games)
-        //        {
-        //            _context.Games.Add(game);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // _globals.ShowExceptionMessage(ex);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Populates data entry controls with data from selected game.
-        ///// </summary>
-        //public void PopulateDataEntryControls()
-        //{
-        //    try
-        //    {
-        //        var selectedGame = _context.SelectedGame;
-        //        _context.Week = selectedGame.Week;
-        //        _context.GuestName = selectedGame.GuestName;
-        //        _context.GuestScore = selectedGame.GuestScore;
-        //        _context.HostName = selectedGame.HostName;
-        //        _context.HostScore = selectedGame.HostScore;
-        //        _context.IsPlayoffGame = selectedGame.IsPlayoffGame;
-        //        _context.Notes = selectedGame.Notes;
-
-        //        _context.AddEntityControlVisibility = Visibility.Hidden;
-        //        _context.EditGameControlVisibility = Visibility.Visible;
-        //        _context.RemoveEntityControlVisibility = Visibility.Visible;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // _globals.ShowExceptionMessage(ex);
-        //    }
-        //}
 
         /// <summary>
         /// Sets the selected season
@@ -454,225 +439,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
         {
             SelectedWeek = new WeekViewModel(week);
         }
-
-        ///// <summary>
-        ///// Sorts the Games collection by Week ascending, then by HostName ascending.
-        ///// </summary>
-        //public void SortGamesByDefaultOrder()
-        //{
-        //    try
-        //    {
-        //        var games = (from game in _context.DbContextContext.Games
-        //                     where game.SeasonID == Globals.SelectedSeason
-        //                     orderby game.Week descending
-        //                     orderby game.ID descending
-        //                     select game).
-        //                     AsQueryable();
-
-        //        LoadEntities(games);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // _globals.ShowExceptionMessage(ex);
-        //    }
-        //}
-
-        #region Helpers
-
-        /// <summary>
-        /// Adds data of a new game to the database TeamSeasons table
-        /// </summary>
-        /// <param name="dbContext">The ProFootballEntities object representing the database to be updated</param>
-        /// <param name="game">The Game object from which data will be extracted</param>
-        private async Task AddEntityToTeams(ProFootballEntities dbContext, Game game)
-        {
-            //newGame = StoreNewGameValues(newGame);
-            await EditTeams(dbContext, game, Direction.Up);
-        }
-
-        /// <summary>
-        /// Decides this game's winner and loser.
-        /// </summary>
-        /// <param name="game">The Game object for which a winner and loser will be decided</param>
-        private void DecideWinnerAndLoser(Game game)
-        {
-            // Declare the winner to be the team that scored more points in the game.
-            if (game.GuestScore > game.HostScore)
-            {
-                game.WinnerName = game.GuestName;
-                game.WinnerScore = game.GuestScore;
-                game.LoserName = game.HostName;
-                game.LoserScore = game.HostScore;
-            }
-            else if (game.HostScore > game.GuestScore)
-            {
-                game.WinnerName = game.HostName;
-                game.WinnerScore = game.HostScore;
-                game.LoserName = game.GuestName;
-                game.LoserScore = game.GuestScore;
-            }
-            else
-            {
-                game.WinnerName = null;
-                game.LoserName = null;
-            }
-        }
-
-        /// <summary>
-        /// Removes data of an existing game from the database TeamSeasons table
-        /// </summary>
-        /// <param name="dbContext">The ProFootballEntities object representing the database to be updated</param>
-        /// <param name="oldGame">The Game object from which data will be extracted</param>
-        private async Task DeleteGameFromTeams(ProFootballEntities dbContext, Game oldGame)
-        {
-            await EditTeams(dbContext, oldGame, Direction.Down);
-        }
-
-        /// <summary>
-        /// Edits data of an existing game in the database TeamSeasons table
-        /// </summary>
-        /// <param name="dbContext">The ProFootballEntities object representing the database to be updated</param>
-        /// <param name="oldGame">The Game object from which data will be extracted for subtraction</param>
-        /// <param name="newGame">The Game object from which data will be extracted for addition</param>
-        private async Task EditGameInTeams(ProFootballEntities dbContext, Game oldGame, Game newGame)
-        {
-            await EditTeams(dbContext, oldGame, Direction.Down);
-            await EditTeams(dbContext, newGame, Direction.Up);
-        }
-
-        /// <summary>
-        /// Edits season scoring data for both of a game's contestants
-        /// </summary>
-        /// <param name="dbContext">The ProFootballEntities object representing the database to be updated</param>
-        /// <param name="game">The Game object from which data will be extracted</param>
-        /// <param name="operation">The arithmetic operation to be applied to the team's scoring data</param>
-        private async Task EditScoringData(ProFootballEntities dbContext, Game game, Operation operation)
-        {
-            await EditScoringDataByTeamSeason(dbContext, game.GuestName, game.SeasonID, operation, game.GuestScore,
-                game.HostScore);
-
-            await EditScoringDataByTeamSeason(dbContext, game.HostName, game.SeasonID, operation, game.HostScore,
-                game.GuestScore);
-        }
-
-        /// <summary>
-        /// Edits all scoring data for the specified Team
-        /// </summary>
-        /// <param name="dbContext">The ProFootballEntities object representing the database to be updated</param>
-        /// <param name="teamName">The name of the selected team</param>
-        /// <param name="seasonID">The ID of the selected season</param>
-        /// <param name="operation">The arithmetic operation to be applied to the team's scoring data</param>
-        /// <param name="teamScore">The team's game score</param>
-        /// <param name="opponentScore">The opponent's game score</param>
-        /// <returns></returns>
-        private async Task EditScoringDataByTeamSeason(ProFootballEntities dbContext, string teamName, int seasonID,
-            Operation operation, double teamScore, double opponentScore)
-        {
-            var teamSeason = await _teamSeasonRepository.FindEntityAsync(dbContext, teamName, seasonID);
-
-            teamSeason.PointsFor = operation(teamSeason.PointsFor, teamScore);
-            teamSeason.PointsAgainst = operation(teamSeason.PointsAgainst, opponentScore);
-
-            var pythPct = _calculator.CalculatePythagoreanWinningPercentage(teamSeason);
-            if (pythPct == null)
-            {
-                teamSeason.PythagoreanWins = 0;
-                teamSeason.PythagoreanLosses = 0;
-            }
-            else
-            {
-                teamSeason.PythagoreanWins = _calculator.Multiply((double)pythPct, teamSeason.Games);
-                teamSeason.PythagoreanLosses = _calculator.Multiply((double)(1 - pythPct), teamSeason.Games);
-            }
-        }
-
-        /// <summary>
-        /// Edits the DataModel's Teams table with data from the specified game.
-        /// </summary>
-        /// <param name="dbContext">The ProFootballEntities object representing the database to be updated</param>
-        /// <param name="game">The Game object from which data will be extracted</param>
-        /// <param name="direction">The direction, up or down, by which both teams' data will be adjusted</param>
-        private async Task EditTeams(ProFootballEntities dbContext, Game game, Direction direction)
-        {
-            Operation operation;
-
-            // Decide whether the teams need to be edited up or down.
-            // Up for new game, down then up for edited game, down for deleted game.
-            switch (direction)
-            {
-                case Direction.Up:
-                    operation = new Operation(_calculator.Add);
-                    break;
-
-                case Direction.Down:
-                    operation = new Operation(_calculator.Subtract);
-                    break;
-
-                default:
-                    throw new ArgumentException("direction");
-            }
-
-            try
-            {
-                await ProcessGame(dbContext, game, operation);
-            }
-            catch (ObjectNotFoundException ex)
-            {
-                Log.Error("ObjectNotFoundException in GamesService.EditTeams: " + ex.Message);
-                MessageBox.Show(ex.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        /// <summary>
-        /// Edits each seasonTeam's data (wins, losses, and ties) from all games.
-        /// </summary>
-        /// <param name="dbContext">The ProFootballEntities object representing the database to be updated</param>
-        /// <param name="game">The Game object from which data will be extracted</param>
-        /// <param name="operation">The arithmetic operation to be applied to the team's scoring data</param>
-        private async Task EditWinLossData(ProFootballEntities dbContext, Game game, Operation operation)
-        {
-            var seasonID = game.SeasonID;
-
-            var guestSeason = await _teamSeasonRepository.FindEntityAsync(dbContext, game.GuestName, seasonID);
-            guestSeason.Games = (int)operation(guestSeason.Games, 1);
-
-            var hostSeason = await _teamSeasonRepository.FindEntityAsync(dbContext, game.HostName, seasonID);
-            hostSeason.Games = (int)operation(hostSeason.Games, 1);
-
-            var winnerName = game.WinnerName;
-            var loserName = game.LoserName;
-            if (String.IsNullOrEmpty(winnerName) || String.IsNullOrEmpty(loserName))
-            {
-                guestSeason.Ties = (int)operation(guestSeason.Ties, 1);
-                hostSeason.Ties = (int)operation(hostSeason.Ties, 1);
-            }
-            else
-            {
-                var winnerSeason = await _teamSeasonRepository.FindEntityAsync(dbContext, winnerName, seasonID);
-                winnerSeason.Wins = (int)operation(winnerSeason.Wins, 1);
-
-                var loserSeason = await _teamSeasonRepository.FindEntityAsync(dbContext, loserName, seasonID);
-                loserSeason.Losses = (int)operation(loserSeason.Losses, 1);
-            }
-
-            guestSeason.WinningPercentage = _calculator.CalculateWinningPercentage(guestSeason);
-            hostSeason.WinningPercentage = _calculator.CalculateWinningPercentage(hostSeason);
-        }
-
-        /// <summary>
-        /// Processes a game
-        /// </summary>
-        /// <param name="dbContext">The ProFootballEntities object representing the database to be updated</param>
-        /// <param name="game">The Game object from which data will be extracted</param>
-        /// <param name="operation">The arithmetic operation to be applied to the team's scoring data</param>
-        private async Task ProcessGame(ProFootballEntities dbContext, Game game, Operation operation)
-        {
-            await EditWinLossData(dbContext, game, operation);
-            await EditScoringData(dbContext, game, operation);
-        }
-
-        #endregion Helpers
-
-        #endregion Methods
     }
 }

@@ -28,10 +28,8 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
     /// </summary>
     public class StoredProcedureRepository : IStoredProcedureRepository
     {
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        #region Methods
 
         /// <summary>
         /// Gets totals for a league's season
@@ -50,11 +48,11 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
             }
             catch (ArgumentException ex)
             {
-                Log.Error("Argument exception in StoredProcedureRepository.GetLeagueSeasonTotals: " + ex.Message);
+                _log.Error("Argument exception in StoredProcedureRepository.GetLeagueSeasonTotals: " + ex.Message);
             }
             catch (InvalidOperationException ex)
             {
-                Log.Error("Invalid operation in StoredProcedureRepository.GetLeagueSeasonTotals: " + ex.Message);
+                _log.Error("Invalid operation in StoredProcedureRepository.GetLeagueSeasonTotals: " + ex.Message);
             }
 
             return retVal;
@@ -77,11 +75,11 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
             }
             catch (ArgumentException ex)
             {
-                Log.Error("Argument exception in StoredProcedureRepository.GetSeasonStandings: " + ex.Message);
+                _log.Error("Argument exception in StoredProcedureRepository.GetSeasonStandings: " + ex.Message);
             }
             catch (InvalidOperationException ex)
             {
-                Log.Error("Invalid operation in StoredProcedureRepository.GetSeasonStandings: " + ex.Message);
+                _log.Error("Invalid operation in StoredProcedureRepository.GetSeasonStandings: " + ex.Message);
             }
 
             return retVal;
@@ -104,12 +102,12 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
             }
             catch (ArgumentException ex)
             {
-                Log.Error(
+                _log.Error(
                     "Argument exception in StoredProcedureRepository.GetTeamSeasonScheduleAverages: " + ex.Message);
             }
             catch (InvalidOperationException ex)
             {
-                Log.Error("Invalid operation in StoredProcedureRepository.GetTeamSeasonScheduleAverages: " +
+                _log.Error("Invalid operation in StoredProcedureRepository.GetTeamSeasonScheduleAverages: " +
                           ex.Message);
             }
 
@@ -133,12 +131,12 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
             }
             catch (ArgumentException ex)
             {
-                Log.Error(
+                _log.Error(
                     "Argument exception in StoredProcedureRepository.GetTeamSeasonScheduleProfile: " + ex.Message);
             }
             catch (InvalidOperationException ex)
             {
-                Log.Error("Invalid operation in StoredProcedureRepository.GetTeamSeasonScheduleProfile: " + ex.Message);
+                _log.Error("Invalid operation in StoredProcedureRepository.GetTeamSeasonScheduleProfile: " + ex.Message);
             }
 
             return retVal;
@@ -161,16 +159,14 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
             }
             catch (ArgumentException ex)
             {
-                Log.Error("Argument exception in StoredProcedureRepository.GetTeamSeasonScheduleTotals: " + ex.Message);
+                _log.Error("Argument exception in StoredProcedureRepository.GetTeamSeasonScheduleTotals: " + ex.Message);
             }
             catch (InvalidOperationException ex)
             {
-                Log.Error("Invalid operation in StoredProcedureRepository.GetTeamSeasonScheduleTotals: " + ex.Message);
+                _log.Error("Invalid operation in StoredProcedureRepository.GetTeamSeasonScheduleTotals: " + ex.Message);
             }
 
             return retVal;
         }
-
-        #endregion Methods
     }
 }

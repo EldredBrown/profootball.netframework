@@ -10,8 +10,6 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Repositories
     [TestFixture]
     public class StoredProcedureRepositoryTest
     {
-        #region Test Cases
-
         [TestCase]
         public void GetLeagueSeasonTotals_HappyPath()
         {
@@ -636,7 +634,5 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Repositories
 
             // Assert
         }
-
-        #endregion Test Cases
     }
 }

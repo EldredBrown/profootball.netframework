@@ -74,7 +74,7 @@ namespace System.ComponentModel.DataAnnotations
         /// </returns>
         public override string FormatErrorMessage(string name)
         {
-            return String.Format(CultureInfo.CurrentCulture, ErrorMessageString, name,
+            return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name,
                 OtherPropertyDisplayName ?? OtherProperty);
         }
 
@@ -95,14 +95,14 @@ namespace System.ComponentModel.DataAnnotations
             PropertyInfo otherPropertyInfo = validationContext.ObjectType.GetProperty(OtherProperty);
             if (otherPropertyInfo == null)
             {
-                return new ValidationResult(String.Format(CultureInfo.CurrentCulture, "Property '{0}' is undefined.",
+                return new ValidationResult(string.Format(CultureInfo.CurrentCulture, "Property '{0}' is undefined.",
                     OtherProperty));
             }
 
             var otherPropertyValue = otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
             if (Equals(value, otherPropertyValue))
             {
-                if (String.IsNullOrEmpty(OtherPropertyDisplayName))
+                if (string.IsNullOrEmpty(OtherPropertyDisplayName))
                 {
                     OtherPropertyDisplayName = GetDisplayNameForProperty(validationContext.ObjectType, OtherProperty);
                 }
@@ -117,7 +117,7 @@ namespace System.ComponentModel.DataAnnotations
             PropertyDescriptor property = typeDescriptor.GetProperties().Find(propertyName, true);
             if (property == null)
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, "Property '{0}' not found.",
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Property '{0}' not found.",
                     containerType.FullName, propertyName));
             }
             IEnumerable<Attribute> attributes = property.Attributes.Cast<Attribute>();

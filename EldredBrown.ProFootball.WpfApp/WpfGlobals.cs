@@ -103,8 +103,6 @@ namespace EldredBrown.ProFootball.WpfApp
                 "Tie scores are not permitted for playoff games.";
         }
 
-        #region Methods
-
         /// <summary>
         /// Shows a DataValidationException message.
         /// </summary>
@@ -123,7 +121,5 @@ namespace EldredBrown.ProFootball.WpfApp
         {
             MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
-        #endregion Methods
     }
 }

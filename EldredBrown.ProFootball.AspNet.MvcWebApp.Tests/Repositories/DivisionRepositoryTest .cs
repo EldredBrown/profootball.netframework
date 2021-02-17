@@ -12,8 +12,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Repositories
     [TestFixture]
     public class DivisionRepositoryTest
     {
-        #region Test Cases
-
         [TestCase]
         public void AddDivision()
         {
@@ -313,7 +311,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Repositories
 
             // Assert
         }
-
-        #endregion Test Cases
     }
 }

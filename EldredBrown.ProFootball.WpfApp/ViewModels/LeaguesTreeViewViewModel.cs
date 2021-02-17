@@ -19,14 +19,8 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
     /// </summary>
     public class LeaguesTreeViewViewModel : ViewModelBase, ILeaguesTreeViewViewModel
     {
-        #region Member Fields
-
         private readonly ISeasonStandingsControlViewModel _parentControl;
         private readonly ISeasonStandingsControlService _controlService;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the LeaguesTreeViewViewModel class
@@ -56,10 +50,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
                 _sharedService.ShowExceptionMessage(ex);
             }
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets this control's leagues collection.
@@ -98,7 +88,5 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
                 _parentControl.Standings = value;
             }
         }
-
-        #endregion Properties
     }
 }

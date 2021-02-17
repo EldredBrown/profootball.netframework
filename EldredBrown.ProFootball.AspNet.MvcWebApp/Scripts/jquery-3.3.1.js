@@ -67,7 +67,7 @@ var hasOwn = class2type.hasOwnProperty;
 
 var fnToString = hasOwn.toString;
 
-var ObjectFunctionString = fnToString.call( Object );
+var ObjectFunctionString = fnTostring.call( Object );
 
 var support = {};
 
@@ -119,7 +119,7 @@ function toType( obj ) {
 
 	// Support: Android <=2.3 only (functionish RegExp)
 	return typeof obj === "object" || typeof obj === "function" ?
-		class2type[ toString.call( obj ) ] || "object" :
+		class2type[ tostring.call( obj ) ] || "object" :
 		typeof obj;
 }
 /* global Symbol */
@@ -312,7 +312,7 @@ jQuery.extend( {
 
 		// Detect obvious negatives
 		// Use toString instead of jQuery.type to catch host objects
-		if ( !obj || toString.call( obj ) !== "[object Object]" ) {
+		if ( !obj || tostring.call( obj ) !== "[object Object]" ) {
 			return false;
 		}
 
@@ -325,7 +325,7 @@ jQuery.extend( {
 
 		// Objects with prototype are plain iff they were constructed by a global Object function
 		Ctor = hasOwn.call( proto, "constructor" ) && proto.constructor;
-		return typeof Ctor === "function" && fnToString.call( Ctor ) === ObjectFunctionString;
+		return typeof Ctor === "function" && fnTostring.call( Ctor ) === ObjectFunctionString;
 	},
 
 	isEmptyObject: function( obj ) {
@@ -644,9 +644,9 @@ var i,
 			escaped :
 			high < 0 ?
 				// BMP codepoint
-				String.fromCharCode( high + 0x10000 ) :
+				string.fromCharCode( high + 0x10000 ) :
 				// Supplemental Plane codepoint (surrogate pair)
-				String.fromCharCode( high >> 10 | 0xD800, high & 0x3FF | 0xDC00 );
+				string.fromCharCode( high >> 10 | 0xD800, high & 0x3FF | 0xDC00 );
 	},
 
 	// CSS string/identifier serialization

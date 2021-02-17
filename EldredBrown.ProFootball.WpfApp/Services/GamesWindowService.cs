@@ -23,9 +23,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
     /// </summary>
     public class GamesWindowService : IGamesWindowService
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ISharedService _sharedService;
@@ -34,10 +32,6 @@ namespace EldredBrown.ProFootball.WpfApp.Services
         private readonly IRepository<WeekCount> _weekCountRepository;
         private readonly ProFootballEntities _dbContext;
         private readonly ICalculator _calculator;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the GamesWindowService class
@@ -61,10 +55,6 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             _calculator = calculator;
         }
 
-        #endregion Constructors & Finalizers
-
-        #region Methods
-
         /// <summary>
         /// Adds a game to the database and updates the Teams table appropriately
         /// </summary>
@@ -77,13 +67,13 @@ namespace EldredBrown.ProFootball.WpfApp.Services
 
                 _gameRepository.AddEntity(newGame);
 
-                AddGameToTeams(newGame);
+                EditTeams(newGame, Direction.Up);
 
                 _sharedService.SaveChanges(_dbContext);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
                 throw;
             }
         }
@@ -111,14 +101,16 @@ namespace EldredBrown.ProFootball.WpfApp.Services
                 _gameRepository.EditEntity(selectedGame);
 
                 DecideWinnerAndLoser(oldGame);
+                EditTeams(oldGame, Direction.Down);
+
                 DecideWinnerAndLoser(newGame);
-                EditGameInTeams(oldGame, newGame);
+                EditTeams(newGame, Direction.Up);
 
                 _sharedService.SaveChanges(_dbContext);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
                 throw;
             }
         }
@@ -134,96 +126,16 @@ namespace EldredBrown.ProFootball.WpfApp.Services
                 oldGame = _gameRepository.FindEntity(oldGame.ID);
 
                 DecideWinnerAndLoser(oldGame);
-                DeleteGameFromTeams(oldGame);
+                EditTeams(oldGame, Direction.Down);
 
                 _gameRepository.RemoveEntity(oldGame);
                 _sharedService.SaveChanges(_dbContext);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
                 throw;
             }
-        }
-
-        /////// <summary>
-        /////// Edits each teamSeason's data (games, points for, points against) from playoff games.
-        /////// </summary>
-        /////// <param name = "winner"></param>
-        /////// <param name = "loser"></param>
-        /////// <param name = "operation"></param>
-        /////// <param name = "currentGame"></param>
-        /////// <param name = "winnerScore"></param>
-        /////// <param name = "loserScore"></param>
-        ////public static void EditDataFromPlayoffGames(Team winner, Team loser, Operation operation, IGame currentGame)
-        ////{
-        ////	try
-        ////	{
-        ////		EditWinLossDataFromPlayoffGames(winner, loser, operation, currentGame);
-        ////	}
-        ////	catch ( Exception ex )
-        ////	{
-        ////		_WpfGlobals.ShowExceptionMessage(ex);
-        ////	}
-        ////}
-
-        /// <summary>
-        /// Gets from the data store all games that match the specified filter criteria
-        /// </summary>
-        /// <param name="seasonID">The ID of the season in which the game was played</param>
-        /// <param name="guestName">The guest of the game to fetch</param>
-        /// <param name="hostName">Thos host of the game to fetch</param>
-        /// <returns></returns>
-        public IEnumerable<Game> GetGames(int seasonID, string guestName = null, string hostName = null)
-        {
-            try
-            {
-                var games = _gameRepository.GetEntities().Where(g => g.SeasonID == seasonID);
-                if (!String.IsNullOrEmpty(guestName))
-                {
-                    games = games.Where(g => g.GuestName == guestName);
-                }
-                if (!String.IsNullOrEmpty(hostName))
-                {
-                    games = games.Where(g => g.HostName == hostName);
-                }
-                games = games.OrderByDescending(g => g.Week).ThenByDescending(g => g.ID);
-
-                return games;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex.Message);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the week count from the repository
-        /// </summary>
-        /// <returns></returns>
-        public int GetWeekCount()
-        {
-            try
-            {
-                return _weekCountRepository.GetEntities().FirstOrDefault().Count;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex.Message);
-                throw;
-            }
-        }
-
-        #region Helpers
-
-        /// <summary>
-        /// Adds data of a new game to the database TeamSeasons table
-        /// </summary>
-        /// <param name="game">The Game object from which data will be extracted</param>
-        private void AddGameToTeams(Game newGame)
-        {
-            EditTeams(newGame, Direction.Up);
         }
 
         /// <summary>
@@ -255,23 +167,116 @@ namespace EldredBrown.ProFootball.WpfApp.Services
         }
 
         /// <summary>
-        /// Removes data of an existing game from the database TeamSeasons table
+        /// Edits the DataModel's Teams table with data from the specified game.
         /// </summary>
-        /// <param name="oldGame">The Game object from which data will be extracted</param>
-        private void DeleteGameFromTeams(Game oldGame)
+        /// <param name="game">The Game object from which data will be extracted</param>
+        /// <param name="direction">The direction, up or down, by which both teams' data will be adjusted</param>
+        private void EditTeams(Game game, Direction direction)
         {
-            EditTeams(oldGame, Direction.Down);
+            Operation operation;
+
+            // Decide whether the teams need to be edited up or down.
+            // Up for new game, down then up for edited game, down for deleted game.
+            switch (direction)
+            {
+                case Direction.Up:
+                    operation = new Operation(_calculator.Add);
+                    break;
+
+                case Direction.Down:
+                    operation = new Operation(_calculator.Subtract);
+                    break;
+
+                default:
+                    throw new ArgumentException("direction");
+            }
+
+            try
+            {
+                ProcessGame(game, operation);
+            }
+            catch (ObjectNotFoundException ex)
+            {
+                _log.Error("ObjectNotFoundException in GamesService.EditTeams: " + ex.Message);
+                _sharedService.ShowExceptionMessage(ex, "ObjectNotFoundException");
+            }
         }
 
         /// <summary>
-        /// Edits data of an existing game in the database TeamSeasons table
+        /// Processes a game
         /// </summary>
-        /// <param name="oldGame">The Game object from which data will be extracted for subtraction</param>
-        /// <param name="newGame">The Game object from which data will be extracted for addition</param>
-        private void EditGameInTeams(Game oldGame, Game newGame)
+        /// <param name="game">The Game object from which data will be extracted</param>
+        /// <param name="operation">The arithmetic operation to be applied to the team's scoring data</param>
+        private void ProcessGame(Game game, Operation operation)
         {
-            EditTeams(oldGame, Direction.Down);
-            EditTeams(newGame, Direction.Up);
+            EditWinLossData(game, operation);
+            EditScoringData(game, operation);
+        }
+
+        /// <summary>
+        /// Edits each seasonTeam's data (wins, losses, and ties) from all games.
+        /// </summary>
+        /// <param name="game">The Game object from which data will be extracted</param>
+        /// <param name="operation">The arithmetic operation to be applied to the team's scoring data</param>
+        private void EditWinLossData(Game game, Operation operation)
+        {
+            var seasonID = game.SeasonID;
+
+            // Get guest's season stats.
+            var guestSeason = _teamSeasonRepository.FindEntity(game.GuestName, seasonID);
+            if (guestSeason != null)
+            {
+                guestSeason.Games = (int)operation(guestSeason.Games, 1);
+            }
+
+            // Get host's season stats.
+            var hostSeason = _teamSeasonRepository.FindEntity(game.HostName, seasonID);
+            if (hostSeason != null)
+            {
+                hostSeason.Games = (int)operation(hostSeason.Games, 1);
+            }
+
+            var winnerName = game.WinnerName;
+            var loserName = game.LoserName;
+            if (string.IsNullOrEmpty(winnerName) || string.IsNullOrEmpty(loserName))
+            {
+                // Game is a tie.
+                if (guestSeason != null)
+                {
+                    guestSeason.Ties = (int)operation(guestSeason.Ties, 1);
+                }
+
+                if (hostSeason != null)
+                {
+                    hostSeason.Ties = (int)operation(hostSeason.Ties, 1);
+                }
+            }
+            else
+            {
+                // Game is not a tie (has a winner and a loser).
+                var winnerSeason = _teamSeasonRepository.FindEntity(game.WinnerName, seasonID);
+                if (winnerSeason != null)
+                {
+                    winnerSeason.Wins = (int)operation(winnerSeason.Wins, 1);
+                }
+
+                var loserSeason = _teamSeasonRepository.FindEntity(game.LoserName, seasonID);
+                if (loserSeason != null)
+                {
+                    loserSeason.Losses = (int)operation(loserSeason.Losses, 1);
+                }
+            }
+
+            // Calculate each team's season winning percentage.
+            if (guestSeason != null)
+            {
+                guestSeason.WinningPercentage = _calculator.CalculateWinningPercentage(guestSeason);
+            }
+
+            if (hostSeason != null)
+            {
+                hostSeason.WinningPercentage = _calculator.CalculateWinningPercentage(hostSeason);
+            }
         }
 
         /// <summary>
@@ -318,120 +323,51 @@ namespace EldredBrown.ProFootball.WpfApp.Services
         }
 
         /// <summary>
-        /// Edits the DataModel's Teams table with data from the specified game.
+        /// Gets from the data store all games that match the specified filter criteria
         /// </summary>
-        /// <param name="game">The Game object from which data will be extracted</param>
-        /// <param name="direction">The direction, up or down, by which both teams' data will be adjusted</param>
-        private void EditTeams(Game game, Direction direction)
+        /// <param name="seasonID">The ID of the season in which the game was played</param>
+        /// <param name="guestName">The guest of the game to fetch</param>
+        /// <param name="hostName">Thos host of the game to fetch</param>
+        /// <returns></returns>
+        public IEnumerable<Game> GetGames(int seasonID, string guestName = null, string hostName = null)
         {
-            Operation operation;
-
-            // Decide whether the teams need to be edited up or down.
-            // Up for new game, down then up for edited game, down for deleted game.
-            switch (direction)
-            {
-                case Direction.Up:
-                    operation = new Operation(_calculator.Add);
-                    break;
-
-                case Direction.Down:
-                    operation = new Operation(_calculator.Subtract);
-                    break;
-
-                default:
-                    throw new ArgumentException("direction");
-            }
-
             try
             {
-                ProcessGame(game, operation);
+                var games = _gameRepository.GetEntities().Where(g => g.SeasonID == seasonID);
+                if (!string.IsNullOrEmpty(guestName))
+                {
+                    games = games.Where(g => g.GuestName == guestName);
+                }
+                if (!string.IsNullOrEmpty(hostName))
+                {
+                    games = games.Where(g => g.HostName == hostName);
+                }
+                games = games.OrderByDescending(g => g.Week).ThenByDescending(g => g.ID);
+
+                return games;
             }
-            catch (ObjectNotFoundException ex)
+            catch (Exception ex)
             {
-                Log.Error("ObjectNotFoundException in GamesService.EditTeams: " + ex.Message);
-                _sharedService.ShowExceptionMessage(ex, "ObjectNotFoundException");
+                _log.Error(ex.Message);
+                throw;
             }
         }
 
         /// <summary>
-        /// Edits each seasonTeam's data (wins, losses, and ties) from all games.
+        /// Gets the week count from the repository
         /// </summary>
-        /// <param name="game">The Game object from which data will be extracted</param>
-        /// <param name="operation">The arithmetic operation to be applied to the team's scoring data</param>
-        private void EditWinLossData(Game game, Operation operation)
+        /// <returns></returns>
+        public int GetWeekCount()
         {
-            var seasonID = game.SeasonID;
-
-            // Get guest's season stats.
-            var guestSeason = _teamSeasonRepository.FindEntity(game.GuestName, seasonID);
-            if (guestSeason != null)
+            try
             {
-                guestSeason.Games = (int)operation(guestSeason.Games, 1);
+                return _weekCountRepository.GetEntities().FirstOrDefault().Count;
             }
-
-            // Get host's season stats.
-            var hostSeason = _teamSeasonRepository.FindEntity(game.HostName, seasonID);
-            if (hostSeason != null)
+            catch (Exception ex)
             {
-                hostSeason.Games = (int)operation(hostSeason.Games, 1);
-            }
-
-            var winnerName = game.WinnerName;
-            var loserName = game.LoserName;
-            if (String.IsNullOrEmpty(winnerName) || String.IsNullOrEmpty(loserName))
-            {
-                // Game is a tie.
-                if (guestSeason != null)
-                {
-                    guestSeason.Ties = (int)operation(guestSeason.Ties, 1);
-                }
-
-                if (hostSeason != null)
-                {
-                    hostSeason.Ties = (int)operation(hostSeason.Ties, 1);
-                }
-            }
-            else
-            {
-                // Game is not a tie (has a winner and a loser).
-                var winnerSeason = _teamSeasonRepository.FindEntity(game.WinnerName, seasonID);
-                if (winnerSeason != null)
-                {
-                    winnerSeason.Wins = (int)operation(winnerSeason.Wins, 1);
-                }
-
-                var loserSeason = _teamSeasonRepository.FindEntity(game.LoserName, seasonID);
-                if (loserSeason != null)
-                {
-                    loserSeason.Losses = (int)operation(loserSeason.Losses, 1);
-                }
-            }
-
-            // Calculate each team's season winning percentage.
-            if (guestSeason != null)
-            {
-                guestSeason.WinningPercentage = _calculator.CalculateWinningPercentage(guestSeason);
-            }
-
-            if (hostSeason != null)
-            {
-                hostSeason.WinningPercentage = _calculator.CalculateWinningPercentage(hostSeason);
+                _log.Error(ex.Message);
+                throw;
             }
         }
-
-        /// <summary>
-        /// Processes a game
-        /// </summary>
-        /// <param name="game">The Game object from which data will be extracted</param>
-        /// <param name="operation">The arithmetic operation to be applied to the team's scoring data</param>
-        private void ProcessGame(Game game, Operation operation)
-        {
-            EditWinLossData(game, operation);
-            EditScoringData(game, operation);
-        }
-
-        #endregion Helpers
-
-        #endregion Methods
     }
 }

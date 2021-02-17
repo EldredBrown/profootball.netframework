@@ -7,8 +7,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Controllers
     [TestFixture]
     public class HomeControllerTest
     {
-        #region Test Cases
-
         [TestCase]
         public void Index()
         {
@@ -48,7 +46,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Controllers
             // Assert
             Assert.IsInstanceOf<ViewResult>(result);
         }
-
-        #endregion Test Cases
     }
 }

@@ -15,15 +15,9 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
     [TestFixture]
     public class GamesWindowViewModelTest
     {
-        #region Member Fields
-
         private ISharedService _sharedService;
         private IGamesWindowService _controlService;
         private IGameFinderWindow _gameFinderWindow;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -34,10 +28,6 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             _gameFinderWindow = A.Fake<IGameFinderWindow>();
             _gameFinderWindow.DataContext = A.Fake<IGameFinderWindowViewModel>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public void SelectedGame_ValueEqualsNull_ClearsDataEntryControls()
@@ -52,12 +42,12 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             // Assert
             #region ClearDataEntryControls();
 
-            Assert.AreEqual(String.Empty, viewModel.GuestName);
+            Assert.AreEqual(string.Empty, viewModel.GuestName);
             Assert.AreEqual(0, viewModel.GuestScore);
-            Assert.AreEqual(String.Empty, viewModel.HostName);
+            Assert.AreEqual(string.Empty, viewModel.HostName);
             Assert.AreEqual(0, viewModel.HostScore);
             Assert.IsFalse(viewModel.IsPlayoffGame);
-            Assert.AreEqual(String.Empty, viewModel.Notes);
+            Assert.AreEqual(string.Empty, viewModel.Notes);
 
             Assert.AreEqual(Visibility.Visible, viewModel.AddGameControlVisibility);
             Assert.AreEqual(Visibility.Hidden, viewModel.EditGameControlVisibility);
@@ -132,7 +122,7 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             var viewModel = new GamesWindowViewModel(_sharedService, _controlService, _gameFinderWindow)
             {
                 // Set up needed infrastructure of class under test.
-                GuestName = String.Empty,
+                GuestName = string.Empty,
                 HostName = "Host"
             };
 
@@ -220,7 +210,7 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             {
                 // Set up needed infrastructure of class under test.
                 GuestName = "Guest",
-                HostName = String.Empty
+                HostName = string.Empty
             };
 
             // Set up needed infrastructure of class under test.
@@ -586,18 +576,8 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             viewModel.EditGameCommand.Execute(null);
 
             // Assert
-            #region ValidateDataEntry();
-
-            var seasonID = (int)WpfGlobals.SelectedSeason;
-            A.CallTo(() => _sharedService.FindTeamSeason(viewModel.GuestName, seasonID)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _sharedService.FindTeamSeason(viewModel.HostName, seasonID)).MustHaveHappenedOnceExactly();
-
-            #endregion ValidateDataEntry();
-
             A.CallTo(() => _controlService.EditGame(A<Game>.That.IsEqualTo(oldGame), A<Game>.That.IsEqualTo(newGame)))
                 .MustHaveHappenedOnceExactly();
-
-            #region ApplyFindGameFilter();
 
             var dataContext = viewModel.GameFinder.DataContext as IGameFinderWindowViewModel;
 
@@ -606,8 +586,6 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
 
             Assert.IsInstanceOf<ReadOnlyCollection<Game>>(viewModel.Games);
             Assert.IsTrue(viewModel.IsFindGameFilterApplied);
-
-            #endregion ApplyFindGameFilter();
         }
 
         [TestCase]
@@ -664,14 +642,6 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             viewModel.EditGameCommand.Execute(null);
 
             // Assert
-            #region ValidateDataEntry();
-
-            var seasonID = (int)WpfGlobals.SelectedSeason;
-            A.CallTo(() => _sharedService.FindTeamSeason(viewModel.GuestName, seasonID)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _sharedService.FindTeamSeason(viewModel.HostName, seasonID)).MustHaveHappenedOnceExactly();
-
-            #endregion ValidateDataEntry();
-
             A.CallTo(() => _controlService.EditGame(A<Game>.That.IsEqualTo(oldGame), A<Game>.That.IsEqualTo(newGame)))
                 .MustHaveHappenedOnceExactly();
             A.CallTo(() => _controlService.GetGames((int)WpfGlobals.SelectedSeason, null, null))
@@ -942,7 +912,5 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

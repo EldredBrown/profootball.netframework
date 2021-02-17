@@ -13,17 +13,11 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
     [TestFixture]
     public class SeasonStandingsControlServiceTest
     {
-        #region Member Fields
-
         private ISharedService _sharedService;
         private IRepository<League> _leagueRepository;
         private IRepository<Conference> _conferenceRepository;
         private IRepository<Division> _divisionRepository;
         private IStoredProcedureRepository _storedProcedureRepository;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -34,10 +28,6 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             _divisionRepository = A.Fake<IRepository<Division>>();
             _storedProcedureRepository = A.Fake<IStoredProcedureRepository>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public void GetLeaguesBySeason_HappyPath()
@@ -659,7 +649,5 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

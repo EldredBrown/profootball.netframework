@@ -12,13 +12,7 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
     /// </summary>
     public class DivisionNodeViewModel : TreeViewItemViewModel
 	{
-        #region Member Fields
-
         private readonly Division _division;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the DivisionViewModel class.
@@ -35,10 +29,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             // Assign argument values to member fields.
             _division = division ?? throw new ArgumentNullException("division");
 		}
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets the name of the Division instance wrapped inside this ViewModel.
@@ -72,10 +62,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
         }
 
-        #endregion Properties
-
-        #region Methods
-
         /// <summary>
         /// Shows the standings for the selected division.
         /// </summary>
@@ -98,7 +84,5 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
                 _sharedService.ShowExceptionMessage(ex.InnerException);
             }
         }
-
-        #endregion Methods
     }
 }

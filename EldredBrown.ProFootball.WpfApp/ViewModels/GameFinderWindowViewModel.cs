@@ -17,15 +17,9 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
     /// </summary>
     public class GameFinderWindowViewModel : ViewModelBase, IGameFinderWindowViewModel
     {
-        #region Constructors & Finalizers
-
         public GameFinderWindowViewModel(ISharedService sharedService)
             : base(sharedService)
         {}
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets this window's guest value.
@@ -67,10 +61,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
         }
 
-        #endregion Properties
-
-        #region Commands
-
         /// <summary>
         /// Views the Games database table.
         /// </summary>
@@ -91,27 +81,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             MoveFocusTo("GuestName");
         }
 
-        #endregion Commands
-
-        #region Methods
-
-        /// <summary>
-        /// Validates data entered into the data entry controls.
-        /// </summary>
-        public void ValidateDataEntry()
-        {
-            if (String.IsNullOrWhiteSpace(GuestName) || String.IsNullOrWhiteSpace(HostName))
-            {
-                throw new DataValidationException(WpfGlobals.Constants.BothTeamsNeededErrorMessage);
-            }
-            else if (GuestName == HostName)
-            {
-                throw new DataValidationException(WpfGlobals.Constants.DifferentTeamsNeededErrorMessage);
-            }
-        }
-
-        #region Helpers
-
         /// <summary>
         /// Moves the focus to the specified property
         /// </summary>
@@ -121,8 +90,19 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             OnMoveFocus(focusedProperty);
         }
 
-        #endregion Helpers
-
-        #endregion Methods
+        /// <summary>
+        /// Validates data entered into the data entry controls.
+        /// </summary>
+        public void ValidateDataEntry()
+        {
+            if (string.IsNullOrWhiteSpace(GuestName) || string.IsNullOrWhiteSpace(HostName))
+            {
+                throw new DataValidationException(WpfGlobals.Constants.BothTeamsNeededErrorMessage);
+            }
+            else if (GuestName == HostName)
+            {
+                throw new DataValidationException(WpfGlobals.Constants.DifferentTeamsNeededErrorMessage);
+            }
+        }
     }
 }

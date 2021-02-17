@@ -12,7 +12,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
     /// </summary>
     public class GamePredictorController : Controller
     {
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IGamePredictorService _service;
@@ -52,7 +52,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in GamePredictorController.PredictGame (GET): " + ex.Message);
+                _log.Error("Exception in GamePredictorController.PredictGame (GET): " + ex.Message);
                 throw;
             }
         }
@@ -86,7 +86,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in GamePredictorController.PredictGame (POST): " + ex.Message);
+                _log.Error("Exception in GamePredictorController.PredictGame (POST): " + ex.Message);
                 throw;
             }
         }
@@ -107,7 +107,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in GamePredictorController.ApplyFilter: " + ex.Message);
+                _log.Error("Exception in GamePredictorController.ApplyFilter: " + ex.Message);
                 throw;
             }
         }

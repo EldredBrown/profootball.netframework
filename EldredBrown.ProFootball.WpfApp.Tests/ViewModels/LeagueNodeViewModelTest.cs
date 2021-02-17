@@ -13,17 +13,11 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
     [TestFixture]
     public class LeagueNodeViewModelTest
     {
-        #region Member Fields
-
         private ILeaguesTreeViewViewModel _parentControl;
         private ISeasonStandingsControlService _controlService;
         private League _league;
         private IRepository<Conference> _conferenceRepository;
         private ISharedService _sharedService;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -34,10 +28,6 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             _conferenceRepository = A.Fake<IRepository<Conference>>();
             _sharedService = A.Fake<ISharedService>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public void IsExpanded_HasDummyChildAndConferencesCountGreaterThanZero_RemovesDummyChildAndLoadsChildren()
@@ -213,7 +203,5 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

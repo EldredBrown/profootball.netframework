@@ -12,16 +12,10 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
     /// </summary>
     public class GameRepository : IRepository<Game>
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ProFootballEntities _dbContext;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the GameRepository class
@@ -40,10 +34,6 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             _dbContext.Dispose();
         }
 
-        #endregion Constructors & Finalizers
-
-        #region IRepository<Game> Implementation
-
         /// <summary>
         /// Adds a Game entity to the data store
         /// </summary>
@@ -53,13 +43,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Adding Game entity to data store");
+                _log.Info("Adding Game entity to data store");
 
                 return _dbContext.Games.Add(game);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
                 throw;
             }
         }
@@ -73,13 +63,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Adding Game entities to data store");
+                _log.Info("Adding Game entities to data store");
 
                 return _dbContext.Games.AddRange(games);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -93,13 +83,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Creating Game entity");
+                _log.Info("Creating Game entity");
 
                 return _dbContext.Games.Create();
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -113,13 +103,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Updating Game entity in data store");
+                _log.Info("Updating Game entity in data store");
 
                 _dbContext.SetModified(game);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -155,24 +145,24 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
                 {
                     var errMsg = $"Game entity not found in data store\nID: {id}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info($"Game entity found in data store\nID: {id}");
+                _log.Info($"Game entity found in data store\nID: {id}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"Game entity not found in data store\nID: {id}";
 
-                Log.Error($"{errMsg}\n{ex.Message}");
+                _log.Error($"{errMsg}\n{ex.Message}");
 
                 throw new ObjectNotFoundException(errMsg);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -188,13 +178,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Getting Game entities from data store");
+                _log.Info("Getting Game entities from data store");
 
                 return _dbContext.Games;
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
                 throw;
             }
         }
@@ -208,13 +198,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Removing Game entity from data store");
+                _log.Info("Removing Game entity from data store");
 
                 return _dbContext.Games.Remove(game);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -229,18 +219,16 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Removing Game entities from data store");
+                _log.Info("Removing Game entities from data store");
 
                 return _dbContext.Games.RemoveRange(games);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
         }
-
-        #endregion IRepository<Game> Implementation
     }
 }

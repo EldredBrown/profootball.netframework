@@ -21,13 +21,7 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
     /// </summary>
     public class RankingsControlViewModel : ViewModelBase, IRankingsControlViewModel
     {
-        #region Member Fields
-
         private readonly IRankingsControlService _controlService;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the RankingsControlViewModel class
@@ -39,10 +33,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
         {
             _controlService = controlService;
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets this control's offensive rankings collection.
@@ -122,10 +112,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
         }
 
-        #endregion Properties
-
-        #region Commands
-
         /// <summary>
         /// Loads the DataModel's Teams table.
         /// </summary>
@@ -162,7 +148,5 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
                 _sharedService.ShowExceptionMessage(ex);
             }
         }
-
-        #endregion Commands
     }
 }

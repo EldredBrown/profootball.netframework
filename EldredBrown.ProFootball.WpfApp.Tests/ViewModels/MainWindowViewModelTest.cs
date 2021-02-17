@@ -10,23 +10,13 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
     [TestFixture]
     public class MainWindowViewModelTest
     {
-        #region Member Fields
-
         private IMainWindowService _windowService;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
         {
             _windowService = A.Fake<IMainWindowService>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public void PredictGameScoreCommand_HappyPath()
@@ -135,7 +125,5 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

@@ -831,7 +831,7 @@ window.Modernizr = (function( window, document, undefined ) {
 
     // SVG SMIL animation
     tests['smil'] = function() {
-        return !!document.createElementNS && /SVGAnimate/.test(toString.call(document.createElementNS(ns.svg, 'animate')));
+        return !!document.createElementNS && /SVGAnimate/.test(tostring.call(document.createElementNS(ns.svg, 'animate')));
     };
 
     // This test is only for clip paths in SVG proper, not clip paths on HTML content
@@ -840,7 +840,7 @@ window.Modernizr = (function( window, document, undefined ) {
     // However read the comments to dig into applying SVG clippaths to HTML content here:
     //   BitBucket.com/Modernizr/Modernizr/issues/213#issuecomment-1149491
     tests['svgclippaths'] = function() {
-        return !!document.createElementNS && /SVGClipPath/.test(toString.call(document.createElementNS(ns.svg, 'clipPath')));
+        return !!document.createElementNS && /SVGClipPath/.test(tostring.call(document.createElementNS(ns.svg, 'clipPath')));
     };
 
     /*>>webforms*/

@@ -14,15 +14,9 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
     [TestFixture]
     public class SharedServiceTest
     {
-        #region Member Fields
-
         private IDataMapper _dataMapper;
         private IRepository<Season> _seasonRepository;
         private IRepository<TeamSeason> _teamSeasonRepository;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -31,10 +25,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
             _seasonRepository = A.Fake<IRepository<Season>>();
             _teamSeasonRepository = A.Fake<IRepository<TeamSeason>>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public async Task FindEntityAsync_HappyPath()
@@ -204,7 +194,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
 
             // Assert
         }
-
-        #endregion Test Cases
     }
 }

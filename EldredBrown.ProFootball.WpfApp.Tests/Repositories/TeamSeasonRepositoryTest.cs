@@ -11,8 +11,6 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Repositories
     [TestFixture]
     public class TeamSeasonRepositoryTest
     {
-        #region Test Cases
-
         [TestCase]
         public void AddTeamSeason_HappyPath()
         {
@@ -352,7 +350,5 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Repositories
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

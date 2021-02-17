@@ -21,7 +21,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
 
     public class SharedService : ISharedService
     {
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IDataMapper _dataMapper;
@@ -64,7 +64,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 {
                     var errMsg = "ObjectNotFoundException in SharedService.FindEntityAsync: " + ex.Message;
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     MessageBox.Show(errMsg, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
 

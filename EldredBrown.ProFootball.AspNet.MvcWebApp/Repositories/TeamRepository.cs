@@ -13,10 +13,8 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
     /// </summary>
     public class TeamRepository : IRepository<Team>
     {
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        #region IRepository<Team> Implementation
 
         /// <summary>
         /// Adds a Team entity to ProFootballEntities
@@ -26,7 +24,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The Team entity added to dbContext</returns>
         public Team AddEntity(ProFootballEntities dbContext, Team team)
         {
-            Log.Info("Adding Team entity to data store");
+            _log.Info("Adding Team entity to data store");
             return dbContext.Teams.Add(team);
         }
 
@@ -38,7 +36,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The Team entity collection added to dbContext</returns>
         public IEnumerable<Team> AddEntities(ProFootballEntities dbContext, IEnumerable<Team> teams)
         {
-            Log.Info("Adding Team entities to data store");
+            _log.Info("Adding Team entities to data store");
             return dbContext.Teams.AddRange(teams);
         }
 
@@ -49,7 +47,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The new Team entity instance</returns>
         public Team CreateEntity(ProFootballEntities dbContext)
         {
-            Log.Info("Creating Team entity");
+            _log.Info("Creating Team entity");
             return dbContext.Teams.Create();
         }
 
@@ -60,7 +58,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <param name="team">The Team entity to modify</param>
         public void EditEntity(ProFootballEntities dbContext, Team team)
         {
-            Log.Info("Updating Team entity in data store");
+            _log.Info("Updating Team entity in data store");
             dbContext.SetModified(team);
         }
 
@@ -84,18 +82,18 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
                 {
                     var errMsg = $"Team entity not found in ProFootballEntities\nName: {name}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info($"Team entity found in ProFootballEntities\nName: {name}");
+                _log.Info($"Team entity found in ProFootballEntities\nName: {name}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"Team entity not found in ProFootballEntities\nName: {name}\n";
 
-                Log.Error(errMsg + "\n" + ex.Message);
+                _log.Error(errMsg + "\n" + ex.Message);
 
                 throw new ObjectNotFoundException(errMsg);
             }
@@ -123,94 +121,24 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
                 {
                     var errMsg = $"Team entity not found in ProFootballEntities\nName: {name}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info($"Team entity found in ProFootballEntities\nName: {name}");
+                _log.Info($"Team entity found in ProFootballEntities\nName: {name}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"Team entity not found in ProFootballEntities\nName: {name}\n";
 
-                Log.Error(errMsg + "\n" + ex.Message);
+                _log.Error(errMsg + "\n" + ex.Message);
 
                 throw new ObjectNotFoundException(errMsg);
             }
 
             return retVal;
         }
-
-        /// <summary>
-        /// Gets an enumerable collection of Team entities
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <returns>An enumerable collection of Team objects</returns>
-        public IEnumerable<Team> GetEntities(ProFootballEntities dbContext)
-        {
-            Log.Info("Getting Team entities from data store");
-            return dbContext.Teams;
-        }
-
-        /// <summary>
-        /// Gets an enumerable collection of Team entities - asynchronous
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <returns>An enumerable collection of Team objects</returns>
-        public async Task<IEnumerable<Team>> GetEntitiesAsync(ProFootballEntities dbContext)
-        {
-            Log.Info("Getting Team entities from data store");
-            return await dbContext.Teams.ToListAsync();
-        }
-
-        /// <summary>
-        /// Loads a collection of Team entities into memory
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        public void LoadEntities(ProFootballEntities dbContext)
-        {
-            Log.Info("Loading Team entities into memory");
-            dbContext.Teams.Load();
-        }
-
-        /// <summary>
-        /// Loads a collection of Team entities into memory - asynchronous
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        public async Task LoadEntitiesAsync(ProFootballEntities dbContext)
-        {
-            Log.Info("Loading Team entities into memory");
-            await dbContext.Teams.LoadAsync();
-        }
-
-        /// <summary>
-        /// Removes a Team entity from ProFootballEntities
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <param name="team">The Team entity to delete</param>
-        /// <returns>The Team entity deleted from dbContext</returns>
-        public Team RemoveEntity(ProFootballEntities dbContext, Team team)
-        {
-            Log.Info("Removing Team entity from data store");
-            return dbContext.Teams.Remove(team);
-        }
-
-        /// <summary>
-        /// Removes multiple Team entities from ProFootballEntities
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <param name="teams">The collection of Team entities to remove</param>
-        /// <returns>The Team entity collection removed from dbContext</returns>
-        public IEnumerable<Team> RemoveEntities(ProFootballEntities dbContext, IEnumerable<Team> teams)
-        {
-            Log.Info("Removing Team entities from data store");
-            return dbContext.Teams.RemoveRange(teams);
-        }
-
-        #endregion IRepository<Team> Implementation
-
-        #region Helpers
 
         private void ValidateFindArgs(string methodName, params object[] args)
         {
@@ -226,6 +154,70 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
             }
         }
 
-        #endregion Helpers
+        /// <summary>
+        /// Gets an enumerable collection of Team entities
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <returns>An enumerable collection of Team objects</returns>
+        public IEnumerable<Team> GetEntities(ProFootballEntities dbContext)
+        {
+            _log.Info("Getting Team entities from data store");
+            return dbContext.Teams;
+        }
+
+        /// <summary>
+        /// Gets an enumerable collection of Team entities - asynchronous
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <returns>An enumerable collection of Team objects</returns>
+        public async Task<IEnumerable<Team>> GetEntitiesAsync(ProFootballEntities dbContext)
+        {
+            _log.Info("Getting Team entities from data store");
+            return await dbContext.Teams.ToListAsync();
+        }
+
+        /// <summary>
+        /// Loads a collection of Team entities into memory
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        public void LoadEntities(ProFootballEntities dbContext)
+        {
+            _log.Info("Loading Team entities into memory");
+            dbContext.Teams.Load();
+        }
+
+        /// <summary>
+        /// Loads a collection of Team entities into memory - asynchronous
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        public async Task LoadEntitiesAsync(ProFootballEntities dbContext)
+        {
+            _log.Info("Loading Team entities into memory");
+            await dbContext.Teams.LoadAsync();
+        }
+
+        /// <summary>
+        /// Removes a Team entity from ProFootballEntities
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <param name="team">The Team entity to delete</param>
+        /// <returns>The Team entity deleted from dbContext</returns>
+        public Team RemoveEntity(ProFootballEntities dbContext, Team team)
+        {
+            _log.Info("Removing Team entity from data store");
+            return dbContext.Teams.Remove(team);
+        }
+
+        /// <summary>
+        /// Removes multiple Team entities from ProFootballEntities
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <param name="teams">The collection of Team entities to remove</param>
+        /// <returns>The Team entity collection removed from dbContext</returns>
+        public IEnumerable<Team> RemoveEntities(ProFootballEntities dbContext, IEnumerable<Team> teams)
+        {
+            _log.Info("Removing Team entities from data store");
+            return dbContext.Teams.RemoveRange(teams);
+        }
     }
 }

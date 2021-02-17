@@ -9,8 +9,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Repositories
     [TestFixture]
     public class StoredProcedureRepositoryTest
     {
-        #region Test Cases
-
         [TestCase]
         public void GetLeagueSeasonTotals()
         {
@@ -129,7 +127,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Repositories
 
             // Assert
         }
-
-        #endregion Test Cases
     }
 }

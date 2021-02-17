@@ -17,33 +17,20 @@ namespace EldredBrown.ProFootball.WpfApp.Services
     /// </summary>
     public class GamePredictorWindowService : IGamePredictorWindowService
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IRepository<Season> _seasonRepository;
-        private readonly IRepository<TeamSeason> _teamSeasonRepository;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the GamePredictorWindowService class
         /// </summary>
         /// <param name="seasonRepository"></param>
         /// <param name="teamSeasonRepository"></param>
-        public GamePredictorWindowService(IRepository<Season> seasonRepository,
-            IRepository<TeamSeason> teamSeasonRepository)
+        public GamePredictorWindowService(IRepository<Season> seasonRepository)
         {
             _seasonRepository = seasonRepository;
-            _teamSeasonRepository = teamSeasonRepository;
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Methods
 
         /// <summary>
         /// Gets a list of all season IDs sorted in descending order
@@ -65,12 +52,10 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
         }
-
-        #endregion Methods
     }
 }

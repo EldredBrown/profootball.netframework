@@ -13,10 +13,8 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
     /// </summary>
     public class TeamSeasonRepository : IRepository<TeamSeason>
     {
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        #region IRepository<TeamSeason> Implementation
 
         /// <summary>
         /// Adds a TeamSeason entity to ProFootballEntities
@@ -26,7 +24,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The TeamSeason entity added to dbContext</returns>
         public TeamSeason AddEntity(ProFootballEntities dbContext, TeamSeason teamSeason)
         {
-            Log.Info("Adding TeamSeason entity to data store");
+            _log.Info("Adding TeamSeason entity to data store");
             return dbContext.TeamSeasons.Add(teamSeason);
         }
 
@@ -38,7 +36,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The TeamSeason entity collection added to dbContext</returns>
         public IEnumerable<TeamSeason> AddEntities(ProFootballEntities dbContext, IEnumerable<TeamSeason> teamSeasons)
         {
-            Log.Info("Adding TeamSeason entities to data store");
+            _log.Info("Adding TeamSeason entities to data store");
             return dbContext.TeamSeasons.AddRange(teamSeasons);
         }
 
@@ -49,7 +47,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The new TeamSeason entity instance</returns>
         public TeamSeason CreateEntity(ProFootballEntities dbContext)
         {
-            Log.Info("Creating TeamSeason entity");
+            _log.Info("Creating TeamSeason entity");
             return dbContext.TeamSeasons.Create();
         }
 
@@ -60,7 +58,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <param name="teamSeason">The TeamSeason entity to modify</param>
         public void EditEntity(ProFootballEntities dbContext, TeamSeason teamSeason)
         {
-            Log.Info("Updating TeamSeason entity in data store");
+            _log.Info("Updating TeamSeason entity in data store");
             dbContext.SetModified(teamSeason);
         }
 
@@ -87,12 +85,12 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
                         $"TeamSeason entity not found in ProFootballEntities\n" +
                         $"TeamName: {teamName}\nSeasonID: {seasonID}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info(
+                _log.Info(
                     $"TeamSeason entity found in ProFootballEntities\nTeamName: {teamName}\nSeasonID: {seasonID}");
             }
             catch (InvalidOperationException ex)
@@ -100,7 +98,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
                 var errMsg =
                     $"TeamSeason entity not found in ProFootballEntities\nTeamName: {teamName}\nSeasonID: {seasonID}";
 
-                Log.Error(errMsg + "\n" + ex.Message);
+                _log.Error(errMsg + "\n" + ex.Message);
 
                 throw new ObjectNotFoundException(errMsg);
             }
@@ -132,12 +130,12 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
                         $"TeamSeason entity not found in ProFootballEntities\n" +
                         $"TeamName: {teamName}\nSeasonID: {seasonID}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info(
+                _log.Info(
                     $"TeamSeason entity found in ProFootballEntities\nTeamName: {teamName}\nSeasonID: {seasonID}");
             }
             catch (InvalidOperationException ex)
@@ -145,84 +143,13 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
                 var errMsg =
                     $"TeamSeason entity not found in ProFootballEntities\nTeamName: {teamName}\nSeasonID: {seasonID}";
 
-                Log.Error(errMsg + "\n" + ex.Message);
+                _log.Error(errMsg + "\n" + ex.Message);
 
                 throw new ObjectNotFoundException(errMsg);
             }
 
             return retVal;
         }
-
-        /// <summary>
-        /// Gets an enumerable collection of TeamSeason entities
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <returns>An enumerable collection of TeamSeason objects</returns>
-        public IEnumerable<TeamSeason> GetEntities(ProFootballEntities dbContext)
-        {
-            Log.Info("Getting TeamSeason entities from data store");
-            return dbContext.TeamSeasons;
-        }
-
-        /// <summary>
-        /// Gets an enumerable collection of TeamSeason entities - asynchronous
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <returns>An enumerable collection of TeamSeason objects</returns>
-        public async Task<IEnumerable<TeamSeason>> GetEntitiesAsync(ProFootballEntities dbContext)
-        {
-            Log.Info("Getting TeamSeason entities from data store");
-            return await dbContext.TeamSeasons.ToListAsync();
-        }
-
-        /// <summary>
-        /// Loads a collection of TeamSeason entities into memory
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        public void LoadEntities(ProFootballEntities dbContext)
-        {
-            Log.Info("Loading TeamSeason entities into memory");
-            dbContext.TeamSeasons.Load();
-        }
-
-        /// <summary>
-        /// Loads a collection of TeamSeason entities into memory - asynchronous
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        public async Task LoadEntitiesAsync(ProFootballEntities dbContext)
-        {
-            Log.Info("Loading TeamSeason entities into memory");
-            await dbContext.TeamSeasons.LoadAsync();
-        }
-
-        /// <summary>
-        /// Removes a TeamSeason entity from ProFootballEntities
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <param name="teamSeason">The TeamSeason entity to delete</param>
-        /// <returns>The TeamSeason entity deleted from dbContext</returns>
-        public TeamSeason RemoveEntity(ProFootballEntities dbContext, TeamSeason teamSeason)
-        {
-            Log.Info("Removing TeamSeason entity from data store");
-            return dbContext.TeamSeasons.Remove(teamSeason);
-        }
-
-        /// <summary>
-        /// Removes multiple TeamSeason entities from ProFootballEntities
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <param name="teamSeasons">The collection of TeamSeason entities to remove</param>
-        /// <returns>The TeamSeason entity collection removed from dbContext</returns>
-        public IEnumerable<TeamSeason> RemoveEntities(ProFootballEntities dbContext,
-            IEnumerable<TeamSeason> teamSeasons)
-        {
-            Log.Info("Removing TeamSeason entities from data store");
-            return dbContext.TeamSeasons.RemoveRange(teamSeasons);
-        }
-
-        #endregion IRepository<TeamSeason> Implementation
-
-        #region Helpers
 
         private void ValidateFindArgs(string methodName, params object[] args)
         {
@@ -242,6 +169,71 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
             }
         }
 
-        #endregion Helpers
+        /// <summary>
+        /// Gets an enumerable collection of TeamSeason entities
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <returns>An enumerable collection of TeamSeason objects</returns>
+        public IEnumerable<TeamSeason> GetEntities(ProFootballEntities dbContext)
+        {
+            _log.Info("Getting TeamSeason entities from data store");
+            return dbContext.TeamSeasons;
+        }
+
+        /// <summary>
+        /// Gets an enumerable collection of TeamSeason entities - asynchronous
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <returns>An enumerable collection of TeamSeason objects</returns>
+        public async Task<IEnumerable<TeamSeason>> GetEntitiesAsync(ProFootballEntities dbContext)
+        {
+            _log.Info("Getting TeamSeason entities from data store");
+            return await dbContext.TeamSeasons.ToListAsync();
+        }
+
+        /// <summary>
+        /// Loads a collection of TeamSeason entities into memory
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        public void LoadEntities(ProFootballEntities dbContext)
+        {
+            _log.Info("Loading TeamSeason entities into memory");
+            dbContext.TeamSeasons.Load();
+        }
+
+        /// <summary>
+        /// Loads a collection of TeamSeason entities into memory - asynchronous
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        public async Task LoadEntitiesAsync(ProFootballEntities dbContext)
+        {
+            _log.Info("Loading TeamSeason entities into memory");
+            await dbContext.TeamSeasons.LoadAsync();
+        }
+
+        /// <summary>
+        /// Removes a TeamSeason entity from ProFootballEntities
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <param name="teamSeason">The TeamSeason entity to delete</param>
+        /// <returns>The TeamSeason entity deleted from dbContext</returns>
+        public TeamSeason RemoveEntity(ProFootballEntities dbContext, TeamSeason teamSeason)
+        {
+            _log.Info("Removing TeamSeason entity from data store");
+            return dbContext.TeamSeasons.Remove(teamSeason);
+        }
+
+        /// <summary>
+        /// Removes multiple TeamSeason entities from ProFootballEntities
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <param name="teamSeasons">The collection of TeamSeason entities to remove</param>
+        /// <returns>The TeamSeason entity collection removed from dbContext</returns>
+        public IEnumerable<TeamSeason> RemoveEntities(ProFootballEntities dbContext,
+            IEnumerable<TeamSeason> teamSeasons)
+        {
+            _log.Info("Removing TeamSeason entities from data store");
+            return dbContext.TeamSeasons.RemoveRange(teamSeasons);
+        }
     }
 }

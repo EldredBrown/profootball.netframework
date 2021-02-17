@@ -30,7 +30,7 @@ if (container == null)
 <#
 
 var codeNamespace = code.VsNamespaceSuggestion();
-if (!String.IsNullOrEmpty(codeNamespace))
+if (!string.IsNullOrEmpty(codeNamespace))
 {
 #>
 namespace <#=code.EscapeNamespace(codeNamespace)#>
@@ -101,7 +101,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 }
 <#
 
-if (!String.IsNullOrEmpty(codeNamespace))
+if (!string.IsNullOrEmpty(codeNamespace))
 {
     PopIndent();
 #>
@@ -270,7 +270,7 @@ public class CodeStringGenerator
         var parameters = _typeMapper.GetParameters(edmFunction);
         var returnType = _typeMapper.GetReturnType(edmFunction);
 
-        var paramList = String.Join(", ", parameters.Select(p => TypeMapper.FixNamespaces(p.FunctionParameterType) + " " + p.FunctionParameterName).ToArray());
+        var paramList = string.Join(", ", parameters.Select(p => TypeMapper.FixNamespaces(p.FunctionParameterType) + " " + p.FunctionParameterName).ToArray());
         if (includeMergeOption)
         {
             paramList = _code.StringAfter(paramList, ", ") + "MergeOption mergeOption";
@@ -290,7 +290,7 @@ public class CodeStringGenerator
         var parameters = _typeMapper.GetParameters(edmFunction);
         var returnType = _typeMapper.GetReturnType(edmFunction);
 
-        var callParams = _code.StringBefore(", ", String.Join(", ", parameters.Select(p => p.ExecuteParameterName).ToArray()));
+        var callParams = _code.StringBefore(", ", string.Join(", ", parameters.Select(p => p.ExecuteParameterName).ToArray()));
         if (includeMergeOption)
         {
             callParams = ", mergeOption" + callParams;
@@ -391,7 +391,7 @@ public class TypeMapper
         var collectionType = edmType as CollectionType;
         if (collectionType != null)
         {
-            return String.Format(CultureInfo.InvariantCulture, "ICollection<{0}>", GetTypeName(collectionType.TypeUsage, modelNamespace));
+            return string.Format(CultureInfo.InvariantCulture, "ICollection<{0}>", GetTypeName(collectionType.TypeUsage, modelNamespace));
         }
 
         var typeName = _code.Escape(edmType.MetadataProperties
@@ -418,7 +418,7 @@ public class TypeMapper
             typeName = FixNamespaces(typeName);
 
             return clrType.IsValueType && isNullable == true ?
-                String.Format(CultureInfo.InvariantCulture, "Nullable<{0}>", typeName) :
+                string.Format(CultureInfo.InvariantCulture, "Nullable<{0}>", typeName) :
                 typeName;
         }
 
@@ -511,7 +511,7 @@ public class TypeMapper
         {
             _errors.Add(
                 new CompilerError(sourceFile, -1, -1, "6023",
-                    String.Format(CultureInfo.CurrentCulture, CodeGenerationTools.GetResourceString("Template_CaseInsensitiveTypeConflict"))));
+                    string.Format(CultureInfo.CurrentCulture, CodeGenerationTools.GetResourceString("Template_CaseInsensitiveTypeConflict"))));
             return false;
         }
         return true;

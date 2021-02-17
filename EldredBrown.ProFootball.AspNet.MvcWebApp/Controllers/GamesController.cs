@@ -13,19 +13,13 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
     /// </summary>
     public class GamesController : Controller
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IGamesService _service;
         private readonly ISharedService _sharedService;
 
         private static GameViewModel _oldGameViewModel;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the GamesController class
@@ -37,10 +31,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             _service = service;
             _sharedService = sharedService;
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Actions
 
         // GET: Games
         public async Task<ActionResult> Index(int? seasonID, int? week, string guestSearchString,
@@ -63,7 +53,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in GamesController.Index: " + ex.Message);
+                _log.Error("Exception in GamesController.Index: " + ex.Message);
                 throw;
             }
         }
@@ -88,7 +78,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in GamesController.Details: " + ex.Message);
+                _log.Error("Exception in GamesController.Details: " + ex.Message);
                 throw;
             }
         }
@@ -110,7 +100,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in GamesController.Create (GET): " + ex.Message);
+                _log.Error("Exception in GamesController.Create (GET): " + ex.Message);
                 throw;
             }
         }
@@ -146,7 +136,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in GamesController.Create (POST): " + ex.Message);
+                _log.Error("Exception in GamesController.Create (POST): " + ex.Message);
                 throw;
             }
         }
@@ -180,7 +170,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in GamesController.Edit (GET): " + ex.Message);
+                _log.Error("Exception in GamesController.Edit (GET): " + ex.Message);
                 throw;
             }
         }
@@ -211,7 +201,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in GamesController.Edit (POST): " + ex.Message);
+                _log.Error("Exception in GamesController.Edit (POST): " + ex.Message);
                 throw;
             }
         }
@@ -236,7 +226,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in GamesController.Delete (GET): " + ex.Message);
+                _log.Error("Exception in GamesController.Delete (GET): " + ex.Message);
                 throw;
             }
         }
@@ -254,11 +244,9 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in GamesController.Delete (POST): " + ex.Message);
+                _log.Error("Exception in GamesController.Delete (POST): " + ex.Message);
                 throw;
             }
         }
-
-        #endregion Actions
     }
 }

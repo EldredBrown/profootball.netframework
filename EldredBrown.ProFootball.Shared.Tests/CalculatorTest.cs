@@ -7,8 +7,6 @@ namespace EldredBrown.ProFootball.Shared.Tests
     [TestFixture]
     public class CalculatorTest
     {
-        #region Test Cases
-
         [TestCase]
         public void Add()
         {
@@ -129,7 +127,5 @@ namespace EldredBrown.ProFootball.Shared.Tests
 
         //    // Assert
         //}
-
-        #endregion Test Cases
     }
 }

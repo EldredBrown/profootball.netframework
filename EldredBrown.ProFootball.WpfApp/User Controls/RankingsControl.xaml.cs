@@ -14,8 +14,6 @@ namespace EldredBrown.ProFootball.WpfApp.UserControls
     /// </summary>
     public partial class RankingsControl : UserControl, IRankingsControl
     {
-        #region Constructors & Finalizers
-
         /// <summary>
         /// Initializes a new instance of the RankingsControl class
         /// </summary>
@@ -26,10 +24,6 @@ namespace EldredBrown.ProFootball.WpfApp.UserControls
             DataContext = WpfGlobals.Container.Resolve<IRankingsControlViewModel>();
         }
 
-        #endregion Constructors & Finalizers
-
-        #region Methods
-
         /// <summary>
         /// Refreshes the view of this RankingsControl object
         /// </summary>
@@ -37,7 +31,5 @@ namespace EldredBrown.ProFootball.WpfApp.UserControls
         {
             (DataContext as IRankingsControlViewModel).ViewRankingsCommand.Execute(null);
         }
-
-        #endregion Methods
     }
 }

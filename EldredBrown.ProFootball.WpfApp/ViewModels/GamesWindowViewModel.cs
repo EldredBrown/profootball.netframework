@@ -43,13 +43,7 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
     /// </summary>
     public class GamesWindowViewModel : ViewModelBase, IFocusMover, IGamesWindowViewModel
 	{
-        #region Member Fields
-
         private readonly IGamesWindowService _controlService;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the GamesWindowViewModel class
@@ -65,10 +59,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
 
             GameFinder = gameFinder;
 		}
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets the visibility of the AddEntity control
@@ -372,6 +362,45 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
         }
 
         /// <summary>
+        /// Populates data entry controls with data from selected game.
+        /// </summary>
+        private void PopulateDataEntryControls()
+        {
+            var selectedGame = SelectedGame;
+            Week = selectedGame.Week;
+            GuestName = selectedGame.GuestName;
+            GuestScore = selectedGame.GuestScore;
+            HostName = selectedGame.HostName;
+            HostScore = selectedGame.HostScore;
+            IsPlayoffGame = selectedGame.IsPlayoffGame;
+            Notes = selectedGame.Notes;
+
+            AddGameControlVisibility = Visibility.Hidden;
+            EditGameControlVisibility = Visibility.Visible;
+            DeleteGameControlVisibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Resets data in all data entry fields to their default values.
+        /// </summary>
+        private void ClearDataEntryControls()
+        {
+            GuestName = string.Empty;
+            GuestScore = 0;
+            HostName = string.Empty;
+            HostScore = 0;
+            IsPlayoffGame = false;
+            Notes = string.Empty;
+
+            AddGameControlVisibility = Visibility.Visible;
+            EditGameControlVisibility = Visibility.Hidden;
+            DeleteGameControlVisibility = Visibility.Hidden;
+
+            // Set focus to GuestName field.
+            MoveFocusTo("GuestName");
+        }
+
+        /// <summary>
         /// Gets/sets SelectedGame window's week value.
         /// </summary>
         private int _week;
@@ -390,10 +419,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
                 }
             }
         }
-
-        #endregion Properties
-
-        #region Commands
 
         /// <summary>
         /// Adds a new game to the database.
@@ -525,6 +550,71 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
         }
 
         /// <summary>
+        /// Validates all data entered into the data entry fields.
+        /// </summary>
+        private void ValidateDataEntry()
+        {
+            if (string.IsNullOrWhiteSpace(GuestName))
+            {
+                // GuestName field is left empty.
+                MoveFocusTo("GuestName");
+                throw new DataValidationException(WpfGlobals.Constants.BothTeamsNeededErrorMessage);
+            }
+            else if (string.IsNullOrWhiteSpace(HostName))
+            {
+                // HostName field is left empty.
+                MoveFocusTo("HostName");
+                throw new DataValidationException(WpfGlobals.Constants.BothTeamsNeededErrorMessage);
+            }
+            else if (GuestName == HostName)
+            {
+                // Guest and host are the same team.
+                MoveFocusTo("GuestName");
+                throw new DataValidationException(WpfGlobals.Constants.DifferentTeamsNeededErrorMessage);
+            }
+        }
+
+        /// <summary>
+        /// Moves the focus to the specified property
+        /// </summary>
+        /// <param name="focusedProperty"></param>
+        private void MoveFocusTo(string focusedProperty)
+        {
+            OnMoveFocus(focusedProperty);
+        }
+
+        private Game MapOldGameValues()
+        {
+            return new Game
+            {
+                ID = SelectedGame.ID,
+                SeasonID = (int)WpfGlobals.SelectedSeason,
+                Week = SelectedGame.Week,
+                GuestName = SelectedGame.GuestName,
+                GuestScore = SelectedGame.GuestScore,
+                HostName = SelectedGame.HostName,
+                HostScore = SelectedGame.HostScore,
+                IsPlayoffGame = SelectedGame.IsPlayoffGame,
+                Notes = SelectedGame.Notes
+            };
+        }
+
+        private Game MapNewGameValues()
+        {
+            return new Game
+            {
+                SeasonID = (int)WpfGlobals.SelectedSeason,
+                Week = this.Week,
+                GuestName = this.GuestName,
+                GuestScore = this.GuestScore,
+                HostName = this.HostName,
+                HostScore = this.HostScore,
+                IsPlayoffGame = this.IsPlayoffGame,
+                Notes = this.Notes
+            };
+        }
+
+        /// <summary>
         /// Searches for a specified game in the database.
         /// </summary>
         private DelegateCommand _FindEntityCommand;
@@ -563,6 +653,20 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             {
                 _sharedService.ShowExceptionMessage(ex);
             }
+        }
+
+        /// <summary>
+        /// Applies the filter set in the GameFinderWindowViewModel
+        /// </summary>
+        private void ApplyFindGameFilter()
+        {
+            var dataContext = GameFinder.DataContext as IGameFinderWindowViewModel;
+
+            Games = new ReadOnlyCollection<Game>(
+                _controlService.GetGames((int)WpfGlobals.SelectedSeason, dataContext.GuestName, dataContext.HostName)
+                .ToList());
+
+            IsFindGameFilterApplied = true;
         }
 
         /// <summary>
@@ -629,150 +733,5 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
                 _sharedService.ShowExceptionMessage(ex);
             }
         }
-
-        #endregion Commands
-
-        #region Methods
-
-        #region Helpers
-
-        /// <summary>
-        /// Applies the filter set in the GameFinderWindowViewModel
-        /// </summary>
-        private void ApplyFindGameFilter()
-        {
-            var dataContext = GameFinder.DataContext as IGameFinderWindowViewModel;
-
-            Games = new ReadOnlyCollection<Game>(
-                _controlService.GetGames((int)WpfGlobals.SelectedSeason, dataContext.GuestName, dataContext.HostName)
-                .ToList());
-
-            IsFindGameFilterApplied = true;
-        }
-
-        /// <summary>
-        /// Resets data in all data entry fields to their default values.
-        /// </summary>
-        private void ClearDataEntryControls()
-        {
-            GuestName = String.Empty;
-            GuestScore = 0;
-            HostName = String.Empty;
-            HostScore = 0;
-            IsPlayoffGame = false;
-            Notes = String.Empty;
-
-            AddGameControlVisibility = Visibility.Visible;
-            EditGameControlVisibility = Visibility.Hidden;
-            DeleteGameControlVisibility = Visibility.Hidden;
-
-            // Set focus to GuestName field.
-            MoveFocusTo("GuestName");
-        }
-
-        private Game MapNewGameValues()
-        {
-            return new Game
-            {
-                SeasonID = (int)WpfGlobals.SelectedSeason,
-                Week = this.Week,
-                GuestName = this.GuestName,
-                GuestScore = this.GuestScore,
-                HostName = this.HostName,
-                HostScore = this.HostScore,
-                IsPlayoffGame = this.IsPlayoffGame,
-                Notes = this.Notes
-            };
-        }
-
-        private Game MapOldGameValues()
-        {
-            return new Game
-            {
-                ID = SelectedGame.ID,
-                SeasonID = (int)WpfGlobals.SelectedSeason,
-                Week = SelectedGame.Week,
-                GuestName = SelectedGame.GuestName,
-                GuestScore = SelectedGame.GuestScore,
-                HostName = SelectedGame.HostName,
-                HostScore = SelectedGame.HostScore,
-                IsPlayoffGame = SelectedGame.IsPlayoffGame,
-                Notes = SelectedGame.Notes
-            };
-        }
-
-        /// <summary>
-        /// Moves the focus to the specified property
-        /// </summary>
-        /// <param name="focusedProperty"></param>
-        private void MoveFocusTo(string focusedProperty)
-        {
-            OnMoveFocus(focusedProperty);
-        }
-
-        /// <summary>
-        /// Populates data entry controls with data from selected game.
-        /// </summary>
-        private void PopulateDataEntryControls()
-        {
-            var selectedGame = SelectedGame;
-            Week = selectedGame.Week;
-            GuestName = selectedGame.GuestName;
-            GuestScore = selectedGame.GuestScore;
-            HostName = selectedGame.HostName;
-            HostScore = selectedGame.HostScore;
-            IsPlayoffGame = selectedGame.IsPlayoffGame;
-            Notes = selectedGame.Notes;
-
-            AddGameControlVisibility = Visibility.Hidden;
-            EditGameControlVisibility = Visibility.Visible;
-            DeleteGameControlVisibility = Visibility.Visible;
-        }
-
-        /// <summary>
-        /// Validates all data entered into the data entry fields.
-        /// </summary>
-        private void ValidateDataEntry()
-        {
-            int seasonID = (int)WpfGlobals.SelectedSeason;
-
-            var guestSeason = _sharedService.FindTeamSeason(GuestName, seasonID);
-            var hostSeason = _sharedService.FindTeamSeason(HostName, seasonID);
-
-            if (String.IsNullOrWhiteSpace(GuestName))
-            {
-                // GuestName field is left empty.
-                MoveFocusTo("GuestName");
-                throw new DataValidationException(WpfGlobals.Constants.BothTeamsNeededErrorMessage);
-            }
-            else if (String.IsNullOrWhiteSpace(HostName))
-            {
-                // HostName field is left empty.
-                MoveFocusTo("HostName");
-                throw new DataValidationException(WpfGlobals.Constants.BothTeamsNeededErrorMessage);
-            }
-            else if (GuestName == HostName)
-            {
-                // Guest and host are the same team.
-                MoveFocusTo("GuestName");
-                throw new DataValidationException(WpfGlobals.Constants.DifferentTeamsNeededErrorMessage);
-            }
-            //else if (guestSeason == null)
-            //{
-            //    // GuestName not in database for the selected season (name probably misspelled)
-            //    MoveFocusTo("GuestName");
-            //    throw new DataValidationException(WpfGlobals.Constants.TeamNotInDatabaseMessage);
-            //}
-            //else if (hostSeason == null)
-            //{
-            //    // HostName not in database for the selected season (name probably misspelled)
-            //    MoveFocusTo("HostName");
-            //    throw new DataValidationException(WpfGlobals.Constants.TeamNotInDatabaseMessage);
-            //}
-        }
-
-        #endregion Helpers
-
-        #endregion Methods
     }
 }

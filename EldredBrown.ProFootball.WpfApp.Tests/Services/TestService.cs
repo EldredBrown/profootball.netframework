@@ -9,121 +9,6 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
 {
     public static class TestService
     {
-        #region Extension Methods
-
-        //public static void SetUpFakeConferences(this ProFootballEntities dbContext,
-        //    IEnumerable<Conference> conferencesEnumerable = null)
-        //{
-        //    if (conferencesEnumerable == null)
-        //    {
-        //        conferencesEnumerable = new List<Conference>
-        //        {
-        //            new Conference
-        //            {
-        //                Name = "Conference"
-        //            }
-        //        };
-        //    }
-        //    var conferencesQueryable = conferencesEnumerable.AsQueryable();
-
-        //    var fakeDbSet = A.Fake<DbSet<Conference>>(d => d.Implements(typeof(IQueryable<Conference>)));
-
-        //    // Setup all IQueryable methods using what you have from "LeagueSeasons"
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Conference>).ElementType).Returns(conferencesQueryable.ElementType);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Conference>).Expression).Returns(conferencesQueryable.Expression);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Conference>).Provider).Returns(conferencesQueryable.Provider);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Conference>).GetEnumerator())
-        //        .Returns(conferencesQueryable.GetEnumerator());
-
-        //    // Do the wiring between DbContext and DbSet
-        //    A.CallTo(() => dbContext.Conferences).Returns(fakeDbSet);
-        //}
-
-        //public static void SetUpFakeDivisionsAsync(this ProFootballEntities dbContext,
-        //    IEnumerable<Division> divisionsEnumerable = null)
-        //{
-        //    if (divisionsEnumerable == null)
-        //    {
-        //        divisionsEnumerable = new List<Division>
-        //        {
-        //            new Division { Name = "Division1" },
-        //            new Division { Name = "Division2" },
-        //            new Division { Name = "Division3" }
-        //        };
-        //    }
-        //    var divisionsQueryable = divisionsEnumerable.AsQueryable();
-
-        //    var fakeDbSet = A.Fake<DbSet<Division>>(d =>
-        //        d.Implements(typeof(IQueryable<Division>)).Implements(typeof(IDbAsyncEnumerable<Division>)));
-
-        //    // Setup all IQueryable methods using what you have from "Divisions"
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Division>).ElementType).Returns(divisionsQueryable.ElementType);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Division>).Expression).Returns(divisionsQueryable.Expression);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Division>).Provider)
-        //        .Returns(new TestDbAsyncQueryProvider<Division>(divisionsQueryable.Provider));
-        //    A.CallTo(() => (fakeDbSet as IDbAsyncEnumerable<Division>).GetAsyncEnumerator())
-        //        .Returns(new TestDbAsyncEnumerator<Division>(divisionsQueryable.GetEnumerator()));
-
-        //    // Do the wiring between DbContext and DbSet
-        //    A.CallTo(() => dbContext.Divisions).Returns(fakeDbSet);
-        //}
-
-        //public static void SetUpFakeGamesAsync(this ProFootballEntities dbContext,
-        //    IEnumerable<Game> gamesEnumerable = null)
-        //{
-        //    if (gamesEnumerable == null)
-        //    {
-        //        gamesEnumerable = new List<Game>
-        //        {
-        //            new Game { SeasonID = 2017, Week = 1, GuestName = "Guest", HostName = "Host"  }
-        //        };
-        //    };
-        //    var gamesQueryable = gamesEnumerable.AsQueryable();
-
-        //    var fakeDbSet = A.Fake<DbSet<Game>>(d =>
-        //        d.Implements(typeof(IQueryable<Game>)).Implements(typeof(IDbAsyncEnumerable<Game>)));
-
-        //    // Setup all IQueryable methods using what you have from "Games"
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Game>).ElementType).Returns(gamesQueryable.ElementType);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Game>).Expression).Returns(gamesQueryable.Expression);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Game>).Provider)
-        //        .Returns(new TestDbAsyncQueryProvider<Game>(gamesQueryable.Provider));
-        //    A.CallTo(() => (fakeDbSet as IDbAsyncEnumerable<Game>).GetAsyncEnumerator())
-        //        .Returns(new TestDbAsyncEnumerator<Game>(gamesQueryable.GetEnumerator()));
-
-        //    // Do the wiring between DbContext and DbSet
-        //    A.CallTo(() => dbContext.Games).Returns(fakeDbSet);
-        //}
-
-        //public static void SetUpFakeLeaguesAsync(this ProFootballEntities dbContext,
-        //    IEnumerable<League> leaguesEnumerable = null)
-        //{
-        //    if (leaguesEnumerable == null)
-        //    {
-        //        leaguesEnumerable = new List<League>
-        //        {
-        //            new League { Name = "League1" },
-        //            new League { Name = "League2" },
-        //            new League { Name = "League3" }
-        //        };
-        //    }
-        //    var leaguesQueryable = leaguesEnumerable.AsQueryable();
-
-        //    var fakeDbSet = A.Fake<DbSet<League>>(d =>
-        //        d.Implements(typeof(IQueryable<League>)).Implements(typeof(IDbAsyncEnumerable<League>)));
-
-        //    // Setup all IQueryable methods using what you have from "Leagues"
-        //    A.CallTo(() => (fakeDbSet as IQueryable<League>).ElementType).Returns(leaguesQueryable.ElementType);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<League>).Expression).Returns(leaguesQueryable.Expression);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<League>).Provider)
-        //        .Returns(new TestDbAsyncQueryProvider<League>(leaguesQueryable.Provider));
-        //    A.CallTo(() => (fakeDbSet as IDbAsyncEnumerable<League>).GetAsyncEnumerator())
-        //        .Returns(new TestDbAsyncEnumerator<League>(leaguesQueryable.GetEnumerator()));
-
-        //    // Do the wiring between DbContext and DbSet
-        //    A.CallTo(() => dbContext.Leagues).Returns(fakeDbSet);
-        //}
-
         public static void SetUpFakeLeagueSeasons(this ProFootballEntities dbContext,
             IEnumerable<LeagueSeason> leagueSeasonsEnumerable = null)
         {
@@ -249,35 +134,6 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             A.CallTo(() => dbContext.GetRankingsTotal(A<int>.Ignored)).Returns(fakeObjectResult);
         }
 
-        //public static void SetUpFakeSeasonsAsync(this ProFootballEntities dbContext,
-        //    IEnumerable<Season> seasonsEnumerable = null)
-        //{
-        //    if (seasonsEnumerable == null)
-        //    {
-        //        seasonsEnumerable = new List<Season>
-        //        {
-        //            new Season { ID = 2017  },
-        //            new Season { ID = 2016  },
-        //            new Season { ID = 2014  }
-        //        };
-        //    }
-        //    var seasonsQueryable = seasonsEnumerable.AsQueryable();
-
-        //    var fakeDbSet = A.Fake<DbSet<Season>>(d =>
-        //        d.Implements(typeof(IQueryable<Season>)).Implements(typeof(IDbAsyncEnumerable<Season>)));
-
-        //    // Setup all IQueryable methods using what you have from "Seasons"
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Season>).ElementType).Returns(seasonsQueryable.ElementType);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Season>).Expression).Returns(seasonsQueryable.Expression);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Season>).Provider)
-        //        .Returns(new TestDbAsyncQueryProvider<Season>(seasonsQueryable.Provider));
-        //    A.CallTo(() => (fakeDbSet as IDbAsyncEnumerable<Season>).GetAsyncEnumerator())
-        //        .Returns(new TestDbAsyncEnumerator<Season>(seasonsQueryable.GetEnumerator()));
-
-        //    // Do the wiring between DbContext and DbSet
-        //    A.CallTo(() => dbContext.Seasons).Returns(fakeDbSet);
-        //}
-
         public static void SetUpFakeSeasonStandingsForConference(this ProFootballEntities dbContext,
             IEnumerable<GetSeasonStandingsForConference_Result> seasonStandingsEnumerable = null)
         {
@@ -321,79 +177,6 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             A.CallTo(() => dbContext.GetSeasonStandingsForDivision(A<int>.Ignored, A<string>.Ignored))
                 .Returns(fakeObjectResult);
         }
-
-        //public static void SetUpFakeTeamsAsync(this ProFootballEntities dbContext,
-        //    IEnumerable<Team> teamsEnumerable = null)
-        //{
-        //    if (teamsEnumerable == null)
-        //    {
-        //        teamsEnumerable = new List<Team>
-        //        {
-        //            new Team { Name = "Team1" },
-        //            new Team { Name = "Team2" },
-        //            new Team { Name = "Team3" }
-        //        };
-        //    }
-        //    var teamsQueryable = teamsEnumerable.AsQueryable();
-
-        //    var fakeDbSet = A.Fake<DbSet<Team>>(d =>
-        //        d.Implements(typeof(IQueryable<Team>)).Implements(typeof(IDbAsyncEnumerable<Team>)));
-
-        //    // Setup all IQueryable methods using what you have from "Teams"
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Team>).ElementType).Returns(teamsQueryable.ElementType);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Team>).Expression).Returns(teamsQueryable.Expression);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<Team>).Provider)
-        //        .Returns(new TestDbAsyncQueryProvider<Team>(teamsQueryable.Provider));
-        //    A.CallTo(() => (fakeDbSet as IDbAsyncEnumerable<Team>).GetAsyncEnumerator())
-        //        .Returns(new TestDbAsyncEnumerator<Team>(teamsQueryable.GetEnumerator()));
-
-        //    // Do the wiring between DbContext and DbSet
-        //    A.CallTo(() => dbContext.Teams).Returns(fakeDbSet);
-        //}
-
-        //public static void SetUpFakeTeamSeasonsAsync(this ProFootballEntities dbContext,
-        //    IEnumerable<TeamSeason> teamSeasonsEnumerable = null)
-        //{
-        //    if (teamSeasonsEnumerable == null)
-        //    {
-        //        teamSeasonsEnumerable = new List<TeamSeason>
-        //        {
-        //            new TeamSeason { TeamName = "Team1", SeasonID = 2017 },
-        //            new TeamSeason { TeamName = "Team2", SeasonID = 2017 },
-        //            new TeamSeason { TeamName = "Team3", SeasonID = 2017 }
-        //        };
-        //    }
-        //    var teamSeasonsQueryable = teamSeasonsEnumerable.AsQueryable();
-
-        //    var fakeDbSet = A.Fake<DbSet<TeamSeason>>(d =>
-        //        d.Implements(typeof(IQueryable<TeamSeason>)).Implements(typeof(IDbAsyncEnumerable<TeamSeason>)));
-
-        //    // Setup all IQueryable methods using what you have from "TeamSeasons"
-        //    A.CallTo(() => (fakeDbSet as IQueryable<TeamSeason>).ElementType).Returns(teamSeasonsQueryable.ElementType);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<TeamSeason>).Expression).Returns(teamSeasonsQueryable.Expression);
-        //    A.CallTo(() => (fakeDbSet as IQueryable<TeamSeason>).Provider)
-        //        .Returns(new TestDbAsyncQueryProvider<TeamSeason>(teamSeasonsQueryable.Provider));
-        //    A.CallTo(() => (fakeDbSet as IDbAsyncEnumerable<TeamSeason>).GetAsyncEnumerator())
-        //        .Returns(new TestDbAsyncEnumerator<TeamSeason>(teamSeasonsQueryable.GetEnumerator()));
-
-        //    // Do the wiring between DbContext and DbSet
-        //    A.CallTo(() => dbContext.TeamSeasons).Returns(fakeDbSet);
-        //}
-
-        //public static void SetUpFakeTeamSeasonScheduleAverages(this ProFootballEntities dbContext,
-        //    IEnumerable<GetTeamSeasonScheduleAverages_Result> teamSeasonScheduleAverages = null)
-        //{
-        //    var fakeObjectResult = A.Fake<ObjectResult<GetTeamSeasonScheduleAverages_Result>>(d =>
-        //        d.Implements(typeof(IEnumerable<GetTeamSeasonScheduleAverages_Result>)));
-
-        //    // Setup all IEnumerable methods using what you have from "teamSeasonScheduleAverages"
-        //    A.CallTo(() => (fakeObjectResult as IEnumerable<GetTeamSeasonScheduleAverages_Result>).GetEnumerator())
-        //        .Returns(teamSeasonScheduleAverages.GetEnumerator());
-
-        //    // Do the wiring between DbContext and ObjectResult
-        //    A.CallTo(() => dbContext.GetTeamSeasonScheduleAverages(A<string>.Ignored, A<int>.Ignored))
-        //        .Returns(fakeObjectResult);
-        //}
 
         public static void SetUpFakeTeamSeasonScheduleProfile(this ProFootballEntities dbContext,
             IEnumerable<GetTeamSeasonScheduleProfile_Result> teamSeasonScheduleProfile = null)
@@ -481,7 +264,5 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             // Do the wiring between DbContext and DbSet
             A.CallTo(() => dbContext.WeekCounts).Returns(fakeDbSet);
         }
-
-        #endregion Extension Methods
     }
 }

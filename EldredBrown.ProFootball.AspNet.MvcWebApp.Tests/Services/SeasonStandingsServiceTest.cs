@@ -13,15 +13,9 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
     [TestFixture]
     public class SeasonStandingsServiceTest
     {
-        #region Member Fields
-
         private ISharedService _sharedService;
         private IDataMapper _dataMapper;
         private IStoredProcedureRepository _storedProcedureRepository;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -30,10 +24,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
             _dataMapper = A.Fake<IDataMapper>();
             _storedProcedureRepository = A.Fake<IStoredProcedureRepository>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public void GetSeasonStandings()
@@ -102,7 +92,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
 
             // Assert
         }
-
-        #endregion Test Cases
     }
 }

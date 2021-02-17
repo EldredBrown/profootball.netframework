@@ -12,14 +12,8 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
     [TestFixture]
     public class TeamSeasonsControlViewModelTest
     {
-        #region Member Fields
-
         private ISharedService _sharedService;
         private ITeamSeasonsControlService _controlService;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -27,10 +21,6 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             _sharedService = A.Fake<ISharedService>();
             _controlService = A.Fake<ITeamSeasonsControlService>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public void ViewTeamScheduleCommand_SelectedTeamIsNull_SetsTeamSeasonScheduleProfileTotalsAndAveragesToNull()
@@ -168,7 +158,5 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

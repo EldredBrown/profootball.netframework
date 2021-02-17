@@ -14,14 +14,8 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Controllers
     [TestFixture]
     public class TeamSeasonsControllerTest
     {
-        #region Member Fields
-
         private ITeamSeasonsService _service;
         private ISharedService _sharedService;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -29,10 +23,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Controllers
             _service = A.Fake<ITeamSeasonsService>();
             _sharedService = A.Fake<ISharedService>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public async Task Index_SortOrderIsTeamAscending()
@@ -1993,7 +1983,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Controllers
             // Arrange
             var controller = new TeamSeasonsController(_service, _sharedService);
 
-            string teamName = String.Empty;
+            string teamName = string.Empty;
             int? seasonID = 2017;
 
             // Act
@@ -2214,7 +2204,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Controllers
 
             // Assert
         }
-
-        #endregion Test Cases
     }
 }

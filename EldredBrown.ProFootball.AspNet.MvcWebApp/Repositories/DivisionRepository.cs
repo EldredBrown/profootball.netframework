@@ -13,10 +13,8 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
     /// </summary>
     public class DivisionRepository : IRepository<Division>
     {
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        #region IRepository<Division> Implementation
 
         /// <summary>
         /// Adds a Division entity to ProFootballEntities
@@ -26,7 +24,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The Division entity added to dbContext</returns>
         public Division AddEntity(ProFootballEntities dbContext, Division division)
         {
-            Log.Info("Adding Division entity to data store");
+            _log.Info("Adding Division entity to data store");
             return dbContext.Divisions.Add(division);
         }
 
@@ -38,7 +36,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The Division entity collection added to dbContext</returns>
         public IEnumerable<Division> AddEntities(ProFootballEntities dbContext, IEnumerable<Division> divisions)
         {
-            Log.Info("Adding Division entities to data store");
+            _log.Info("Adding Division entities to data store");
             return dbContext.Divisions.AddRange(divisions);
         }
 
@@ -49,7 +47,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The new Division entity instance</returns>
         public Division CreateEntity(ProFootballEntities dbContext)
         {
-            Log.Info("Creating Division entity");
+            _log.Info("Creating Division entity");
             return dbContext.Divisions.Create();
         }
 
@@ -60,7 +58,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <param name="division">The Division entity to modify</param>
         public void EditEntity(ProFootballEntities dbContext, Division division)
         {
-            Log.Info("Updating Division entity in data store");
+            _log.Info("Updating Division entity in data store");
             dbContext.SetModified(division);
         }
 
@@ -84,18 +82,18 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
                 {
                     var errMsg = $"Division entity not found in ProFootballEntities\nName: {name}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info($"Division entity found in ProFootballEntities\nName: {name}");
+                _log.Info($"Division entity found in ProFootballEntities\nName: {name}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"Division entity not found in ProFootballEntities\nName: {name}\n";
 
-                Log.Error(errMsg + "\n" + ex.Message);
+                _log.Error(errMsg + "\n" + ex.Message);
 
                 throw new ObjectNotFoundException(errMsg);
             }
@@ -123,94 +121,24 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
                 {
                     var errMsg = $"Division entity not found in ProFootballEntities\nName: {name}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info($"Division entity found in ProFootballEntities\nName: {name}");
+                _log.Info($"Division entity found in ProFootballEntities\nName: {name}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"Division entity not found in ProFootballEntities\nName: {name}\n";
 
-                Log.Error(errMsg + "\n" + ex.Message);
+                _log.Error(errMsg + "\n" + ex.Message);
 
                 throw new ObjectNotFoundException(errMsg);
             }
 
             return retVal;
         }
-
-        /// <summary>
-        /// Gets an enumerable collection of Division entities
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <returns>An enumerable collection of Division objects</returns>
-        public IEnumerable<Division> GetEntities(ProFootballEntities dbContext)
-        {
-            Log.Info("Getting Division entities from data store");
-            return dbContext.Divisions;
-        }
-
-        /// <summary>
-        /// Gets an enumerable collection of Division entities - asynchronous
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <returns>An enumerable collection of Division objects</returns>
-        public async Task<IEnumerable<Division>> GetEntitiesAsync(ProFootballEntities dbContext)
-        {
-            Log.Info("Getting Division entities from data store");
-            return await dbContext.Divisions.ToListAsync();
-        }
-
-        /// <summary>
-        /// Loads a collection of Division entities into memory
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        public void LoadEntities(ProFootballEntities dbContext)
-        {
-            Log.Info("Loading Division entities into memory");
-            dbContext.Divisions.Load();
-        }
-
-        /// <summary>
-        /// Loads a collection of Division entities into memory - asynchronous
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        public async Task LoadEntitiesAsync(ProFootballEntities dbContext)
-        {
-            Log.Info("Loading Division entities into memory");
-            await dbContext.Divisions.LoadAsync();
-        }
-
-        /// <summary>
-        /// Removes a Division entity from ProFootballEntities
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <param name="division">The Division entity to delete</param>
-        /// <returns>The Division entity deleted from dbContext</returns>
-        public Division RemoveEntity(ProFootballEntities dbContext, Division division)
-        {
-            Log.Info("Removing Division entity from data store");
-            return dbContext.Divisions.Remove(division);
-        }
-
-        /// <summary>
-        /// Removes multiple Division entities from ProFootballEntities
-        /// </summary>
-        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
-        /// <param name="divisions">The collection of Division entities to remove</param>
-        /// <returns>The Division entity collection removed from dbContext</returns>
-        public IEnumerable<Division> RemoveEntities(ProFootballEntities dbContext, IEnumerable<Division> divisions)
-        {
-            Log.Info("Removing Division entities from data store");
-            return dbContext.Divisions.RemoveRange(divisions);
-        }
-
-        #endregion IRepository<Division> Implementation
-
-        #region Helpers
 
         private void ValidateFindArgs(string methodName, params object[] args)
         {
@@ -226,6 +154,70 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
             }
         }
 
-        #endregion Helpers
+        /// <summary>
+        /// Gets an enumerable collection of Division entities
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <returns>An enumerable collection of Division objects</returns>
+        public IEnumerable<Division> GetEntities(ProFootballEntities dbContext)
+        {
+            _log.Info("Getting Division entities from data store");
+            return dbContext.Divisions;
+        }
+
+        /// <summary>
+        /// Gets an enumerable collection of Division entities - asynchronous
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <returns>An enumerable collection of Division objects</returns>
+        public async Task<IEnumerable<Division>> GetEntitiesAsync(ProFootballEntities dbContext)
+        {
+            _log.Info("Getting Division entities from data store");
+            return await dbContext.Divisions.ToListAsync();
+        }
+
+        /// <summary>
+        /// Loads a collection of Division entities into memory
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        public void LoadEntities(ProFootballEntities dbContext)
+        {
+            _log.Info("Loading Division entities into memory");
+            dbContext.Divisions.Load();
+        }
+
+        /// <summary>
+        /// Loads a collection of Division entities into memory - asynchronous
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        public async Task LoadEntitiesAsync(ProFootballEntities dbContext)
+        {
+            _log.Info("Loading Division entities into memory");
+            await dbContext.Divisions.LoadAsync();
+        }
+
+        /// <summary>
+        /// Removes a Division entity from ProFootballEntities
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <param name="division">The Division entity to delete</param>
+        /// <returns>The Division entity deleted from dbContext</returns>
+        public Division RemoveEntity(ProFootballEntities dbContext, Division division)
+        {
+            _log.Info("Removing Division entity from data store");
+            return dbContext.Divisions.Remove(division);
+        }
+
+        /// <summary>
+        /// Removes multiple Division entities from ProFootballEntities
+        /// </summary>
+        /// <param name="dbContext">An instance of the ProFootballEntities class</param>
+        /// <param name="divisions">The collection of Division entities to remove</param>
+        /// <returns>The Division entity collection removed from dbContext</returns>
+        public IEnumerable<Division> RemoveEntities(ProFootballEntities dbContext, IEnumerable<Division> divisions)
+        {
+            _log.Info("Removing Division entities from data store");
+            return dbContext.Divisions.RemoveRange(divisions);
+        }
     }
 }

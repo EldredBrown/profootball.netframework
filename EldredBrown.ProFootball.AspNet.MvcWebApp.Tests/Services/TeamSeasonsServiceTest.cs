@@ -16,18 +16,12 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
     [TestFixture]
     public class TeamSeasonsServiceTest
     {
-        #region Member Fields
-
         private ISharedService _sharedService;
         private IDataMapper _dataMapper;
         private IRepository<LeagueSeason> _leagueSeasonRepository;
         private IRepository<TeamSeason> _teamSeasonRepository;
         private IStoredProcedureRepository _storedProcedureRepository;
         private ICalculator _calculator;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -39,10 +33,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
             _storedProcedureRepository = A.Fake<IStoredProcedureRepository>();
             _calculator = A.Fake<ICalculator>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public async Task GetEntitiesOrderedAsync_SortOrderIsTeamAsc_OrderByTeamNameAscending()
@@ -2389,7 +2379,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
                 _teamSeasonRepository, _storedProcedureRepository, _calculator);
 
             var seasonID = 2017;
-            var sortOrder = String.Empty;
+            var sortOrder = string.Empty;
             var dbContext = A.Fake<ProFootballEntities>();
 
             var seasonCount = 3;
@@ -2616,7 +2606,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
                 new SeasonViewModel { ID = 2014 },
             };
             int? seasonID = null;
-            string sortOrder = String.Empty;
+            string sortOrder = string.Empty;
 
             TeamSeasonsService.SelectedSeason = 0;
             WebGlobals.SelectedSeason = 2017;
@@ -3861,7 +3851,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
 
             // Assert
         }
-
-        #endregion Test Cases
     }
 }

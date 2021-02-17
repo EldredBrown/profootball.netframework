@@ -15,18 +15,12 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
     [TestFixture]
     public class GamesServiceTest
     {
-        #region Member Fields
-
         private ISharedService _sharedService;
         private IDataMapper _dataMapper;
         private IRepository<Game> _gameRepository;
         private IRepository<Team> _teamRepository;
         private IRepository<TeamSeason> _teamSeasonRepository;
         private ICalculator _calculator;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -38,10 +32,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
             _teamSeasonRepository = A.Fake<IRepository<TeamSeason>>();
             _calculator = A.Fake<ICalculator>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public async Task AddEntity_TieAndPythPctNull_AddsTiesToTeamSeasonRecordsAndSetsPythWinsAndLossesToZero()
@@ -1393,7 +1383,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
                 _teamSeasonRepository, _calculator);
 
             var seasonID = 2017;
-            string selectedWeek = String.Empty;
+            string selectedWeek = string.Empty;
             string guestSearchString = null;
             string hostSearchString = null;
             var dbContext = A.Fake<ProFootballEntities>();
@@ -1448,7 +1438,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
 
             var seasonID = 2017;
             string selectedWeek = null;
-            string guestSearchString = String.Empty;
+            string guestSearchString = string.Empty;
             string hostSearchString = null;
             var dbContext = A.Fake<ProFootballEntities>();
 
@@ -1530,7 +1520,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
             var seasonID = 2017;
             string selectedWeek = null;
             string guestSearchString = null;
-            string hostSearchString = String.Empty;
+            string hostSearchString = string.Empty;
             var dbContext = A.Fake<ProFootballEntities>();
 
             var games = SetUpFakeGames();
@@ -1680,7 +1670,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
             {
                 if (i == 0)
                 {
-                    Assert.AreEqual(String.Empty, resultToList.ElementAt(i).ID);
+                    Assert.AreEqual(string.Empty, resultToList.ElementAt(i).ID);
                 }
                 else if (i < resultToList.Count - 1)
                 {
@@ -1708,57 +1698,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
             // Assert
             Assert.IsNull(result);
         }
-
-        [TestCase]
-        public void SetSelectedSeason()
-        {
-            // Arrange
-            var service = new GamesService(_sharedService, _dataMapper, _gameRepository, _teamRepository,
-                _teamSeasonRepository, _calculator);
-
-            var seasons = new List<SeasonViewModel>();
-            var seasonID = 2017;
-
-            // Act
-            service.SetSelectedSeason(seasons, seasonID);
-
-            // Assert
-            A.CallTo(() => _sharedService.SetSelectedSeason(seasons, seasonID, ref GamesService.SelectedSeason))
-                .MustHaveHappenedOnceExactly();
-        }
-
-        [TestCase]
-        public void SetSelectedWeek()
-        {
-            // Arrange
-            var service = new GamesService(_sharedService, _dataMapper, _gameRepository, _teamRepository,
-                _teamSeasonRepository, _calculator);
-
-            var week = 1;
-
-            // Act
-            service.SetSelectedWeek(week);
-
-            // Assert
-            Assert.IsInstanceOf<WeekViewModel>(GamesService.SelectedWeek);
-            Assert.AreEqual(week.ToString(), GamesService.SelectedWeek.ID);
-        }
-
-        //[TestCase]
-        public void TestCase1()
-        {
-            // Arrange
-            var service = new GamesService(_sharedService, _dataMapper, _gameRepository, _teamRepository,
-                _teamSeasonRepository, _calculator);
-
-            // Act
-
-            // Assert
-        }
-
-        #endregion Test Cases
-
-        #region Helpers
 
         private IEnumerable<Game> SetUpFakeGames()
         {
@@ -1958,6 +1897,51 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Services
             return games;
         }
 
-        #endregion Helpers
+        [TestCase]
+        public void SetSelectedSeason()
+        {
+            // Arrange
+            var service = new GamesService(_sharedService, _dataMapper, _gameRepository, _teamRepository,
+                _teamSeasonRepository, _calculator);
+
+            var seasons = new List<SeasonViewModel>();
+            var seasonID = 2017;
+
+            // Act
+            service.SetSelectedSeason(seasons, seasonID);
+
+            // Assert
+            A.CallTo(() => _sharedService.SetSelectedSeason(seasons, seasonID, ref GamesService.SelectedSeason))
+                .MustHaveHappenedOnceExactly();
+        }
+
+        [TestCase]
+        public void SetSelectedWeek()
+        {
+            // Arrange
+            var service = new GamesService(_sharedService, _dataMapper, _gameRepository, _teamRepository,
+                _teamSeasonRepository, _calculator);
+
+            var week = 1;
+
+            // Act
+            service.SetSelectedWeek(week);
+
+            // Assert
+            Assert.IsInstanceOf<WeekViewModel>(GamesService.SelectedWeek);
+            Assert.AreEqual(week.ToString(), GamesService.SelectedWeek.ID);
+        }
+
+        //[TestCase]
+        public void TestCase1()
+        {
+            // Arrange
+            var service = new GamesService(_sharedService, _dataMapper, _gameRepository, _teamRepository,
+                _teamSeasonRepository, _calculator);
+
+            // Act
+
+            // Assert
+        }
     }
 }

@@ -12,16 +12,10 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
     [TestFixture]
     public class DivisionNodeViewModelTest
     {
-        #region Member Fields
-
         private ITreeViewItemViewModel _parent;
         private ISeasonStandingsControlService _controlService;
         private Division _division;
         private ISharedService _sharedService;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -31,10 +25,6 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             _division = new Division();
             _sharedService = A.Fake<ISharedService>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public void IsSelected_ShowStandingsHappyPath()
@@ -100,7 +90,5 @@ namespace EldredBrown.ProFootballWPF.Tests.ViewModels
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

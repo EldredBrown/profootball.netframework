@@ -4,8 +4,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        #region Actions
-
         public ActionResult Index()
         {
             return View();
@@ -24,7 +22,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
 
             return View();
         }
-
-        #endregion Actions
     }
 }

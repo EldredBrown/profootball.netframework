@@ -13,10 +13,8 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
     /// </summary>
     public class WeekCountRepository : IRepository<WeekCount>
     {
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        #region IRepository<WeekCount> Implementation
 
         /// <summary>
         /// Adds a WeekCount entity to ProFootballEntities
@@ -26,7 +24,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The WeekCount entity added to dbContext</returns>
         public WeekCount AddEntity(ProFootballEntities dbContext, WeekCount weekCount)
         {
-            Log.Info("Adding WeekCount entity to data store");
+            _log.Info("Adding WeekCount entity to data store");
             return dbContext.WeekCounts.Add(weekCount);
         }
 
@@ -38,7 +36,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The WeekCount entity collection added to dbContext</returns>
         public IEnumerable<WeekCount> AddEntities(ProFootballEntities dbContext, IEnumerable<WeekCount> weekCounts)
         {
-            Log.Info("Adding WeekCount entities to data store");
+            _log.Info("Adding WeekCount entities to data store");
             return dbContext.WeekCounts.AddRange(weekCounts);
         }
 
@@ -49,7 +47,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The new WeekCount entity instance</returns>
         public WeekCount CreateEntity(ProFootballEntities dbContext)
         {
-            Log.Info("Creating WeekCount entity");
+            _log.Info("Creating WeekCount entity");
             return dbContext.WeekCounts.Create();
         }
 
@@ -60,7 +58,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <param name="weekCount">The WeekCount entity to modify</param>
         public void EditEntity(ProFootballEntities dbContext, WeekCount weekCount)
         {
-            Log.Info("Updating WeekCount entity in data store");
+            _log.Info("Updating WeekCount entity in data store");
             dbContext.SetModified(weekCount);
         }
 
@@ -84,18 +82,18 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
                 {
                     var errMsg = $"WeekCount entity not found in ProFootballEntities\nSeasonID: {seasonID}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info($"WeekCount entity found in ProFootballEntities\nSeasonID: {seasonID}");
+                _log.Info($"WeekCount entity found in ProFootballEntities\nSeasonID: {seasonID}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"WeekCount entity not found in ProFootballEntities\nSeasonID: {seasonID}";
 
-                Log.Error(errMsg + "\n" + ex.Message);
+                _log.Error(errMsg + "\n" + ex.Message);
 
                 throw new ObjectNotFoundException(errMsg);
             }
@@ -123,23 +121,37 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
                 {
                     var errMsg = $"WeekCount entity not found in ProFootballEntities\nSeasonID: {seasonID}";
 
-                    Log.Error(errMsg);
+                    _log.Error(errMsg);
 
                     throw new ObjectNotFoundException(errMsg);
                 }
 
-                Log.Info($"WeekCount entity found in ProFootballEntities\nSeasonID: {seasonID}");
+                _log.Info($"WeekCount entity found in ProFootballEntities\nSeasonID: {seasonID}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"WeekCount entity not found in ProFootballEntities\nSeasonID: {seasonID}";
 
-                Log.Error(errMsg + "\n" + ex.Message);
+                _log.Error(errMsg + "\n" + ex.Message);
 
                 throw new ObjectNotFoundException(errMsg);
             }
 
             return retVal;
+        }
+
+        private void ValidateFindArgs(string methodName, params object[] args)
+        {
+            var messagePrefix = $"WeekCountRepository.{methodName}: ";
+
+            if (args.Length != 1)
+            {
+                throw new ArgumentException(messagePrefix + "Invalid number of arguments received");
+            }
+            if (args[0].GetType() != typeof(int))
+            {
+                throw new ArgumentException(messagePrefix + "ID");
+            }
         }
 
         /// <summary>
@@ -149,7 +161,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>An enumerable collection of WeekCount objects</returns>
         public IEnumerable<WeekCount> GetEntities(ProFootballEntities dbContext)
         {
-            Log.Info("Getting WeekCount entities from data store");
+            _log.Info("Getting WeekCount entities from data store");
             return dbContext.WeekCounts;
         }
 
@@ -160,7 +172,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>An enumerable collection of WeekCount objects</returns>
         public async Task<IEnumerable<WeekCount>> GetEntitiesAsync(ProFootballEntities dbContext)
         {
-            Log.Info("Getting WeekCount entities from data store");
+            _log.Info("Getting WeekCount entities from data store");
             return await dbContext.WeekCounts.ToListAsync();
         }
 
@@ -182,7 +194,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The WeekCount entity deleted from dbContext</returns>
         public WeekCount RemoveEntity(ProFootballEntities dbContext, WeekCount weekCount)
         {
-            Log.Info("Removing WeekCount entity from data store");
+            _log.Info("Removing WeekCount entity from data store");
             return dbContext.WeekCounts.Remove(weekCount);
         }
 
@@ -194,28 +206,8 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Repositories
         /// <returns>The WeekCount entity collection removed from dbContext</returns>
         public IEnumerable<WeekCount> RemoveEntities(ProFootballEntities dbContext, IEnumerable<WeekCount> weekCounts)
         {
-            Log.Info("Removing WeekCount entities from data store");
+            _log.Info("Removing WeekCount entities from data store");
             return dbContext.WeekCounts.RemoveRange(weekCounts);
         }
-
-        #endregion IRepository<WeekCount> Implementation
-
-        #region Helpers
-
-        private void ValidateFindArgs(string methodName, params object[] args)
-        {
-            var messagePrefix = $"WeekCountRepository.{methodName}: ";
-
-            if (args.Length != 1)
-            {
-                throw new ArgumentException(messagePrefix + "Invalid number of arguments received");
-            }
-            if (args[0].GetType() != typeof(int))
-            {
-                throw new ArgumentException(messagePrefix + "ID");
-            }
-        }
-
-        #endregion Helpers
     }
 }

@@ -25,12 +25,12 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.DAL
             _stopwatch.Stop();
             if (interceptionContext.Exception != null)
             {
-                log.Error(String.Format("Error executing command: {0}", command.CommandText),
+                log.Error(string.Format("Error executing command: {0}", command.CommandText),
                     interceptionContext.Exception);
             }
             else
             {
-                log.Info(String.Format("SQL Database: SchoolInterceptor.ReaderExecuted: Command: {0}: ",
+                log.Info(string.Format("SQL Database: SchoolInterceptor.ReaderExecuted: Command: {0}: ",
                     command.CommandText));
             }
             base.ScalarExecuted(command, interceptionContext);
@@ -47,12 +47,12 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.DAL
             _stopwatch.Stop();
             if (interceptionContext.Exception != null)
             {
-                log.Error(String.Format("Error executing command: {0}", command.CommandText),
+                log.Error(string.Format("Error executing command: {0}", command.CommandText),
                     interceptionContext.Exception);
             }
             else
             {
-                log.Info(String.Format("SQL Database: SchoolInterceptor.ReaderExecuted: Command: {0}: ",
+                log.Info(string.Format("SQL Database: SchoolInterceptor.ReaderExecuted: Command: {0}: ",
                     command.CommandText));
             }
             base.NonQueryExecuted(command, interceptionContext);
@@ -70,12 +70,12 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.DAL
             _stopwatch.Stop();
             if (interceptionContext.Exception != null)
             {
-                log.Error(String.Format("Error executing command: {0}", command.CommandText),
+                log.Error(string.Format("Error executing command: {0}", command.CommandText),
                     interceptionContext.Exception);
             }
             else
             {
-                log.Info(String.Format("SQL Database: SchoolInterceptor.ReaderExecuted: Command: {0}: ",
+                log.Info(string.Format("SQL Database: SchoolInterceptor.ReaderExecuted: Command: {0}: ",
                     command.CommandText));
             }
             base.ReaderExecuted(command, interceptionContext);

@@ -25,16 +25,10 @@ namespace EldredBrown.ProFootball.WpfApp.Services
     /// </summary>
     public class SharedService : ISharedService
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         IRepository<TeamSeason> _teamSeasonRepository;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the SharedService class
@@ -44,10 +38,6 @@ namespace EldredBrown.ProFootball.WpfApp.Services
         {
             _teamSeasonRepository = teamSeasonRepository;
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Methods
 
         /// <summary>
         /// Finds a TeamSeason by TeamName and SeasonID
@@ -63,7 +53,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
                 throw;
             }
         }
@@ -125,7 +115,5 @@ namespace EldredBrown.ProFootball.WpfApp.Services
         {
             return MessageBox.Show(messageBoxText, caption, button, icon);
         }
-
-        #endregion Methods
     }
 }

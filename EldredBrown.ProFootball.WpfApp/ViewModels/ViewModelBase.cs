@@ -11,13 +11,7 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
     /// </summary>
     public abstract class ViewModelBase : IFocusMover, INotifyPropertyChanged, IViewModelBase
     {
-        #region Member Fields
-
         protected readonly ISharedService _sharedService;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the ViewModelBase class.
@@ -26,10 +20,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
 		{
             _sharedService = sharedService;
 		}
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets a value indicating whether this view model object needs to be updated
@@ -49,10 +39,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
 			}
 		}
 
-        #endregion Properties
-
-        #region Commands
-
         public DelegateCommand UpdateCommand
 		{
 			get
@@ -61,10 +47,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
 			}
 		}
 
-        #endregion Commands
-
-        #region Event Raisers
-
         /// <summary>
         /// Raises MoveFocus event when focus is moved from one control to another.
         /// </summary>
@@ -72,7 +54,7 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
         protected virtual void OnMoveFocus(string focusedProperty)
         {
             // Validate focusedProperty argument.
-            if (String.IsNullOrEmpty(focusedProperty))
+            if (string.IsNullOrEmpty(focusedProperty))
             {
                 throw new ArgumentException("focusedProperty");
             }
@@ -88,7 +70,7 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
         protected void OnPropertyChanged(string name)
 		{
 			// Validate name argument.
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentException("name");
 			}
@@ -101,21 +83,11 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
 			}
 		}
 
-        #endregion Event Raisers
-
-        #region IFocusMover Members
-
         public event EventHandler<MoveFocusEventArgs> MoveFocus;
-
-        #endregion IFocusMover Members
-
-        #region INotifyPropertyChanged Members
 
         /// <summary>
         /// Event triggered when a property is changed.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion INotifyPropertyChanged Members
     }
 }

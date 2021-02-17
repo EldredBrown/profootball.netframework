@@ -11,7 +11,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
     /// </summary>
     public class SeasonStandingsController : Controller
     {
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ISeasonStandingsService _service;
@@ -51,7 +51,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in SeasonStandingsController.Index: " + ex.Message);
+                _log.Error("Exception in SeasonStandingsController.Index: " + ex.Message);
                 throw;
             }
         }

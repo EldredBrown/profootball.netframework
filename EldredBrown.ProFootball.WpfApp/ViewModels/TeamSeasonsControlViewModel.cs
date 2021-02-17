@@ -25,16 +25,10 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
     /// </summary>
     public class TeamSeasonsControlViewModel : ViewModelBase, ITeamSeasonsControlViewModel
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ITeamSeasonsControlService _controlService;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the TeamSeasonsControlViewModel class 
@@ -46,10 +40,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
         {
             _controlService = controlService;
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets this control's selected team.
@@ -156,10 +146,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
         }
 
-        #endregion Properties
-
-        #region Commands
-
         /// <summary>
         /// Views the team schedule profile, totals, and averages for the selected team.
         /// </summary>
@@ -231,12 +217,10 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
         }
-
-        #endregion Commands
     }
 }

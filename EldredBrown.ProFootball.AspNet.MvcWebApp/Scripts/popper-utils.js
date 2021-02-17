@@ -815,7 +815,7 @@ function getSupportedPropertyName(property) {
  */
 function isFunction(functionToCheck) {
   const getType = {};
-  return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+  return functionToCheck && getType.tostring.call(functionToCheck) === '[object Function]';
 }
 
 /**

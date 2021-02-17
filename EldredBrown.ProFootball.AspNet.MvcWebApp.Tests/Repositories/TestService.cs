@@ -11,8 +11,6 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Repositories
 {
     public static class TestService
     {
-        #region Extension Methods
-
         public static void SetUpFakeConferencesAsync(this ProFootballEntities dbContext,
             IEnumerable<Conference> conferencesEnumerable = null)
         {
@@ -433,7 +431,5 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Tests.Repositories
             // Do the wiring between DbContext and DbSet
             A.CallTo(() => dbContext.WeekCounts).Returns(fakeDbSet);
         }
-
-        #endregion Extension Methods
     }
 }

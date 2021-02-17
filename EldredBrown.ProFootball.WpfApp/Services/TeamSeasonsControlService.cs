@@ -21,18 +21,12 @@ namespace EldredBrown.ProFootball.WpfApp.Services
     /// </summary>
     public class TeamSeasonsControlService : ITeamSeasonsControlService
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private ISharedService _sharedService;
         private IRepository<TeamSeason> _teamSeasonRepository;
         private IStoredProcedureRepository _storedProcedureRepository;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the TeamSeasonsControlService class
@@ -48,10 +42,6 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             _storedProcedureRepository = storedProcedureRepository;
         }
 
-        #endregion Constructors & Finalizers
-
-        #region Methods
-
         /// <summary>
         /// Gets all the TeamSeason objects for a specified season
         /// </summary>
@@ -65,7 +55,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (ArgumentNullException ex)
             {
-                Log.Error($"ArgumentNullException caught in TeamSeasonsControlService.GetEntities: {ex.Message}");
+                _log.Error($"ArgumentNullException caught in TeamSeasonsControlService.GetEntities: {ex.Message}");
 
                 _sharedService.ShowExceptionMessage(ex);
 
@@ -73,7 +63,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -94,7 +84,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (ArgumentNullException ex)
             {
-                Log.Error(
+                _log.Error(
                     $"ArgumentNullException caught in TeamSeasonsControlService.GetTeamSeasonScheduleProfile: {ex.Message}");
 
                 _sharedService.ShowExceptionMessage(ex);
@@ -103,7 +93,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -124,7 +114,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (ArgumentNullException ex)
             {
-                Log.Error(
+                _log.Error(
                     $"ArgumentNullException caught in TeamSeasonsControlService.GetTeamSeasonScheduleTotals: {ex.Message}");
 
                 _sharedService.ShowExceptionMessage(ex);
@@ -133,7 +123,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -154,7 +144,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (ArgumentNullException ex)
             {
-                Log.Error(
+                _log.Error(
                     $"ArgumentNullException caught in TeamSeasonsControlService.GetTeamSeasonScheduleAverages: {ex.Message}");
 
                 _sharedService.ShowExceptionMessage(ex);
@@ -163,12 +153,10 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
         }
-
-        #endregion Methods
     }
 }

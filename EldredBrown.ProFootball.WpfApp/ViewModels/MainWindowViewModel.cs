@@ -21,16 +21,10 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
     /// </summary>
     public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IMainWindowService _windowService;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the MainWindowViewModel class.
@@ -40,10 +34,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
 		{
             _windowService = windowService;
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets this window's seasons collection.
@@ -89,10 +79,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
         }
 
-        #endregion Properties
-
-        #region Commands
-
         /// <summary>
         /// Opens the GamePredictorWindow.
         /// </summary>
@@ -116,7 +102,7 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -146,7 +132,7 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
                 throw;
             }
         }
@@ -175,12 +161,10 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
         }
-
-        #endregion Commands
     }
 }

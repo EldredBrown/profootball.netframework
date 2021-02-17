@@ -12,16 +12,10 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
     /// </summary>
     public class TeamSeasonRepository : IRepository<TeamSeason>
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ProFootballEntities _dbContext;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the TeamSeasonRepository class
@@ -40,10 +34,6 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             _dbContext.Dispose();
         }
 
-        #endregion Constructors & Finalizers
-
-        #region IRepository<TeamSeason> Implementation
-
         /// <summary>
         /// Adds a TeamSeason entity to the data store
         /// </summary>
@@ -53,13 +43,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Adding TeamSeason entity to data store");
+                _log.Info("Adding TeamSeason entity to data store");
 
                 return _dbContext.TeamSeasons.Add(teamSeason);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -74,13 +64,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Adding TeamSeason entities to data store");
+                _log.Info("Adding TeamSeason entities to data store");
 
                 return _dbContext.TeamSeasons.AddRange(teamSeasons);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -94,13 +84,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Creating TeamSeason entity");
+                _log.Info("Creating TeamSeason entity");
 
                 return _dbContext.TeamSeasons.Create();
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -114,13 +104,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Updating TeamSeason entity in data store");
+                _log.Info("Updating TeamSeason entity in data store");
 
                 _dbContext.SetModified(teamSeason);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -157,31 +147,19 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
             try
             {
                 retVal = _dbContext.TeamSeasons.Find(teamName, seasonID);
-                //if (retVal == null)
-                //{
-                //    var errMsg = $"TeamSeason entity not found in data store\n" +
-                //                 $"TeamName: {teamName}\nID: {seasonID}";
-
-                //    Log.Error(errMsg);
-
-                //    throw new ObjectNotFoundException(errMsg);
-                //}
-
-                //Log.Info($"TeamSeason entity found in data store\n" +
-                //         $"TeamName: {teamName}\nID: {seasonID}");
             }
             catch (InvalidOperationException ex)
             {
                 var errMsg = $"TeamSeason entity not found in data store\n" +
                              $"TeamName: {teamName}\nID: {seasonID}";
 
-                Log.Error($"{errMsg}\n{ex.Message}");
+                _log.Error($"{errMsg}\n{ex.Message}");
 
                 throw new ObjectNotFoundException(errMsg);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -197,13 +175,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Getting TeamSeason entities from data store");
+                _log.Info("Getting TeamSeason entities from data store");
 
                 return _dbContext.TeamSeasons;
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -218,13 +196,13 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Removing TeamSeason entity from data store");
+                _log.Info("Removing TeamSeason entity from data store");
 
                 return _dbContext.TeamSeasons.Remove(teamSeason);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -239,18 +217,16 @@ namespace EldredBrown.ProFootball.WpfApp.Repositories
         {
             try
             {
-                Log.Info("Removing TeamSeason entities from data store");
+                _log.Info("Removing TeamSeason entities from data store");
 
                 return _dbContext.TeamSeasons.RemoveRange(teamSeasons);
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
         }
-
-        #endregion IRepository<TeamSeason> Implementation
     }
 }

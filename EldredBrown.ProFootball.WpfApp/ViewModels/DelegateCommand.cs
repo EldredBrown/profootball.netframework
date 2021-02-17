@@ -5,24 +5,14 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
 {
     public class DelegateCommand : ICommand
     {
-        #region Fields
-
         private readonly Action<object> _execute;
         private readonly Predicate<object> _canExecute;
-
-        #endregion Fields
-
-        #region Constructors & Finalizers
 
         public DelegateCommand(Action<object> execute, Predicate<object> canExecute = null)
         {
             _execute = execute ?? throw new ArgumentNullException("execute");
             _canExecute = canExecute;
         }
-
-        #endregion Constructors & Finalizers
-
-        #region ICommand Members
 
         public event EventHandler CanExecuteChanged
         {
@@ -39,7 +29,5 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
         {
             _execute(parameter);
         }
-
-        #endregion ICommand Members
     }
 }

@@ -20,14 +20,8 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
     /// </summary>
     public class TreeViewItemViewModel : ViewModelBase, ITreeViewItemViewModel
     {
-        #region Member Fields
-
         protected static readonly TreeViewItemViewModel DummyChild = new TreeViewItemViewModel();
         protected readonly ISeasonStandingsControlService _controlService;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the TreeViewItemViewModel class.
@@ -62,10 +56,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
 			: this(parent: null, controlService: null, lazyLoadChildren: true)
 		{
 		}
-
-        #endregion Constructors & Finalizers
-
-        #region Properties
 
         /// <summary>
         /// Gets the name of the association (league, conference, or division) represented by this object
@@ -142,10 +132,6 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
         /// </summary>
         internal ITreeViewItemViewModel Parent { get; }
 
-        #endregion Properties
-
-        #region Protected Methods
-
         /// <summary>
         /// Gets a value indicating whether this control's children have been populated yet.
         /// </summary>
@@ -164,7 +150,5 @@ namespace EldredBrown.ProFootball.WpfApp.ViewModels
         {
             // To be implemented in subclass
         }
-
-        #endregion Protected Methods
     }
 }

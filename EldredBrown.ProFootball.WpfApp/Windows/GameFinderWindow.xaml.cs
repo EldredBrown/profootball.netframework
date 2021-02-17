@@ -17,13 +17,7 @@ namespace EldredBrown.ProFootball.WpfApp.Windows
     /// </summary>
     public partial class GameFinderWindow : Window, IGameFinderWindow
     {
-        #region Member Fields
-
         private readonly ISharedService _sharedService;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the GameFinderWindow class
@@ -37,10 +31,6 @@ namespace EldredBrown.ProFootball.WpfApp.Windows
 		    DataContext = WpfGlobals.Container.Resolve<IGameFinderWindowViewModel>();
 		}
 
-        #endregion Constructors & Finalizers
-
-        #region Methods
-
         /// <summary>
         /// Opens a window and returns only when the newly opened window is closed
         /// </summary>
@@ -49,10 +39,6 @@ namespace EldredBrown.ProFootball.WpfApp.Windows
         {
             return base.ShowDialog();
         }
-
-        #endregion
-
-        #region Event Handlers
 
         /// <summary>
         /// Handles the Click event on the OK button
@@ -90,7 +76,5 @@ namespace EldredBrown.ProFootball.WpfApp.Windows
         {
             DialogResult = false;
         }
-
-        #endregion Event Handlers
     }
 }

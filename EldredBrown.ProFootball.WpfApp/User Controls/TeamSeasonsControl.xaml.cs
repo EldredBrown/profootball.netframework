@@ -14,8 +14,6 @@ namespace EldredBrown.ProFootball.WpfApp.UserControls
     /// </summary>
     public partial class TeamSeasonsControl : UserControl, ITeamSeasonsControl
     {
-        #region Constructors & Finalizers
-
         /// <summary>
         /// Initializes a new instance of the TeamsControl class
         /// </summary>
@@ -26,10 +24,6 @@ namespace EldredBrown.ProFootball.WpfApp.UserControls
             DataContext = WpfGlobals.Container.Resolve<ITeamSeasonsControlViewModel>();
         }
 
-        #endregion Constructors & Finalizers
-
-        #region Methods
-
         /// <summary>
         /// Refreshes the view of this TeamsControl object
         /// </summary>
@@ -37,7 +31,5 @@ namespace EldredBrown.ProFootball.WpfApp.UserControls
         {
             (DataContext as ITeamSeasonsControlViewModel).ViewTeamsCommand.Execute(null);
         }
-
-        #endregion Methods
     }
 }

@@ -21,7 +21,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
     /// </summary>
     public class GamePredictorService : IGamePredictorService
     {
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IDataMapper _dataMapper;
@@ -81,7 +81,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 }
                 catch (ArgumentNullException ex)
                 {
-                    Log.Error("ArgumentNullExcetion in GamePredictorService.GetGuestAndHostSeasonIds: " + ex.Message);
+                    _log.Error("ArgumentNullExcetion in GamePredictorService.GetGuestAndHostSeasonIds: " + ex.Message);
                     return;
                 }
             }
@@ -120,7 +120,7 @@ namespace EldredBrown.ProFootball.AspNet.MvcWebApp.Services
                 }
                 catch (ArgumentNullException ex)
                 {
-                    Log.Error("ArgumentNullExcetion in GamePredictorService.GetGuestAndHostSeasonIds: " + ex.Message);
+                    _log.Error("ArgumentNullExcetion in GamePredictorService.GetGuestAndHostSeasonIds: " + ex.Message);
                     return null;
                 }
             }

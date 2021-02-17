@@ -16,8 +16,6 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
     [TestFixture]
     public class MainWindowServiceTest
     {
-        #region Member Fields
-
         private ISharedService _sharedService;
         private IRepository<Game> _gameRepository;
         private IRepository<Season> _seasonRepository;
@@ -28,10 +26,6 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
         private ProFootballEntities _dbContext;
         private ICalculator _calculator;
         private IGamePredictorWindow _gamePredictorWindow;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -47,10 +41,6 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             _calculator = A.Fake<ICalculator>();
             _gamePredictorWindow = A.Fake<IGamePredictorWindow>();
         }
-
-        #endregion SetUp & TearDown
-
-        #region Test Cases
 
         [TestCase]
         public void GetAllSeasonIds_HappyPath()
@@ -2761,7 +2751,5 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             // Assert
             // TODO: Assert results of call to method under test.
         }
-
-        #endregion Test Cases
     }
 }

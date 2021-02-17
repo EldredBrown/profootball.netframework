@@ -18,17 +18,11 @@ namespace EldredBrown.ProFootball.WpfApp.Services
     /// </summary>
     public class RankingsControlService : IRankingsControlService
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ISharedService _sharedService;
         private readonly IStoredProcedureRepository _storedProcedureRepository;
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the RankingsControlService class
@@ -41,10 +35,6 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             _sharedService = sharedService;
             _storedProcedureRepository = storedProcedureRepository;
         }
-
-        #endregion Constructors & Finalizers
-
-        #region Methods
 
         /// <summary>
         /// Gets all offensive rankings for the specified season
@@ -59,7 +49,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (ArgumentNullException ex)
             {
-                Log.Error(
+                _log.Error(
                     $"ArgumentNullException caught in RankingsControlService.GetRankingsOffensiveBySeason: {ex.Message}");
 
                 _sharedService.ShowExceptionMessage(ex);
@@ -68,7 +58,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -87,7 +77,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (ArgumentNullException ex)
             {
-                Log.Error(
+                _log.Error(
                     $"ArgumentNullException caught in RankingsControlService.GetRankingsDefensiveBySeason: {ex.Message}");
 
                 _sharedService.ShowExceptionMessage(ex);
@@ -96,7 +86,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -115,7 +105,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (ArgumentNullException ex)
             {
-                Log.Error(
+                _log.Error(
                     $"ArgumentNullException caught in RankingsControlService.GetRankingsTotalBySeason: {ex.Message}");
 
                 _sharedService.ShowExceptionMessage(ex);
@@ -124,12 +114,10 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
         }
-
-        #endregion Methods
     }
 }

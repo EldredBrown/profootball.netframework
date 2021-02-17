@@ -13,18 +13,12 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
     [TestFixture]
     public class GamesWindowServiceTest
     {
-        #region Member Fields
-
         private ISharedService _sharedService;
         private IRepository<Game> _gameRepository;
         private IRepository<WeekCount> _weekCountRepository;
         private IRepository<TeamSeason> _teamSeasonRepository;
         private ProFootballEntities _dbContext;
         private ICalculator _calculator;
-
-        #endregion Member Fields
-
-        #region SetUp & TearDown
 
         [SetUp]
         public void SetUp()
@@ -37,9 +31,7 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             _calculator = A.Fake<ICalculator>();
         }
 
-        #endregion SetUp & TearDown
-
-        #region Test Cases
+        // TODO - 2020-09-25: Explore how I can have all test cases use the same instance of GamesWindowService to eliminate duplication.
 
         [TestCase]
         public void AddGame_GuestWinsAndPythPctsAreNotNull_UpdatesWinsAndLossesAndScoringDataAndPythWinsAndLosses()
@@ -2076,7 +2068,7 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
 
             // Define argument variables of method under test.
             var seasonID = 2017;
-            string guestName = String.Empty;
+            string guestName = string.Empty;
             string hostName = null;
 
             // Set up needed infrastructure of class under test.
@@ -2158,7 +2150,7 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             // Define argument variables of method under test.
             var seasonID = 2017;
             string guestName = "Guest 2";
-            string hostName = String.Empty;
+            string hostName = string.Empty;
 
             // Set up needed infrastructure of class under test.
             SetUpGameRepositoryForGetGamesTest();
@@ -2310,10 +2302,6 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             // TODO: Assert results of call to method under test.
         }
 
-        #endregion Test Cases
-
-        #region Helpers
-
         private void SetUpGameRepositoryForGetGamesTest()
         {
             int id = 1;
@@ -2345,7 +2333,5 @@ namespace EldredBrown.ProFootball.WpfApp.Tests.Services
             }
             A.CallTo(() => _gameRepository.GetEntities()).Returns(games);
         }
-
-        #endregion Helpers
     }
 }

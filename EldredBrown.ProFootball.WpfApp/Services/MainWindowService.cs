@@ -25,9 +25,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
     /// </summary>
     public class MainWindowService : IMainWindowService
     {
-        #region Member Fields
-
-        private static readonly ILog Log =
+        private static readonly ILog _log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ISharedService _sharedService;
@@ -42,10 +40,6 @@ namespace EldredBrown.ProFootball.WpfApp.Services
         private readonly IGamePredictorWindow _gamePredictorWindow;
 
         private object _dbLock = new object();
-
-        #endregion Member Fields
-
-        #region Constructors & Finalizers
 
         /// <summary>
         /// Initializes a new instance of the MainWindowService class
@@ -77,10 +71,6 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             _gamePredictorWindow = gamePredictorWindow;
         }
 
-        #endregion Constructors & Finalizers
-
-        #region Methods
-
         /// <summary>
         /// Gets all the season IDs
         /// </summary>
@@ -94,7 +84,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (ArgumentNullException ex)
             {
-                Log.Error($"ArgumentNullException caught in MainWindowService.GetAllSeasonIds: {ex.Message}");
+                _log.Error($"ArgumentNullException caught in MainWindowService.GetAllSeasonIds: {ex.Message}");
 
                 _sharedService.ShowExceptionMessage(ex);
 
@@ -102,7 +92,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -128,19 +118,19 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (ArgumentNullException ex)
             {
-                Log.Error($"ArgumentNullException caught in MainWindowService.GetGameCount: {ex.Message}");
+                _log.Error($"ArgumentNullException caught in MainWindowService.GetGameCount: {ex.Message}");
 
                 _sharedService.ShowExceptionMessage(ex);
             }
             catch (OverflowException ex)
             {
-                Log.Error($"OverflowException caught in MainWindowService.GetGameCount: {ex.Message}");
+                _log.Error($"OverflowException caught in MainWindowService.GetGameCount: {ex.Message}");
 
                 _sharedService.ShowExceptionMessage(ex, "OverflowException");
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -160,7 +150,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -203,7 +193,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                _log.Error(ex.Message);
 
                 throw;
             }
@@ -211,28 +201,6 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             _sharedService.ShowMessageBox("Weekly update completed.", WpfGlobals.Constants.AppName, MessageBoxButton.OK,
                 MessageBoxImage.Information);
         }
-
-        /// <summary>
-        /// Shows the Games window
-        /// </summary>
-        /// <param name="gamesWindowInjected">IGamesWindow dependency injection used only for unit testing</param>
-        public void ShowGames(IGamesWindow gamesWindowInjected = null)
-        {
-            try
-            {
-                // Show the Games window.
-                var gamesWindow = gamesWindowInjected ?? new GamesWindow();
-                gamesWindow.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex.Message);
-
-                throw;
-            }
-        }
-
-        #region Helpers
 
         /// <summary>
         /// Updates a specified LeagueSeason
@@ -251,7 +219,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (ArgumentNullException ex)
             {
-                Log.Error($"ArgumentNullException caught in MainWindowService.UpdateLeagueSeason: {ex.Message}");
+                _log.Error($"ArgumentNullException caught in MainWindowService.UpdateLeagueSeason: {ex.Message}");
 
                 _sharedService.ShowExceptionMessage(ex);
 
@@ -271,6 +239,35 @@ namespace EldredBrown.ProFootball.WpfApp.Services
         }
 
         /// <summary>
+        /// Updates the season week count
+        /// </summary>
+        /// <param name="seasonID">The ID of the season for which the week count will be updated</param>
+        /// <returns></returns>
+        private int UpdateWeekCount(int seasonID)
+        {
+            int srcWeekCount = 0;
+            try
+            {
+                srcWeekCount = _gameRepository.GetEntities()
+                    .Where(g => g.SeasonID == seasonID)
+                    .Select(g => g.Week)
+                    .Max();
+
+                var destWeekCount = _weekCountRepository.FindEntity(seasonID);
+
+                destWeekCount.Count = srcWeekCount;
+            }
+            catch (ArgumentNullException ex)
+            {
+                _log.Error($"ArgumentNullException caught in MainWindowService.UpdateWeekCount: {ex.Message}");
+
+                _sharedService.ShowExceptionMessage(ex);
+            }
+
+            return srcWeekCount;
+        }
+
+        /// <summary>
         /// Updates the rankings of all teams
         /// </summary>
         private void UpdateRankings()
@@ -284,7 +281,7 @@ namespace EldredBrown.ProFootball.WpfApp.Services
             }
             catch (ArgumentNullException ex)
             {
-                Log.Error($"ArgumentNullException in MainWindowService.UpdateRankings: {ex.Message}");
+                _log.Error($"ArgumentNullException in MainWindowService.UpdateRankings: {ex.Message}");
 
                 _sharedService.ShowExceptionMessage(ex);
 
@@ -368,36 +365,23 @@ namespace EldredBrown.ProFootball.WpfApp.Services
         }
 
         /// <summary>
-        /// Updates the season week count
+        /// Shows the Games window
         /// </summary>
-        /// <param name="seasonID">The ID of the season for which the week count will be updated</param>
-        /// <returns></returns>
-        private int UpdateWeekCount(int seasonID)
+        /// <param name="gamesWindowInjected">IGamesWindow dependency injection used only for unit testing</param>
+        public void ShowGames(IGamesWindow gamesWindowInjected = null)
         {
-            int srcWeekCount = 0;
             try
             {
-                srcWeekCount = _gameRepository.GetEntities()
-                    .Where(g => g.SeasonID == seasonID)
-                    .Select(g => g.Week)
-                    .Max();
-
-                var destWeekCount = _weekCountRepository.FindEntity(seasonID);
-
-                destWeekCount.Count = srcWeekCount;
+                // Show the Games window.
+                var gamesWindow = gamesWindowInjected ?? new GamesWindow();
+                gamesWindow.ShowDialog();
             }
-            catch (ArgumentNullException ex)
+            catch (Exception ex)
             {
-                Log.Error($"ArgumentNullException caught in MainWindowService.UpdateWeekCount: {ex.Message}");
+                _log.Error(ex.Message);
 
-                _sharedService.ShowExceptionMessage(ex);
+                throw;
             }
-
-            return srcWeekCount;
         }
-
-        #endregion Helpers
-
-        #endregion Methods
     }
 }
